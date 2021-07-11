@@ -1,0 +1,26 @@
+modLoader="javafml" 
+loaderVersion="[36,)" 
+issueTrackerURL="https://github.com/noobanidus/timetodie/issues"
+license="https://github.com/noobanidus/timetodie/blob/master/LICENSE"
+[[mods]] 
+modId="timetodie" 
+version="${version}"
+displayName="Time to Die"
+displayURL="https://minecraft.curseforge.com/projects/timetodie"
+credits=""
+authors="Noobanidus"
+description='''
+A potion effect that renders an entity invulnerable, but destroys them when it expires.
+'''
+[[dependencies.timetodie]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.timetodie]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,)"
+    ordering="NONE"
+    side="BOTH"
