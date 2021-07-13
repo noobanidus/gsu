@@ -1,4 +1,4 @@
-package noobanidus.mods.timetodie.effects;
+package noobanidus.mods.gsu.effects;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;

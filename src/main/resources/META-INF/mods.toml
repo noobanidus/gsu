@@ -1,24 +1,24 @@
 modLoader="javafml" 
 loaderVersion="[36,)" 
-issueTrackerURL="https://github.com/noobanidus/timetodie/issues"
-license="https://github.com/noobanidus/timetodie/blob/master/LICENSE"
+issueTrackerURL="https://github.com/noobanidus/gsu/issues"
+license="https://github.com/noobanidus/gsu/blob/1.16/LICENSE"
 [[mods]] 
-modId="timetodie" 
+modId="gsu"
 version="${version}"
-displayName="Time to Die"
-displayURL="https://minecraft.curseforge.com/projects/timetodie"
+displayName="Generic Stream Utilities"
+displayURL="https://minecraft.curseforge.com/projects/gsu"
 credits=""
 authors="Noobanidus"
 description='''
-A potion effect that renders an entity invulnerable, but destroys them when it expires.
+Provides a series of potions, commands, enchantments and other effects for Twitch streamer integration with Minecraft.
 '''
-[[dependencies.timetodie]]
+[[dependencies.gsu]]
     modId="forge"
     mandatory=true
     versionRange="[36,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.timetodie]]
+[[dependencies.gsu]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.16.5,)"

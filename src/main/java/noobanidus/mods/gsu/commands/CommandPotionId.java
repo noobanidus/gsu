@@ -1,18 +1,11 @@
-package noobanidus.mods.timetodie.commands;
+package noobanidus.mods.gsu.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.PotionArgument;
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Effect;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.ServerWorldInfo;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class CommandPotionId {
   public static void register(CommandDispatcher<CommandSource> dispatcher) {
