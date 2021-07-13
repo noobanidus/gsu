@@ -6,6 +6,7 @@ import net.minecraft.potion.EffectType;
 import net.minecraft.potion.InstantEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.Explosion;
+import noobanidus.mods.gsu.config.ConfigManager;
 
 public class ExplosiveEffect extends InstantEffect {
   public ExplosiveEffect() {
@@ -16,7 +17,7 @@ public class ExplosiveEffect extends InstantEffect {
   public void performEffect(LivingEntity entity, int amplifier) {
     if (entity instanceof PlayerEntity) {
       PlayerEntity player = (PlayerEntity) entity;
-      player.world.createExplosion(player, DamageSource.causeExplosionDamage(player), null, player.getPosX(), player.getPosY(), player.getPosZ(), 2.0F, false, Explosion.Mode.BREAK);
+      player.world.createExplosion(player, DamageSource.causeExplosionDamage(player), null, player.getPosX(), player.getPosY(), player.getPosZ(), (float) (double) ConfigManager.getExplosionSize(), false, ConfigManager.getExplosionMode());
     }
   }
 }
