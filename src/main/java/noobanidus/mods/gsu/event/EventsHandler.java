@@ -5,12 +5,12 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import noobanidus.mods.carrierbees.CarrierBees;
-import noobanidus.mods.carrierbees.config.ConfigManager;
+import noobanidus.mods.gsu.GSU;
+import noobanidus.mods.gsu.config.ConfigManager;
 
 import java.util.*;
 
-@Mod.EventBusSubscriber(modid = CarrierBees.MODID)
+@Mod.EventBusSubscriber(modid = GSU.MODID)
 public class EventsHandler {
   private static Map<UUID, List<EffectInstance>> potionClone = new HashMap<>();
 
@@ -31,7 +31,7 @@ public class EventsHandler {
   }
 
   @SubscribeEvent
-  public static void playerRespawn (PlayerEvent.PlayerRespawnEvent event) {
+  public static void playerRespawn(PlayerEvent.PlayerRespawnEvent event) {
     if (ConfigManager.getEffectsPersist() && !event.isEndConquered()) {
       PlayerEntity player = event.getPlayer();
       List<EffectInstance> effects = potionClone.get(player.getUniqueID());
