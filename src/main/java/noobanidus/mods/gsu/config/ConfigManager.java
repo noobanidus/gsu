@@ -8,14 +8,17 @@ import net.minecraftforge.fml.config.ModConfig;
 import noobanidus.mods.gsu.GSU;
 
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 
 public class ConfigManager {
-  private static Random rand = new Random();
   private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
 
   public static ForgeConfigSpec COMMON_CONFIG;
 
+  // Potion effects
   private static ForgeConfigSpec.DoubleValue EXPLOSION_SIZE;
   private static ForgeConfigSpec.IntValue DAMAGE_AMOUNT;
   private static ForgeConfigSpec.DoubleValue DAMAGE_CHANCE;
@@ -25,15 +28,29 @@ public class ConfigManager {
   private static ForgeConfigSpec.BooleanValue EFFECTS_PERSIST;
   private static ForgeConfigSpec.ConfigValue<String> EXPLOSION_MODE;
 
+  // Command options
+  private static ForgeConfigSpec.BooleanValue REGISTER_TIME;
+  private static ForgeConfigSpec.BooleanValue REGISTER_POTION;
+  private static ForgeConfigSpec.IntValue PERMISSION_LEVEL;
+
+  // Time values
+  private static ForgeConfigSpec.LongValue DAY_LENGTH;
+  private static ForgeConfigSpec.IntValue MIDNIGHT_TIME;
+  private static ForgeConfigSpec.IntValue NIGHT_TIME;
+  private static ForgeConfigSpec.IntValue MORNING_TIME;
+  private static ForgeConfigSpec.IntValue SUNSET_TIME;
+  private static ForgeConfigSpec.IntValue DAWN_TIME;
+  private static ForgeConfigSpec.IntValue MIDDAY_TIME;
+
   public static boolean getEffectsPersist() {
     return EFFECTS_PERSIST.get();
   }
 
-  public static float getExplosionSize () {
+  public static float getExplosionSize() {
     return (float) (double) EXPLOSION_SIZE.get();
   }
 
-  public static Explosion.Mode getExplosionMode () {
+  public static Explosion.Mode getExplosionMode() {
     switch (EXPLOSION_MODE.get().toLowerCase(Locale.ROOT)) {
       default:
       case "none":
@@ -79,6 +96,21 @@ public class ConfigManager {
     EFFECTS_PERSIST = COMMON_BUILDER.comment("whether or not potion effects given by bees should persist through death").define("effects_persist", true);
     COMMON_BUILDER.pop();
     COMMON_BUILDER.push("commands");
+
+    REGISTER_POTION = COMMON_BUILDER.comment("whether or not the potion id command should be registered [default: true]").define("register_potion", true);
+    REGISTER_TIME = COMMON_BUILDER.comment("whether commands should be registered for each time (/midnight, /night, /sunrise, etc) [default: true]").define("register_time", true);
+    PERMISSION_LEVEL = COMMON_BUILDER.comment("the permission level required for all commands").defineInRange("permission_level", 2, 0, 4);
+
+    COMMON_BUILDER.push("time commands");
+
+    DAY_LENGTH = COMMON_BUILDER.comment("the length of a day in ticks [default: 24,000]").defineInRange("day_length", 24000L, 0, Long.MAX_VALUE);
+    NIGHT_TIME = COMMON_BUILDER.comment("the value of 'night', i.e., when you can sleep in a bed [default: 12542]").defineInRange("night_time", 12010, 0, Integer.MAX_VALUE);
+    MIDNIGHT_TIME = COMMON_BUILDER.comment("the value of midnight [default: 18000]").defineInRange("midnight_time", 18000, 0, Integer.MAX_VALUE);
+    MORNING_TIME = COMMON_BUILDER.comment("the value of 'morning', i.e., when you wake up [default: 0").defineInRange("morning_time", 0, 0, Integer.MAX_VALUE);
+    SUNSET_TIME = COMMON_BUILDER.comment("the value of sunset [default: 12000]").defineInRange("sunset_time", 12000, 0, Integer.MAX_VALUE);
+    DAWN_TIME = COMMON_BUILDER.comment("the value of sunrise [default: 23000]").defineInRange("dawn_time", 23000, 0, Integer.MAX_VALUE);
+    MIDDAY_TIME = COMMON_BUILDER.comment("the value of midday or noon [default: 6000]").defineInRange("midday_time", 6000, 0, Integer.MAX_VALUE);
+    COMMON_BUILDER.pop();
     COMMON_BUILDER.pop();
     COMMON_CONFIG = COMMON_BUILDER.build();
   }
