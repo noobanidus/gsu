@@ -19,29 +19,31 @@ public class ConfigManager {
   public static ForgeConfigSpec COMMON_CONFIG;
 
   // Potion effects
-  private static ForgeConfigSpec.DoubleValue EXPLOSION_SIZE;
-  private static ForgeConfigSpec.IntValue DAMAGE_AMOUNT;
-  private static ForgeConfigSpec.DoubleValue DAMAGE_CHANCE;
-  private static ForgeConfigSpec.BooleanValue NICE_MODE;
-  private static ForgeConfigSpec.IntValue FUMBLE_CHANCE;
-  private static ForgeConfigSpec.IntValue DRUMBLE_CHANCE;
-  private static ForgeConfigSpec.BooleanValue EFFECTS_PERSIST;
-  private static ForgeConfigSpec.ConfigValue<String> EXPLOSION_MODE;
-  private static ForgeConfigSpec.BooleanValue HIDE_PARTICLES;
+  private static final ForgeConfigSpec.DoubleValue EXPLOSION_SIZE;
+  private static final ForgeConfigSpec.IntValue DAMAGE_AMOUNT;
+  private static final ForgeConfigSpec.DoubleValue DAMAGE_CHANCE;
+  private static final ForgeConfigSpec.BooleanValue NICE_MODE;
+  private static final ForgeConfigSpec.IntValue FUMBLE_CHANCE;
+  private static final ForgeConfigSpec.IntValue DRUMBLE_CHANCE;
+  private static final ForgeConfigSpec.BooleanValue EFFECTS_PERSIST;
+  private static final ForgeConfigSpec.ConfigValue<String> EXPLOSION_MODE;
+  private static final ForgeConfigSpec.BooleanValue HIDE_PARTICLES;
+  private static final ForgeConfigSpec.DoubleValue KNOCKBACK_AMOUNT;
+  private static final ForgeConfigSpec.DoubleValue KNOCKUP_AMOUNT;
 
   // Command options
-  private static ForgeConfigSpec.BooleanValue REGISTER_TIME;
-  private static ForgeConfigSpec.BooleanValue REGISTER_POTION;
-  private static ForgeConfigSpec.IntValue PERMISSION_LEVEL;
+  private static final ForgeConfigSpec.BooleanValue REGISTER_TIME;
+  private static final ForgeConfigSpec.BooleanValue REGISTER_POTION;
+  private static final ForgeConfigSpec.IntValue PERMISSION_LEVEL;
 
   // Time values
-  private static ForgeConfigSpec.LongValue DAY_LENGTH;
-  private static ForgeConfigSpec.IntValue MIDNIGHT_TIME;
-  private static ForgeConfigSpec.IntValue NIGHT_TIME;
-  private static ForgeConfigSpec.IntValue MORNING_TIME;
-  private static ForgeConfigSpec.IntValue SUNSET_TIME;
-  private static ForgeConfigSpec.IntValue DAWN_TIME;
-  private static ForgeConfigSpec.IntValue MIDDAY_TIME;
+  private static final ForgeConfigSpec.LongValue DAY_LENGTH;
+  private static final ForgeConfigSpec.IntValue MIDNIGHT_TIME;
+  private static final ForgeConfigSpec.IntValue NIGHT_TIME;
+  private static final ForgeConfigSpec.IntValue MORNING_TIME;
+  private static final ForgeConfigSpec.IntValue SUNSET_TIME;
+  private static final ForgeConfigSpec.IntValue DAWN_TIME;
+  private static final ForgeConfigSpec.IntValue MIDDAY_TIME;
 
   public static boolean getEffectsPersist() {
     return EFFECTS_PERSIST.get();
@@ -94,6 +96,8 @@ public class ConfigManager {
     DAMAGE_CHANCE = COMMON_BUILDER.comment("the chance as a percent per tick of the potion effect that a tool or sword will take durability damage").defineInRange("durability_chance", 0.015, 0, Double.MAX_VALUE);
     NICE_MODE = COMMON_BUILDER.comment("whether or not crumble will damage items at or below 10 durability").define("nice_mode", true);
     EFFECTS_PERSIST = COMMON_BUILDER.comment("whether or not potion effects given by bees should persist through death").define("effects_persist", true);
+    KNOCKBACK_AMOUNT = COMMON_BUILDER.comment("the amount of knockback that should be added to an entity's attacks").defineInRange("knockback", 5.0, 0.0, 5.0);
+    KNOCKUP_AMOUNT = COMMON_BUILDER.comment("the amount of knockup that should be added to an entity's attacks").defineInRange("knockup", 2.5, 0.0, 5.0);
     HIDE_PARTICLES = COMMON_BUILDER.comment("whether or not potion effects should show particles").define("hide_particles", false);
     COMMON_BUILDER.pop();
     COMMON_BUILDER.push("commands");
@@ -158,6 +162,14 @@ public class ConfigManager {
 
   public static int getMiddayTime() {
     return MIDDAY_TIME.get();
+  }
+
+  public static double getKnockbackAmount() {
+    return KNOCKBACK_AMOUNT.get();
+  }
+
+  public static double getKnockupAmount () {
+    return KNOCKUP_AMOUNT.get();
   }
 
   public static void loadConfig(ForgeConfigSpec spec, Path path) {

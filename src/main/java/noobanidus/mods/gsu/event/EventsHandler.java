@@ -7,6 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import noobanidus.mods.gsu.GSU;
 import noobanidus.mods.gsu.config.ConfigManager;
+import noobanidus.mods.gsu.effects.SimpleEffect;
 
 import java.util.*;
 
@@ -18,13 +19,14 @@ public class EventsHandler {
   public static void playerClone(PlayerEvent.Clone event) {
     if (ConfigManager.getEffectsPersist()) {
       PlayerEntity original = event.getOriginal();
-      PlayerEntity newPlayer = event.getPlayer();
       Collection<EffectInstance> instance = original.getActivePotionEffects();
       if (!instance.isEmpty()) {
         List<EffectInstance> map = potionClone.computeIfAbsent(original.getUniqueID(), (k) -> new ArrayList<>());
         for (EffectInstance effect : original.getActivePotionEffects()) {
-          EffectInstance copy = new EffectInstance(effect.getPotion(), effect.getDuration(), effect.getAmplifier());
-          map.add(copy);
+          if (effect.getPotion() instanceof SimpleEffect) {
+            EffectInstance copy = new EffectInstance(effect.getPotion(), effect.getDuration(), effect.getAmplifier());
+            map.add(copy);
+          }
         }
       }
     }

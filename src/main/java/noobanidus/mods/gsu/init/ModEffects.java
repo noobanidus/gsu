@@ -1,8 +1,11 @@
 package noobanidus.mods.gsu.init;
 
 import com.tterrag.registrate.util.entry.RegistryEntry;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
+import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.effects.*;
 
 import static noobanidus.mods.gsu.GSU.REGISTRATE;
@@ -24,6 +27,12 @@ public class ModEffects {
   public static final RegistryEntry<ThimbleEffect> THIMBLE = REGISTRATE.effect("thimble", ThimbleEffect::new).register();
 
   public static final RegistryEntry<JumbleEffect> JUMBLE = REGISTRATE.effect("jumble", JumbleEffect::new).register();
+
+  private static final String KNOCKBACK_MODIFIER = "135f711e-33b6-457f-8c40-a5abc8c47a5e";
+
+  public static final RegistryEntry<Effect> KNOCKBACK = REGISTRATE.effect("knockback", () -> new SimpleEffect(EffectType.BENEFICIAL, 0x000000, true).addAttributesModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager.getKnockbackAmount(), AttributeModifier.Operation.ADDITION)).register();
+
+  public static final RegistryEntry<Effect> KNOCKUP = REGISTRATE.effect("knockup", () -> new SimpleEffect(EffectType.BENEFICIAL, 0x000000, true).addAttributesModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager.getKnockupAmount(), AttributeModifier.Operation.ADDITION)).register();
 
   public static void load() {
   }
