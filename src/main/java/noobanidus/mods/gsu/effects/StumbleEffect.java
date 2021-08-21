@@ -10,7 +10,7 @@ import noobanidus.mods.gsu.init.ModBlocks;
 
 import java.util.Random;
 
-public class StumbleEffect extends Effect  {
+public class StumbleEffect extends SimpleEffect  {
   private static final Random rand = new Random();
 
   public StumbleEffect() {

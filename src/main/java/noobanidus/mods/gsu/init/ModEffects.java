@@ -9,7 +9,7 @@ import static noobanidus.mods.gsu.GSU.REGISTRATE;
 
 public class ModEffects {
   public static final RegistryEntry<DyingEffect> DYING = REGISTRATE.effect("dying", DyingEffect::new).register();
-  public static final RegistryEntry<SimpleEffect> IMMORTAL = REGISTRATE.effect("immortal", () -> new SimpleEffect(EffectType.NEUTRAL, 0xffffff)).register();
+  public static final RegistryEntry<SimpleEffect> IMMORTAL = REGISTRATE.effect("immortal", () -> new SimpleEffect(EffectType.NEUTRAL, 0xffffff, true)).register();
   public static final RegistryEntry<DyingEffect> IMMORTAL_DYING = REGISTRATE.effect("immortal_dying", DyingEffect::new).register();
   public static final RegistryEntry<FumbleEffect> FUMBLE = REGISTRATE.effect("fumble", FumbleEffect::new).register();
   public static final RegistryEntry<ExplosiveEffect> EXPLOSIVE = REGISTRATE.effect("explosive", ExplosiveEffect::new).register();

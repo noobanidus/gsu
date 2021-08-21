@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "noobanidus.mods.gsu.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "gsu.refmap.json",
+  "mixins": [
+    "MixinEffectInstance"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

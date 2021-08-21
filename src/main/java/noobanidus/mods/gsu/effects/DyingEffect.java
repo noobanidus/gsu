@@ -10,9 +10,9 @@ import net.minecraft.util.DamageSource;
 import java.util.Collections;
 import java.util.List;
 
-public class DyingEffect extends Effect {
+public class DyingEffect extends SimpleEffect {
   public DyingEffect() {
-    super(EffectType.NEUTRAL, 0xffffff);
+    super(EffectType.NEUTRAL, 0xffffff, true);
   }
 
   @Override

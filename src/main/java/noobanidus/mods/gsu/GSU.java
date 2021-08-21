@@ -13,8 +13,10 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import noobanidus.libs.noobutil.registrate.CustomRegistrate;
 import noobanidus.mods.gsu.commands.CommandPotionId;
 import noobanidus.mods.gsu.config.ConfigManager;
+import noobanidus.mods.gsu.init.ModBlocks;
 import noobanidus.mods.gsu.init.ModEffects;
 import noobanidus.mods.gsu.init.ModSounds;
+import noobanidus.mods.gsu.init.ModTiles;
 import noobanidus.mods.gsu.setup.ClientInit;
 import noobanidus.mods.gsu.setup.CommonSetup;
 import org.apache.logging.log4j.LogManager;
@@ -40,6 +42,8 @@ public class GSU {
 
     ModSounds.load();
     ModEffects.load();
+    ModTiles.load();
+    ModBlocks.load();
   }
 
   @SubscribeEvent

@@ -27,6 +27,7 @@ public class ConfigManager {
   private static ForgeConfigSpec.IntValue DRUMBLE_CHANCE;
   private static ForgeConfigSpec.BooleanValue EFFECTS_PERSIST;
   private static ForgeConfigSpec.ConfigValue<String> EXPLOSION_MODE;
+  private static ForgeConfigSpec.BooleanValue HIDE_PARTICLES;
 
   // Command options
   private static ForgeConfigSpec.BooleanValue REGISTER_TIME;
@@ -83,17 +84,17 @@ public class ConfigManager {
   }
 
   static {
-    Set<String> MODE_TYPES = new HashSet<>();
-    MODE_TYPES.addAll(Arrays.asList("none", "break", "destroy"));
+    Set<String> MODE_TYPES = new HashSet<>(Arrays.asList("none", "break", "destroy"));
     COMMON_BUILDER.push("effects");
     EXPLOSION_SIZE = COMMON_BUILDER.comment("the size of the explosion caused by the explosive effect").defineInRange("explosion_size", 2.0, 0, Double.MAX_VALUE);
-    EXPLOSION_MODE = COMMON_BUILDER.comment("the type of explosion mode for blocks  options: NONE, BREAK, DESTROY. none does nothing, break breaks blocks, destroy breaks & destroys blocks.").define("explosion_mode", "break", (o) -> MODE_TYPES.contains(o.toString().toLowerCase(Locale.ROOT)));
+    EXPLOSION_MODE = COMMON_BUILDER.comment("the type of explosion mode for blocks  options: NONE, BREAK, DESTROY. none does nothing, break breaks blocks, destroy breaks & destroys blocks.").define("explosion_mode", "break", (o) -> o != null && MODE_TYPES.contains(o.toString().toLowerCase(Locale.ROOT)));
     FUMBLE_CHANCE = COMMON_BUILDER.comment("the chance of dropping an item per tick, expressed as 1 in X").defineInRange("fumble_chance", 24, 0, Integer.MAX_VALUE);
     DRUMBLE_CHANCE = COMMON_BUILDER.comment("the chance of being granted slowness x while under the effects of the drumble debuff, expressed as 1 in X").defineInRange("fumble_chance", 30, 0, Integer.MAX_VALUE);
     DAMAGE_AMOUNT = COMMON_BUILDER.comment("the maximum amount of durability damage applied (randomly from 1 to X)").defineInRange("durability_damage", 3, 0, Integer.MAX_VALUE);
     DAMAGE_CHANCE = COMMON_BUILDER.comment("the chance as a percent per tick of the potion effect that a tool or sword will take durability damage").defineInRange("durability_chance", 0.015, 0, Double.MAX_VALUE);
     NICE_MODE = COMMON_BUILDER.comment("whether or not crumble will damage items at or below 10 durability").define("nice_mode", true);
     EFFECTS_PERSIST = COMMON_BUILDER.comment("whether or not potion effects given by bees should persist through death").define("effects_persist", true);
+    HIDE_PARTICLES = COMMON_BUILDER.comment("whether or not potion effects should show particles").define("hide_particles", false);
     COMMON_BUILDER.pop();
     COMMON_BUILDER.push("commands");
 
@@ -113,6 +114,50 @@ public class ConfigManager {
     COMMON_BUILDER.pop();
     COMMON_BUILDER.pop();
     COMMON_CONFIG = COMMON_BUILDER.build();
+  }
+
+  public static boolean getHideParticles() {
+    return HIDE_PARTICLES.get();
+  }
+
+  public static boolean getRegisterTime() {
+    return REGISTER_TIME.get();
+  }
+
+  public static boolean getRegisterPotion() {
+    return REGISTER_POTION.get();
+  }
+
+  public static int getPermissionLevel() {
+    return PERMISSION_LEVEL.get();
+  }
+
+  public static Long getDayLength() {
+    return DAY_LENGTH.get();
+  }
+
+  public static int getMidnightTime() {
+    return MIDNIGHT_TIME.get();
+  }
+
+  public static int getNightTime() {
+    return NIGHT_TIME.get();
+  }
+
+  public static int getMorningTime() {
+    return MORNING_TIME.get();
+  }
+
+  public static int getSunsetTime() {
+    return SUNSET_TIME.get();
+  }
+
+  public static int getDawnTime() {
+    return DAWN_TIME.get();
+  }
+
+  public static int getMiddayTime() {
+    return MIDDAY_TIME.get();
   }
 
   public static void loadConfig(ForgeConfigSpec spec, Path path) {

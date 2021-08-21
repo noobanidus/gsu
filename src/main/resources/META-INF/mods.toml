@@ -15,7 +15,7 @@ Provides a series of potions, commands, enchantments and other effects for Twitc
 [[dependencies.gsu]]
     modId="forge"
     mandatory=true
-    versionRange="[36,)"
+    versionRange="[36.2,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.gsu]]

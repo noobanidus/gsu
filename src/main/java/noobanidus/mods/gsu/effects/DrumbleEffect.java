@@ -10,7 +10,7 @@ import noobanidus.mods.gsu.config.ConfigManager;
 
 import java.util.Random;
 
-public class DrumbleEffect extends Effect {
+public class DrumbleEffect extends SimpleEffect {
   private static final Random rand = new Random();
 
   public DrumbleEffect() {

@@ -10,7 +10,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 
 import java.util.Random;
 
-public class ThimbleEffect extends Effect  {
+public class ThimbleEffect extends SimpleEffect  {
   private static final Random rand = new Random();
 
   public ThimbleEffect() {
