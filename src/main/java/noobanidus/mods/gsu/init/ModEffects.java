@@ -34,7 +34,7 @@ public class ModEffects {
 
   public static final RegistryEntry<Effect> KNOCKUP = REGISTRATE.effect("knockup", () -> new SimpleEffect(EffectType.BENEFICIAL, 0x000000, true).addAttributesModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager.getKnockupAmount(), AttributeModifier.Operation.ADDITION)).register();
 
-  public static final RegistryEntry<SimpleEffect> CACTUS_SHIELD = REGISTRATE.effect("cactus_shield", () -> new SimpleEffect(EffectType.BENEFICIAL, 0x237543)).register();
+  public static final RegistryEntry<SimpleEffect> CACTUS_SHIELD = REGISTRATE.effect("cactus_shield", () -> new SimpleEffect(EffectType.BENEFICIAL, 0x237543, true)).register();
 
   public static void load() {
   }
