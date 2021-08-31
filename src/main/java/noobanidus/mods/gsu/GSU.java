@@ -11,6 +11,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import noobanidus.libs.noobutil.registrate.CustomRegistrate;
+import noobanidus.mods.gsu.commands.CommandNight;
 import noobanidus.mods.gsu.commands.CommandPotionId;
 import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.init.ModBlocks;
@@ -49,5 +50,6 @@ public class GSU {
   @SubscribeEvent
   public static void commandRegister(RegisterCommandsEvent event) {
     CommandPotionId.register(event.getDispatcher());
+    CommandNight.register(event.getDispatcher());
   }
 }

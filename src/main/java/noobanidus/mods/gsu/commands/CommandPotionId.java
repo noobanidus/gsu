@@ -13,7 +13,7 @@ public class CommandPotionId {
     if (ConfigManager.getRegisterPotion()) {
       dispatcher.register(Commands.literal("potion_id").requires(o -> o.hasPermissionLevel(ConfigManager.getPermissionLevel())).then(Commands.argument("effect", PotionArgument.mobEffect()).executes(c -> {
         Effect effect = PotionArgument.getMobEffect(c, "effect");
-        int potion_id = Effect.getId(effect);
+        byte potion_id = (byte)Effect.getId(effect);
         c.getSource().sendFeedback(new StringTextComponent("Id of `" + effect.getRegistryName().toString() + "` in this environment is: " + potion_id), true);
         return 1;
       })));
