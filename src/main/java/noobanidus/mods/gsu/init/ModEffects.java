@@ -15,7 +15,8 @@ public class ModEffects {
   public static final RegistryEntry<SimpleEffect> IMMORTAL = REGISTRATE.effect("immortal", () -> new SimpleEffect(EffectType.NEUTRAL, 0xffffff, true)).register();
   public static final RegistryEntry<DyingEffect> IMMORTAL_DYING = REGISTRATE.effect("immortal_dying", DyingEffect::new).register();
   public static final RegistryEntry<FumbleEffect> FUMBLE = REGISTRATE.effect("fumble", FumbleEffect::new).register();
-  public static final RegistryEntry<ExplosiveEffect> EXPLOSIVE = REGISTRATE.effect("explosive", ExplosiveEffect::new).register();
+  public static final RegistryEntry<InstantExplosiveEffect> EXPLOSIVE = REGISTRATE.effect("explosive", InstantExplosiveEffect::new).register();
+  public static final RegistryEntry<DelayedExplosiveEffect> DELAYED_EXPLOSIVE = REGISTRATE.effect("delayed_explosive", DelayedExplosiveEffect::new).register();
   public static final RegistryEntry<StumbleEffect> STUMBLE = REGISTRATE.effect("stumble", StumbleEffect::new).register();
 
   public static final RegistryEntry<CrumbleEffect> CRUMBLE = REGISTRATE.effect("crumble", CrumbleEffect::new).register();

@@ -8,8 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import noobanidus.libs.noobutil.tiles.DecayingTileEntity;
 import noobanidus.mods.gsu.init.ModTiles;
-import noobanidus.mods.gsu.tiles.DecayingTileEntity;
 
 import javax.annotation.Nullable;
 
