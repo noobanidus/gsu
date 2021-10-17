@@ -31,9 +31,9 @@ public class ModEffects {
 
   private static final String KNOCKBACK_MODIFIER = "135f711e-33b6-457f-8c40-a5abc8c47a5e";
 
-  public static final RegistryEntry<Effect> KNOCKBACK = REGISTRATE.effect("knockback", () -> new SimpleEffect(EffectType.BENEFICIAL, 0x000000, true).addAttributesModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager.getKnockbackAmount(), AttributeModifier.Operation.ADDITION)).register();
+  public static final RegistryEntry<Effect> KNOCKBACK = REGISTRATE.effect("knockback", () -> new SimpleEffect(EffectType.BENEFICIAL, 0x000000, true).addAttributeModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager.getKnockbackAmount(), AttributeModifier.Operation.ADDITION)).register();
 
-  public static final RegistryEntry<Effect> KNOCKUP = REGISTRATE.effect("knockup", () -> new SimpleEffect(EffectType.BENEFICIAL, 0x000000, true).addAttributesModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager.getKnockupAmount(), AttributeModifier.Operation.ADDITION)).register();
+  public static final RegistryEntry<Effect> KNOCKUP = REGISTRATE.effect("knockup", () -> new SimpleEffect(EffectType.BENEFICIAL, 0x000000, true).addAttributeModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager.getKnockupAmount(), AttributeModifier.Operation.ADDITION)).register();
 
   public static final RegistryEntry<SimpleEffect> CACTUS_SHIELD = REGISTRATE.effect("cactus_shield", () -> new SimpleEffect(EffectType.BENEFICIAL, 0x237543, true)).register();
 

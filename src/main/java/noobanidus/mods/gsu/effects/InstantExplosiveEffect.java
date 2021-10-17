@@ -14,10 +14,10 @@ public class InstantExplosiveEffect extends InstantEffect {
   }
 
   @Override
-  public void performEffect(LivingEntity entity, int amplifier) {
-    if (entity instanceof PlayerEntity && !entity.world.isRemote) {
+  public void applyEffectTick(LivingEntity entity, int amplifier) {
+    if (entity instanceof PlayerEntity && !entity.level.isClientSide) {
       PlayerEntity player = (PlayerEntity) entity;
-      player.world.createExplosion(player, DamageSource.causeExplosionDamage(player), null, player.getPosX(), player.getPosY(), player.getPosZ(), (float) (double) ConfigManager.getExplosionSize(), false, ConfigManager.getExplosionMode());
+      player.level.explode(player, DamageSource.explosion(player), null, player.getX(), player.getY(), player.getZ(), (float) (double) ConfigManager.getExplosionSize(), false, ConfigManager.getExplosionMode());
     }
   }
 }

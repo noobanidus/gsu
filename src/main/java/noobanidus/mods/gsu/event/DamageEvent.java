@@ -16,11 +16,11 @@ public class DamageEvent {
   private static void livingEvent(LivingEvent event, DamageSource source) {
     LivingEntity entity = event.getEntityLiving();
     if (source != DamageSource.OUT_OF_WORLD) {
-      if (entity.getActivePotionEffect(ModEffects.IMMORTAL.get()) != null || entity.getActivePotionEffect(ModEffects.IMMORTAL_DYING.get()) != null) {
+      if (entity.getEffect(ModEffects.IMMORTAL.get()) != null || entity.getEffect(ModEffects.IMMORTAL_DYING.get()) != null) {
         event.setCanceled(true);
         return;
       }
-      if (source == DamageSource.CACTUS && entity.getActivePotionEffect(ModEffects.CACTUS_SHIELD.get()) != null) {
+      if (source == DamageSource.CACTUS && entity.getEffect(ModEffects.CACTUS_SHIELD.get()) != null) {
         event.setCanceled(true);
       }
     }
@@ -44,18 +44,18 @@ public class DamageEvent {
   @SubscribeEvent
   public static void onKnockup(LivingKnockBackEvent event) {
     LivingEntity living = event.getEntityLiving();
-    if (living.getRevengeTarget() instanceof MobEntity) {
-      MobEntity attacker = (MobEntity) living.getRevengeTarget();
-      if (living.equals(attacker.getAttackTarget()) && attacker.getActivePotionEffect(ModEffects.KNOCKUP.get()) != null) {
+    if (living.getLastHurtByMob() instanceof MobEntity) {
+      MobEntity attacker = (MobEntity) living.getLastHurtByMob();
+      if (living.equals(attacker.getTarget()) && attacker.getEffect(ModEffects.KNOCKUP.get()) != null) {
         event.setCanceled(true);
         float strength = event.getStrength();
         double ratioX = event.getRatioX();
         strength = (float) ((double) strength * (1.0D - living.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE)));
         if (!(strength <= 0.0F)) {
-          living.isAirBorne = true;
-          Vector3d vector3d = living.getMotion();
+          living.hasImpulse = true;
+          Vector3d vector3d = living.getDeltaMovement();
           Vector3d vector3d1 = (new Vector3d(0.0d, ratioX, 0.0d)).normalize().scale(strength);
-          living.setMotion(vector3d.x, vector3d1.y, vector3d.z);
+          living.setDeltaMovement(vector3d.x, vector3d1.y, vector3d.z);
         }
       }
     }

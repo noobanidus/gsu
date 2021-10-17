@@ -11,8 +11,9 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import noobanidus.libs.noobutil.registrate.CustomRegistrate;
-import noobanidus.mods.gsu.commands.CommandNight;
-import noobanidus.mods.gsu.commands.CommandPotionId;
+import noobanidus.mods.gsu.commands.NightCommand;
+import noobanidus.mods.gsu.commands.PotionIdCommand;
+import noobanidus.mods.gsu.commands.CumulativeEffectCommand;
 import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.init.ModBlocks;
 import noobanidus.mods.gsu.init.ModEffects;
@@ -49,7 +50,8 @@ public class GSU {
 
   @SubscribeEvent
   public static void commandRegister(RegisterCommandsEvent event) {
-    CommandPotionId.register(event.getDispatcher());
-    CommandNight.register(event.getDispatcher());
+    CumulativeEffectCommand.register(event.getDispatcher());
+    PotionIdCommand.register(event.getDispatcher());
+    NightCommand.register(event.getDispatcher());
   }
 }

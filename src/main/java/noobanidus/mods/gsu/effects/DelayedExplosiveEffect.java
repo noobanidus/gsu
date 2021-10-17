@@ -17,10 +17,10 @@ public class DelayedExplosiveEffect extends SimpleEffect {
   }
 
   @Override
-  public void removeAttributesModifiersFromEntity(LivingEntity entity, AttributeModifierManager attributeMapIn, int amplifier) {
-    super.removeAttributesModifiersFromEntity(entity, attributeMapIn, amplifier);
-    if (!entity.world.isRemote) {
-      entity.world.createExplosion(entity, DamageSource.causeExplosionDamage(entity), null, entity.getPosX(), entity.getPosY(), entity.getPosZ(), (float) (double) ConfigManager.getExplosionSize(), false, ConfigManager.getExplosionMode());
+  public void removeAttributeModifiers(LivingEntity entity, AttributeModifierManager attributeMapIn, int amplifier) {
+    super.removeAttributeModifiers(entity, attributeMapIn, amplifier);
+    if (!entity.level.isClientSide) {
+      entity.level.explode(entity, DamageSource.explosion(entity), null, entity.getX(), entity.getY(), entity.getZ(), (float) (double) ConfigManager.getExplosionSize(), false, ConfigManager.getExplosionMode());
     }
   }
 }

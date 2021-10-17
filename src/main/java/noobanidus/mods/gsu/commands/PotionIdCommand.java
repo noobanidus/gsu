@@ -8,13 +8,13 @@ import net.minecraft.potion.Effect;
 import net.minecraft.util.text.StringTextComponent;
 import noobanidus.mods.gsu.config.ConfigManager;
 
-public class CommandPotionId {
+public class PotionIdCommand {
   public static void register(CommandDispatcher<CommandSource> dispatcher) {
     if (ConfigManager.getRegisterPotion()) {
-      dispatcher.register(Commands.literal("potion_id").requires(o -> o.hasPermissionLevel(ConfigManager.getPermissionLevel())).then(Commands.argument("effect", PotionArgument.mobEffect()).executes(c -> {
-        Effect effect = PotionArgument.getMobEffect(c, "effect");
+      dispatcher.register(Commands.literal("potion_id").requires(o -> o.hasPermission(ConfigManager.getPermissionLevel())).then(Commands.argument("effect", PotionArgument.effect()).executes(c -> {
+        Effect effect = PotionArgument.getEffect(c, "effect");
         byte potion_id = (byte)Effect.getId(effect);
-        c.getSource().sendFeedback(new StringTextComponent("Id of `" + effect.getRegistryName().toString() + "` in this environment is: " + potion_id), true);
+        c.getSource().sendSuccess(new StringTextComponent("Id of `" + effect.getRegistryName().toString() + "` in this environment is: " + potion_id), true);
         return 1;
       })));
     }

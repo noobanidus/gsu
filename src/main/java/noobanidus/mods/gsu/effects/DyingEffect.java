@@ -16,8 +16,8 @@ public class DyingEffect extends SimpleEffect {
   }
 
   @Override
-  public void removeAttributesModifiersFromEntity(LivingEntity p_111187_1_, AttributeModifierManager p_111187_2_, int p_111187_3_) {
-    p_111187_1_.attackEntityFrom(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
+  public void removeAttributeModifiers(LivingEntity pLivingEntity, AttributeModifierManager pAttributeMap, int pAmplifier) {
+    pLivingEntity.hurt(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
   }
 
   @Override

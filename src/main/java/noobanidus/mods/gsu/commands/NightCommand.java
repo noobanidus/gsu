@@ -9,7 +9,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.ServerWorldInfo;
 import noobanidus.mods.gsu.config.ConfigManager;
 
-public class CommandNight {
+public class NightCommand {
   public static void register(CommandDispatcher<CommandSource> dispatcher) {
     if (ConfigManager.getRegisterTime()) {
       registerCommand(dispatcher, "midnight", ConfigManager.getMidnightTime());
@@ -22,11 +22,11 @@ public class CommandNight {
   }
 
   private static void registerCommand (CommandDispatcher<CommandSource> dispatcher, String command, int value) {
-    dispatcher.register(Commands.literal(command).requires(o -> o.hasPermissionLevel(ConfigManager.getPermissionLevel())).executes(c -> {
+    dispatcher.register(Commands.literal(command).requires(o -> o.hasPermission(ConfigManager.getPermissionLevel())).executes(c -> {
       MinecraftServer server = c.getSource().getServer();
-      ServerWorld world = server.getWorld(World.OVERWORLD);
+      ServerWorld world = server.getLevel(World.OVERWORLD);
       if (world != null) {
-        ServerWorldInfo info = (ServerWorldInfo) world.getWorldInfo();
+        ServerWorldInfo info = (ServerWorldInfo) world.getLevelData();
         long dayTime = info.getDayTime();
         long newTime = (dayTime + ConfigManager.getDayLength());
         newTime -= newTime % ConfigManager.getDayLength();

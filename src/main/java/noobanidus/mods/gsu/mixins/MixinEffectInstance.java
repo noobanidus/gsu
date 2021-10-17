@@ -16,15 +16,15 @@ public class MixinEffectInstance {
   private boolean checkedParticles = false;
 
   @Shadow
-  private boolean showParticles;
+  private boolean visible;
 
-  @Inject(method = "doesShowParticles", at = @At(value="HEAD"))
-  protected void injectShowParticles(CallbackInfoReturnable<Boolean> cir) {
+  @Inject(method = "isVisible", at = @At(value="HEAD"))
+  protected void GSUinjectIsVisible(CallbackInfoReturnable<Boolean> cir) {
     if (!checkedParticles) {
-      Effect effect = ((EffectInstance) (Object) this).getPotion();
+      Effect effect = ((EffectInstance) (Object) this).getEffect();
       if (effect instanceof SimpleEffect) {
         if (((SimpleEffect) effect).hideParticles()) {
-          this.showParticles = false;
+          this.visible = false;
         }
       }
       checkedParticles = true;
