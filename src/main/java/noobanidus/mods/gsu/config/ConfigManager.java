@@ -97,7 +97,7 @@ public class ConfigManager {
     NICE_MODE = COMMON_BUILDER.comment("whether or not crumble will damage items at or below 10 durability").define("nice_mode", true);
     EFFECTS_PERSIST = COMMON_BUILDER.comment("whether or not potion effects given by bees should persist through death").define("effects_persist", true);
     KNOCKBACK_AMOUNT = COMMON_BUILDER.comment("the amount of knockback that should be added to an entity's attacks").defineInRange("knockback", 5.0, 0.0, 5.0);
-    KNOCKUP_AMOUNT = COMMON_BUILDER.comment("the amount of knockup that should be added to an entity's attacks").defineInRange("knockup", 2.5, 0.0, 5.0);
+    KNOCKUP_AMOUNT = COMMON_BUILDER.comment("the amount of knockup that should be added to an entity's attacks").defineInRange("knockup", 1.8, 0.0, 5.0);
     HIDE_PARTICLES = COMMON_BUILDER.comment("whether or not potion effects should show particles").define("hide_particles", false);
     COMMON_BUILDER.pop();
     COMMON_BUILDER.push("commands");
