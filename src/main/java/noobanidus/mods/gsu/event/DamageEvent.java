@@ -73,7 +73,7 @@ public class DamageEvent {
         if (!(strength <= 0.0F)) {
           living.hasImpulse = true;
           Vector3d vector3d = living.getDeltaMovement();
-          living.setDeltaMovement(vector3d.x, strength, vector3d.z);
+          living.setDeltaMovement(vector3d.x, ConfigManager.getKnockupAmount(), vector3d.z);
         }
       }
     }
