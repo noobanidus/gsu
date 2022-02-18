@@ -1,14 +1,10 @@
-package noobanidus.mods.gsu.effects;
+package noobanidus.mods.gsu.effect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShieldItem;
-import net.minecraft.item.SwordItem;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
 import net.minecraftforge.items.CapabilityItemHandler;
 import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.init.ModSounds;
@@ -21,7 +17,7 @@ public class CrumbleEffect extends SimpleEffect {
   private static final Random rand = new Random();
 
   public CrumbleEffect() {
-    super(EffectType.HARMFUL, 0xa0814a);
+    super(MobEffectCategory.HARMFUL, 0xa0814a);
   }
 
   @Override
@@ -31,13 +27,14 @@ public class CrumbleEffect extends SimpleEffect {
 
   @Override
   public void applyEffectTick(LivingEntity entity, int amplifier) {
-    if (entity instanceof PlayerEntity) {
+    if (entity instanceof Player) {
       if (rand.nextDouble() <= ConfigManager.getDamageChance()) {
         List<ItemStack> tools = new ArrayList<>();
         entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(cap -> {
           for (int i = 0; i < cap.getSlots(); i++) {
             ItemStack inSlot = cap.getStackInSlot(i);
-            if ((!inSlot.getToolTypes().isEmpty() || inSlot.getItem() instanceof SwordItem || inSlot.getItem() instanceof ArmorItem) && inSlot.isDamageableItem()) {
+            // TODO: Improve this
+            if (inSlot.getItem() instanceof TieredItem && inSlot.isDamageableItem()) {
               if (ConfigManager.getNiceMode() && inSlot.getDamageValue() >= inSlot.getMaxDamage() + 10) {
                 continue;
               }
@@ -55,7 +52,7 @@ public class CrumbleEffect extends SimpleEffect {
           ItemStack tool = tools.get(rand.nextInt(tools.size()));
           tool.hurtAndBreak(rand.nextInt(Math.max(1, ConfigManager.getDamageAmount())) + 1, entity, (playerEntity) -> {
           });
-          entity.level.playSound(null, entity.blockPosition(), ModSounds.CRUMBLE.get(), SoundCategory.PLAYERS, 1f, 2f);
+          entity.level.playSound(null, entity.blockPosition(), ModSounds.CRUMBLE.get(), SoundSource.PLAYERS, 1f, 2f);
         }
       }
     }

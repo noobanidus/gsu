@@ -1,11 +1,10 @@
-package noobanidus.mods.gsu.effects;
+package noobanidus.mods.gsu.effect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
-import net.minecraft.potion.Effects;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import noobanidus.mods.gsu.config.ConfigManager;
 
 import java.util.Random;
@@ -14,7 +13,7 @@ public class DrumbleEffect extends SimpleEffect {
   private static final Random rand = new Random();
 
   public DrumbleEffect() {
-    super(EffectType.HARMFUL, 0x9c0000);
+    super(MobEffectCategory.HARMFUL, 0x9c0000);
   }
 
   @Override
@@ -28,8 +27,8 @@ public class DrumbleEffect extends SimpleEffect {
       entity.level.addParticle(ParticleTypes.END_ROD, entity.getRandomX(1.0), entity.getRandomY() + 0.5, entity.getRandomZ(1.0), 0, 0, 0);
     }
     if (!entity.level.isClientSide && rand.nextInt(ConfigManager.getDrumbleChance()) == 0) {
-      if (entity.getEffect(Effects.MOVEMENT_SLOWDOWN) == null) {
-        entity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 15, 10, false, false, true));
+      if (entity.getEffect(MobEffects.MOVEMENT_SLOWDOWN) == null) {
+        entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 15, 10, false, false, true));
       }
     }
   }

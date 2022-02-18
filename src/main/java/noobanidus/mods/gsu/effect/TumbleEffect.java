@@ -1,11 +1,10 @@
-package noobanidus.mods.gsu.effects;
+package noobanidus.mods.gsu.effect;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.effect.MobEffectCategory;
 
 public class TumbleEffect extends SimpleEffect  {
   public TumbleEffect() {
-    super(EffectType.HARMFUL, 0x532eca);
+    super(MobEffectCategory.HARMFUL, 0x532eca);
   }
 
   @Override

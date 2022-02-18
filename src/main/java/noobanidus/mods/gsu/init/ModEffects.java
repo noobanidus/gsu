@@ -1,18 +1,18 @@
 package noobanidus.mods.gsu.init;
 
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import noobanidus.mods.gsu.config.ConfigManager;
-import noobanidus.mods.gsu.effects.*;
+import noobanidus.mods.gsu.effect.*;
 
 import static noobanidus.mods.gsu.GSU.REGISTRATE;
 
 public class ModEffects {
   public static final RegistryEntry<DyingEffect> DYING = REGISTRATE.effect("dying", DyingEffect::new).register();
-  public static final RegistryEntry<SimpleEffect> IMMORTAL = REGISTRATE.effect("immortal", () -> new SimpleEffect(EffectType.NEUTRAL, 0xffffff, true)).register();
+  public static final RegistryEntry<SimpleEffect> IMMORTAL = REGISTRATE.effect("immortal", () -> new SimpleEffect(MobEffectCategory.NEUTRAL, 0xffffff, true)).register();
   public static final RegistryEntry<DyingEffect> IMMORTAL_DYING = REGISTRATE.effect("immortal_dying", DyingEffect::new).register();
   public static final RegistryEntry<FumbleEffect> FUMBLE = REGISTRATE.effect("fumble", FumbleEffect::new).register();
   public static final RegistryEntry<InstantExplosiveEffect> EXPLOSIVE = REGISTRATE.effect("explosive", InstantExplosiveEffect::new).register();
@@ -31,11 +31,11 @@ public class ModEffects {
 
   private static final String KNOCKBACK_MODIFIER = "135f711e-33b6-457f-8c40-a5abc8c47a5e";
 
-  public static final RegistryEntry<Effect> KNOCKBACK = REGISTRATE.effect("knockback", () -> new SimpleEffect(EffectType.BENEFICIAL, 0x000000, true).addAttributeModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager.getKnockbackAmount(), AttributeModifier.Operation.ADDITION)).register();
+  public static final RegistryEntry<MobEffect> KNOCKBACK = REGISTRATE.effect("knockback", () -> new SimpleEffect(MobEffectCategory.BENEFICIAL, 0x000000, true).addAttributeModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager.getKnockbackAmount(), AttributeModifier.Operation.ADDITION)).register();
 
-  public static final RegistryEntry<Effect> KNOCKUP = REGISTRATE.effect("knockup", () -> new SimpleEffect(EffectType.BENEFICIAL, 0x000000, true).addAttributeModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager.getKnockupAmount(), AttributeModifier.Operation.ADDITION)).register();
+  public static final RegistryEntry<MobEffect> KNOCKUP = REGISTRATE.effect("knockup", () -> new SimpleEffect(MobEffectCategory.BENEFICIAL, 0x000000, true).addAttributeModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager.getKnockupAmount(), AttributeModifier.Operation.ADDITION)).register();
 
-  public static final RegistryEntry<SimpleEffect> CACTUS_SHIELD = REGISTRATE.effect("cactus_shield", () -> new SimpleEffect(EffectType.BENEFICIAL, 0x237543, true)).register();
+  public static final RegistryEntry<SimpleEffect> CACTUS_SHIELD = REGISTRATE.effect("cactus_shield", () -> new SimpleEffect(MobEffectCategory.BENEFICIAL, 0x237543, true)).register();
 
   public static void load() {
   }

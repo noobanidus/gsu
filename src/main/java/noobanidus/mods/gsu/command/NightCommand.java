@@ -1,16 +1,16 @@
-package noobanidus.mods.gsu.commands;
+package noobanidus.mods.gsu.command;
 
 import com.mojang.brigadier.CommandDispatcher;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.ServerWorldInfo;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.PrimaryLevelData;
 import noobanidus.mods.gsu.config.ConfigManager;
 
 public class NightCommand {
-  public static void register(CommandDispatcher<CommandSource> dispatcher) {
+  public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
     if (ConfigManager.getRegisterTime()) {
       registerCommand(dispatcher, "midnight", ConfigManager.getMidnightTime());
       registerCommand(dispatcher, "night", ConfigManager.getNightTime());
@@ -21,12 +21,12 @@ public class NightCommand {
     }
   }
 
-  private static void registerCommand (CommandDispatcher<CommandSource> dispatcher, String command, int value) {
+  private static void registerCommand (CommandDispatcher<CommandSourceStack> dispatcher, String command, int value) {
     dispatcher.register(Commands.literal(command).requires(o -> o.hasPermission(ConfigManager.getPermissionLevel())).executes(c -> {
       MinecraftServer server = c.getSource().getServer();
-      ServerWorld world = server.getLevel(World.OVERWORLD);
+      ServerLevel world = server.getLevel(Level.OVERWORLD);
       if (world != null) {
-        ServerWorldInfo info = (ServerWorldInfo) world.getLevelData();
+        PrimaryLevelData info = (PrimaryLevelData) world.getLevelData();
         long dayTime = info.getDayTime();
         long newTime = (dayTime + ConfigManager.getDayLength());
         newTime -= newTime % ConfigManager.getDayLength();

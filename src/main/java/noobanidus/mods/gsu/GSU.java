@@ -11,14 +11,14 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import noobanidus.libs.noobutil.registrate.CustomRegistrate;
-import noobanidus.mods.gsu.commands.NightCommand;
-import noobanidus.mods.gsu.commands.PotionIdCommand;
-import noobanidus.mods.gsu.commands.CumulativeEffectCommand;
+import noobanidus.mods.gsu.command.CumulativeEffectCommand;
+import noobanidus.mods.gsu.command.NightCommand;
+import noobanidus.mods.gsu.command.PotionIdCommand;
 import noobanidus.mods.gsu.config.ConfigManager;
+import noobanidus.mods.gsu.init.ModBlockEntities;
 import noobanidus.mods.gsu.init.ModBlocks;
 import noobanidus.mods.gsu.init.ModEffects;
 import noobanidus.mods.gsu.init.ModSounds;
-import noobanidus.mods.gsu.init.ModTiles;
 import noobanidus.mods.gsu.setup.ClientInit;
 import noobanidus.mods.gsu.setup.CommonSetup;
 import org.apache.logging.log4j.LogManager;
@@ -44,7 +44,7 @@ public class GSU {
 
     ModSounds.load();
     ModEffects.load();
-    ModTiles.load();
+    ModBlockEntities.load();
     ModBlocks.load();
   }
 

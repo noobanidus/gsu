@@ -1,11 +1,11 @@
 package noobanidus.mods.gsu.event;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.MovementInput;
+import net.minecraft.client.player.Input;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.client.event.InputUpdateEvent;
+import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import noobanidus.mods.gsu.GSU;
@@ -15,19 +15,19 @@ import noobanidus.mods.gsu.init.ModEffects;
 public class ClientEventsHandler {
   @SubscribeEvent
   public static void tumbleHandler(EntityViewRenderEvent.CameraSetup event) {
-    PlayerEntity player = Minecraft.getInstance().player;
+    Player player = Minecraft.getInstance().player;
     if (player != null && player.getEffect(ModEffects.TUMBLE.get()) != null) {
       event.setRoll(180f);
     }
   }
 
   @SubscribeEvent
-  public static void onInput(InputUpdateEvent event) {
+  public static void onInput(MovementInputUpdateEvent event) {
     if (!event.getPlayer().hasEffect(ModEffects.JUMBLE.get())) {
       return;
     }
 
-    MovementInput input = event.getMovementInput();
+    Input input = event.getInput();
     boolean forwardKeyDown = input.up;
     boolean backKeyDown = input.down;
     boolean leftKeyDown = input.left;

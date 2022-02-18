@@ -1,7 +1,7 @@
 package noobanidus.mods.gsu.init;
 
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 
 import static noobanidus.mods.gsu.GSU.REGISTRATE;
 

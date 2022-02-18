@@ -1,11 +1,10 @@
-package noobanidus.mods.gsu.effects;
+package noobanidus.mods.gsu.effect;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.effect.MobEffectCategory;
 
 public class GenericEffect extends SimpleEffect  {
   public GenericEffect() {
-    super(EffectType.HARMFUL, 0x160a82);
+    super(MobEffectCategory.HARMFUL, 0x160a82);
   }
 
   @Override

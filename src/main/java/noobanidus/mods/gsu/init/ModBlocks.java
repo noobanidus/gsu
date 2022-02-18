@@ -1,9 +1,9 @@
 package noobanidus.mods.gsu.init;
 
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.ResourceLocation;
-import noobanidus.mods.gsu.blocks.CrawlBlock;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.Material;
+import noobanidus.mods.gsu.block.CrawlBlock;
 
 import static noobanidus.mods.gsu.GSU.REGISTRATE;
 

@@ -2,9 +2,10 @@ package noobanidus.mods.gsu.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
-import net.minecraft.world.Explosion;
+import net.minecraft.world.level.Explosion;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import noobanidus.mods.gsu.GSU;
 
 import java.nio.file.Path;
@@ -53,15 +54,15 @@ public class ConfigManager {
     return (float) (double) EXPLOSION_SIZE.get();
   }
 
-  public static Explosion.Mode getExplosionMode() {
+  public static Explosion.BlockInteraction getExplosionMode() {
     switch (EXPLOSION_MODE.get().toLowerCase(Locale.ROOT)) {
       default:
       case "none":
-        return Explosion.Mode.NONE;
+        return Explosion.BlockInteraction.NONE;
       case "break":
-        return Explosion.Mode.BREAK;
+        return Explosion.BlockInteraction.BREAK;
       case "destroy":
-        return Explosion.Mode.DESTROY;
+        return Explosion.BlockInteraction.DESTROY;
     }
   }
 
@@ -178,7 +179,7 @@ public class ConfigManager {
     spec.setConfig(configData);
   }
 
-  public static void configReloaded(ModConfig.Reloading event) {
+  public static void configReloaded(ModConfigEvent event) {
     if (event.getConfig().getType() == ModConfig.Type.COMMON) {
       COMMON_CONFIG.setConfig(event.getConfig().getConfigData());
       GSU.LOG.info("GSU config reloaded");
