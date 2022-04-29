@@ -4,9 +4,11 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "gsu.refmap.json",
   "mixins": [
-    "MixinEffectInstance"
+    "MixinEffectInstance",
+    "MixinEntity"
   ],
   "client": [
+    "MixinLivingRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,13 +1,20 @@
 package noobanidus.mods.gsu.event;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import noobanidus.mods.gsu.GSU;
+import noobanidus.mods.gsu.capability.SkinCapability;
+import noobanidus.mods.gsu.capability.SkinCapabilityProvider;
 import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.effects.SimpleEffect;
+import noobanidus.mods.gsu.network.Networking;
+import noobanidus.mods.gsu.network.SetSkin;
 
 import java.util.*;
 
@@ -43,6 +50,25 @@ public class EventsHandler {
         }
         potionClone.remove(player.getUUID());
       }
+    }
+  }
+
+  @SubscribeEvent
+  public static void attachCapbilities (AttachCapabilitiesEvent<Entity> event) {
+    if (ConfigManager.getEntitySet().contains(event.getObject().getType())) {
+      event.addCapability(SkinCapabilityProvider.IDENTIFIER, new SkinCapabilityProvider());
+    }
+  }
+
+  @SubscribeEvent
+  public static void startTracking (PlayerEvent.StartTracking event) {
+    Entity target = event.getTarget();
+    if (!target.level.isClientSide()) {
+    target.getCapability(SkinCapabilityProvider.SKIN_CAPABILITY).ifPresent(cap -> {
+      if (cap.getOverride() != null) {
+        Networking.sendTo(new SetSkin(target.getId(), cap.getOverride()), (ServerPlayerEntity) event.getPlayer());
+      }
+    });
     }
   }
 }
