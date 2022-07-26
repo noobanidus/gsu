@@ -12,11 +12,18 @@ public class SkinCapabilityStorage implements Capability.IStorage<SkinCapability
   @Nullable
   @Override
   public INBT writeNBT(Capability<SkinCapability> capability, SkinCapability instance, Direction side) {
-    return StringNBT.valueOf(instance.getOverride().toString());
+    if (instance.getOverride() != null) {
+      return StringNBT.valueOf(instance.getOverride().toString());
+    } else {
+      return StringNBT.valueOf("");
+    }
   }
 
   @Override
   public void readNBT(Capability<SkinCapability> capability, SkinCapability instance, Direction side, INBT nbt) {
-    instance.setOverride(new ResourceLocation(nbt.getAsString()));
+    String result = nbt.getAsString();
+    if (!result.isEmpty()) {
+      instance.setOverride(new ResourceLocation(result));
+    }
   }
 }
