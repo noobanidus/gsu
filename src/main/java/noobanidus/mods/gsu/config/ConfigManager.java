@@ -3,12 +3,9 @@ package noobanidus.mods.gsu.config;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.OwnerHurtByTargetGoal;
-import net.minecraft.entity.ai.goal.OwnerHurtTargetGoal;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.registries.ForgeRegistries;
 import noobanidus.mods.gsu.GSU;
@@ -37,7 +34,6 @@ public class ConfigManager {
   // Command options
   private static final ForgeConfigSpec.BooleanValue REGISTER_TIME;
   private static final ForgeConfigSpec.BooleanValue REGISTER_POTION;
-  private static final ForgeConfigSpec.BooleanValue REGISTER_GOAL;
   private static final ForgeConfigSpec.IntValue PERMISSION_LEVEL;
 
   // Time values
@@ -52,12 +48,7 @@ public class ConfigManager {
   // Capability injects
   private static final ForgeConfigSpec.ConfigValue<List<? extends String>> ENTITY_LIST;
 
-  private static final ForgeConfigSpec.ConfigValue<List<? extends String>> GOAL_ENTITY_LIST;
-  private static final ForgeConfigSpec.ConfigValue<List<? extends String>> GOAL_STRIP_LIST;
-
   private static Set<EntityType<?>> ENTITY_SET = null;
-  private static Set<EntityType<?>> GOAL_ENTITY_SET = null;
-  private static Set<Class<?>> GOAL_STRIP_SET = null;
 
   public static boolean getEffectsPersist() {
     return EFFECTS_PERSIST.get();
@@ -104,10 +95,6 @@ public class ConfigManager {
     COMMON_BUILDER.push("reskin");
     ENTITY_LIST = COMMON_BUILDER.comment("list of entities (minecraft:cow, etc) that will have the capacity to be reskinned via NBT").defineList("entity_list", Collections.singletonList("minecraft:cow"), o -> (o instanceof String) && ((String) o).contains(":"));
     COMMON_BUILDER.pop();
-    COMMON_BUILDER.push("goals");
-    GOAL_ENTITY_LIST = COMMON_BUILDER.comment("list of entities (minecraft:wolf, etc) that will have their goals trimmed").defineList("goal_entity_list", Collections.singletonList("minecraft:wolf"), o -> (o instanceof String) && ((String) o).contains(":"));
-    GOAL_STRIP_LIST = COMMON_BUILDER.comment("list of classes found via the /goal (, etc) that will be trimmed for specified entities").defineList("goal_strip_list", Arrays.asList(OwnerHurtByTargetGoal.class.toString(), OwnerHurtTargetGoal.class.toString()), o -> (o instanceof String));
-    COMMON_BUILDER.pop();
     COMMON_BUILDER.push("effects");
     EXPLOSION_SIZE = COMMON_BUILDER.comment("the size of the explosion caused by the explosive effect").defineInRange("explosion_size", 2.0, 0, Double.MAX_VALUE);
     EXPLOSION_MODE = COMMON_BUILDER.comment("the type of explosion mode for blocks  options: NONE, BREAK, DESTROY. none does nothing, break breaks blocks, destroy breaks & destroys blocks.").define("explosion_mode", "break", (o) -> o != null && MODE_TYPES.contains(o.toString().toLowerCase(Locale.ROOT)));
@@ -125,7 +112,6 @@ public class ConfigManager {
 
     REGISTER_POTION = COMMON_BUILDER.comment("whether or not the potion id command should be registered [default: true]").define("register_potion", true);
     REGISTER_TIME = COMMON_BUILDER.comment("whether commands should be registered for each time (/midnight, /night, /sunrise, etc) [default: true]").define("register_time", true);
-    REGISTER_GOAL = COMMON_BUILDER.comment("whether the command to list goals for specific entities should be registered [default: true]").define("register_goal", true);
     PERMISSION_LEVEL = COMMON_BUILDER.comment("the permission level required for all commands").defineInRange("permission_level", 2, 0, 4);
 
     COMMON_BUILDER.push("time commands");
@@ -152,10 +138,6 @@ public class ConfigManager {
 
   public static boolean getRegisterPotion() {
     return REGISTER_POTION.get();
-  }
-
-  public static boolean getRegisterGoal () {
-    return REGISTER_GOAL.get();
   }
 
   public static int getPermissionLevel() {
@@ -211,39 +193,6 @@ public class ConfigManager {
     }
 
     return ENTITY_SET;
-  }
-
-  public static Set<EntityType<?>> getGoalEntitySet () {
-    if (GOAL_ENTITY_SET == null) {
-      GOAL_ENTITY_SET = new HashSet<>();
-      for (String value : GOAL_ENTITY_LIST.get()) {
-        ResourceLocation loc = new ResourceLocation(value);
-        EntityType<?> type = ForgeRegistries.ENTITIES.getValue(loc);
-        if (type != null) {
-          GOAL_ENTITY_SET.add(type);
-        }
-      }
-    }
-
-    return GOAL_ENTITY_SET;
-  }
-
-  public static Set<Class<?>> getGoalStripSet() {
-    if (GOAL_STRIP_SET == null) {
-      GOAL_STRIP_SET = new HashSet<>();
-      for (String value : GOAL_STRIP_LIST.get()) {
-        Class<?> clazz;
-        try {
-          clazz = Class.forName(value);
-        } catch (ClassNotFoundException e) {
-          GSU.LOG.error("Class listed in configuration not found: " + value);
-          continue;
-        }
-        GOAL_STRIP_SET.add(clazz);
-      }
-    }
-
-    return GOAL_STRIP_SET;
   }
 
   public static void loadConfig(ForgeConfigSpec spec, Path path) {
