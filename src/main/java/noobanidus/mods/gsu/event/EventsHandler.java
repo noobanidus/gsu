@@ -1,10 +1,13 @@
 package noobanidus.mods.gsu.event;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -69,6 +72,26 @@ public class EventsHandler {
         Networking.sendTo(new SetSkin(target.getId(), cap.getOverride()), (ServerPlayerEntity) event.getPlayer());
       }
     });
+    }
+  }
+
+  @SubscribeEvent
+  public static void entityJoinWorld (EntityJoinWorldEvent event) {
+    if (ConfigManager.getGoalEntitySet().contains(event.getEntity().getType()) && event.getEntity() instanceof MobEntity mob) {
+      Set<Goal> toRemove = new HashSet<>();
+      mob.targetSelector.availableGoals.forEach(goal -> {
+        if (ConfigManager.getGoalStripSet().contains(goal.getClass())) {
+          toRemove.add(goal);
+        }
+      });
+      toRemove.forEach(mob.targetSelector::removeGoal);
+      toRemove.clear();
+      mob.goalSelector.availableGoals.forEach(goal -> {
+        if (ConfigManager.getGoalStripSet().contains(goal.getClass())) {
+          toRemove.add(goal);
+        }
+      });
+      toRemove.forEach(mob.goalSelector::removeGoal);
     }
   }
 }
