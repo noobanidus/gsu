@@ -2,17 +2,17 @@ package noobanidus.mods.gsu.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Explosion;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import noobanidus.mods.gsu.GSU;
 
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 public class ConfigManager {
   private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
@@ -45,6 +45,11 @@ public class ConfigManager {
   private static final ForgeConfigSpec.IntValue SUNSET_TIME;
   private static final ForgeConfigSpec.IntValue DAWN_TIME;
   private static final ForgeConfigSpec.IntValue MIDDAY_TIME;
+
+  // Capability injects
+  private static final ForgeConfigSpec.ConfigValue<List<? extends String>> ENTITY_LIST;
+
+  private static Set<EntityType<?>> ENTITY_SET = null;
 
   public static boolean getEffectsPersist() {
     return EFFECTS_PERSIST.get();
@@ -88,6 +93,9 @@ public class ConfigManager {
 
   static {
     Set<String> MODE_TYPES = new HashSet<>(Arrays.asList("none", "break", "destroy"));
+    COMMON_BUILDER.push("reskin");
+    ENTITY_LIST = COMMON_BUILDER.comment("list of entities (minecraft:cow, etc) that will have the capacity to be reskinned via NBT").defineList("entity_list", Collections.singletonList("minecraft:cow"), o -> (o instanceof String) && ((String) o).contains(":"));
+    COMMON_BUILDER.pop();
     COMMON_BUILDER.push("effects");
     EXPLOSION_SIZE = COMMON_BUILDER.comment("the size of the explosion caused by the explosive effect").defineInRange("explosion_size", 2.0, 0, Double.MAX_VALUE);
     EXPLOSION_MODE = COMMON_BUILDER.comment("the type of explosion mode for blocks  options: NONE, BREAK, DESTROY. none does nothing, break breaks blocks, destroy breaks & destroys blocks.").define("explosion_mode", "break", (o) -> o != null && MODE_TYPES.contains(o.toString().toLowerCase(Locale.ROOT)));
@@ -173,6 +181,21 @@ public class ConfigManager {
     return KNOCKUP_AMOUNT.get();
   }
 
+  public static Set<EntityType<?>> getEntitySet () {
+    if (ENTITY_SET == null) {
+      ENTITY_SET = new HashSet<>();
+      for (String value : ENTITY_LIST.get()) {
+        ResourceLocation loc = new ResourceLocation(value);
+        EntityType<?> type = ForgeRegistries.ENTITIES.getValue(loc);
+        if (type != null) {
+          ENTITY_SET.add(type);
+        }
+      }
+    }
+
+    return ENTITY_SET;
+  }
+
   public static void loadConfig(ForgeConfigSpec spec, Path path) {
     CommentedFileConfig configData = CommentedFileConfig.builder(path).sync().autosave().writingMode(WritingMode.REPLACE).build();
     configData.load();
@@ -181,6 +204,7 @@ public class ConfigManager {
 
   public static void configReloaded(ModConfigEvent event) {
     if (event.getConfig().getType() == ModConfig.Type.COMMON) {
+      ENTITY_SET = null;
       COMMON_CONFIG.setConfig(event.getConfig().getConfigData());
       GSU.LOG.info("GSU config reloaded");
     }

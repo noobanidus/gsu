@@ -1,12 +1,14 @@
 {
   "required": true,
   "package": "noobanidus.mods.gsu.mixins",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_17",
   "refmap": "gsu.refmap.json",
   "mixins": [
-    "MixinMobEffectInstance"
+    "MixinMobEffectInstance",
+    "MixinEntity"
   ],
   "client": [
+    "MixinLivingRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
