@@ -31,6 +31,8 @@ public class ConfigManager {
   private static final ForgeConfigSpec.BooleanValue HIDE_PARTICLES;
   private static final ForgeConfigSpec.DoubleValue KNOCKBACK_AMOUNT;
   private static final ForgeConfigSpec.DoubleValue KNOCKUP_AMOUNT;
+  private static final ForgeConfigSpec.IntValue FIRE_DURATION;
+  private static final ForgeConfigSpec.IntValue FIRE_RADIUS;
 
   // Command options
   private static final ForgeConfigSpec.BooleanValue REGISTER_TIME;
@@ -108,6 +110,8 @@ public class ConfigManager {
     KNOCKBACK_AMOUNT = COMMON_BUILDER.comment("the amount of knockback that should be added to an entity's attacks").defineInRange("knockback", 5.0, 0.0, 5.0);
     KNOCKUP_AMOUNT = COMMON_BUILDER.comment("the amount of knockup that should be added to an entity's attacks").defineInRange("knockup", 1.8, 0.0, 5.0);
     HIDE_PARTICLES = COMMON_BUILDER.comment("whether or not potion effects should show particles").define("hide_particles", false);
+    FIRE_DURATION = COMMON_BUILDER.comment("how long a fire (or delayed fire) potion effect should set an entity on fire (in seconds)").defineInRange("fire_duration", 5, 0, Integer.MAX_VALUE);
+    FIRE_RADIUS = COMMON_BUILDER.comment("the radius of blocks that should be set on fire when a splash potion of fire is thrown").defineInRange("fire_radius", 3, 0, Integer.MAX_VALUE);
     COMMON_BUILDER.pop();
     COMMON_BUILDER.push("commands");
 
@@ -179,6 +183,14 @@ public class ConfigManager {
 
   public static double getKnockupAmount () {
     return KNOCKUP_AMOUNT.get();
+  }
+
+  public static int getFireDuration() {
+    return FIRE_DURATION.get();
+  }
+
+  public static int getFireRadius () {
+    return FIRE_RADIUS.get();
   }
 
   public static Set<EntityType<?>> getEntitySet () {

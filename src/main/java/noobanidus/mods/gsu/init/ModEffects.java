@@ -7,6 +7,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.effect.*;
+import noobanidus.mods.gsu.effect.DelayedFireEffect;
+import noobanidus.mods.gsu.effect.InstantFireEffect;
 
 import static noobanidus.mods.gsu.GSU.REGISTRATE;
 
@@ -28,6 +30,9 @@ public class ModEffects {
   public static final RegistryEntry<ThimbleEffect> THIMBLE = REGISTRATE.effect("thimble", ThimbleEffect::new).register();
 
   public static final RegistryEntry<JumbleEffect> JUMBLE = REGISTRATE.effect("jumble", JumbleEffect::new).register();
+
+  public static final RegistryEntry<InstantFireEffect> INSTANT_FIRE = REGISTRATE.effect("instant_fire", InstantFireEffect::new).register();
+  public static final RegistryEntry<DelayedFireEffect> DELAYED_FIRE = REGISTRATE.effect("delayed_fire", DelayedFireEffect::new).register();
 
   private static final String KNOCKBACK_MODIFIER = "135f711e-33b6-457f-8c40-a5abc8c47a5e";
 
