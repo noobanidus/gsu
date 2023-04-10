@@ -54,7 +54,7 @@ public class EventsHandler {
   @SubscribeEvent
   public static void playerRespawn(PlayerEvent.PlayerRespawnEvent event) {
     if (ConfigManager.getEffectsPersist() && !event.isEndConquered()) {
-      Player player = event.getPlayer();
+      Player player = event.getEntity();
       List<MobEffectInstance> effects = potionClone.get(player.getUUID());
       if (effects != null) {
         for (MobEffectInstance effect : effects) {
@@ -78,7 +78,7 @@ public class EventsHandler {
     if (!target.level.isClientSide()) {
       target.getCapability(Capabilities.SKIN_CAPABILITY).ifPresent(cap -> {
         if (cap.getOverride() != null) {
-          Networking.sendTo(new SetSkin(target.getId(), cap.getOverride()), (ServerPlayer) event.getPlayer());
+          Networking.sendTo(new SetSkin(target.getId(), cap.getOverride()), (ServerPlayer) event.getEntity());
         }
       });
     }

@@ -16,6 +16,8 @@ import noobanidus.mods.gsu.block.entity.DecayingBlockEntity;
 import noobanidus.mods.gsu.init.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class CrawlBlock extends BaseEntityBlock {
   private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
 
@@ -48,7 +50,7 @@ public class CrawlBlock extends BaseEntityBlock {
       return null;
     }
 
-    if (pBlockEntityType.getRegistryName().equals(ModBlockEntities.DECAYING.getId())) {
+    if (pBlockEntityType.equals(ModBlockEntities.DECAYING.get())) {
       return DecayingBlockEntity::decayingTick;
     }
 

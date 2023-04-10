@@ -198,7 +198,7 @@ public class ConfigManager {
       ENTITY_SET = new HashSet<>();
       for (String value : ENTITY_LIST.get()) {
         ResourceLocation loc = new ResourceLocation(value);
-        EntityType<?> type = ForgeRegistries.ENTITIES.getValue(loc);
+        EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(loc);
         if (type != null) {
           ENTITY_SET.add(type);
         }

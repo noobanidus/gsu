@@ -23,9 +23,8 @@ public class DamageEvent {
   public static Set<UUID> knockupSet = new HashSet<>();
 
   private static void livingEvent(LivingEvent event, DamageSource source) {
-    LivingEntity entity = event.getEntityLiving();
-    if (source.getEntity() instanceof LivingEntity) {
-      LivingEntity sourceEntity = (LivingEntity) source.getEntity();
+    LivingEntity entity = event.getEntity();
+    if (source.getEntity() instanceof LivingEntity sourceEntity) {
       if (sourceEntity.hasEffect(ModEffects.KNOCKUP.get())) {
         knockupSet.add(entity.getUUID());
       }
@@ -58,9 +57,8 @@ public class DamageEvent {
 
   @SubscribeEvent(priority= EventPriority.HIGHEST)
   public static void onKnockup(LivingKnockBackEvent event) {
-    LivingEntity living = event.getEntityLiving();
-    if (living.getLastHurtByMob() instanceof Mob) {
-      Mob attacker = (Mob) living.getLastHurtByMob();
+    LivingEntity living = event.getEntity();
+    if (living instanceof Mob attacker) {
       MobEffectInstance instance = attacker.getEffect(ModEffects.KNOCKUP.get());
       if (instance != null) {
         event.setCanceled(true);

@@ -10,7 +10,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.MobEffectArgument;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -20,9 +20,9 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 public class CumulativeEffectCommand {
-   private static final SimpleCommandExceptionType ERROR_GIVE_FAILED = new SimpleCommandExceptionType(new TranslatableComponent("commands.effect.give.failed"));
-   private static final SimpleCommandExceptionType ERROR_CLEAR_EVERYTHING_FAILED = new SimpleCommandExceptionType(new TranslatableComponent("commands.effect.clear.everything.failed"));
-   private static final SimpleCommandExceptionType ERROR_CLEAR_SPECIFIC_FAILED = new SimpleCommandExceptionType(new TranslatableComponent("commands.effect.clear.specific.failed"));
+   private static final SimpleCommandExceptionType ERROR_GIVE_FAILED = new SimpleCommandExceptionType(Component.translatable("commands.effect.give.failed"));
+   private static final SimpleCommandExceptionType ERROR_CLEAR_EVERYTHING_FAILED = new SimpleCommandExceptionType(Component.translatable("commands.effect.clear.everything.failed"));
+   private static final SimpleCommandExceptionType ERROR_CLEAR_SPECIFIC_FAILED = new SimpleCommandExceptionType(Component.translatable("commands.effect.clear.specific.failed"));
 
    public static void register(CommandDispatcher<CommandSourceStack> pDispatcher) {
       pDispatcher.register(Commands.literal("ceffect").requires((p_198359_0_) -> {
@@ -78,9 +78,9 @@ public class CumulativeEffectCommand {
          throw ERROR_GIVE_FAILED.create();
       } else {
          if (pTargets.size() == 1) {
-            pSource.sendSuccess(new TranslatableComponent("commands.effect.give.success.single", pEffect.getDisplayName(), pTargets.iterator().next().getDisplayName(), j / 20), true);
+            pSource.sendSuccess(Component.translatable("commands.effect.give.success.single", pEffect.getDisplayName(), pTargets.iterator().next().getDisplayName(), j / 20), true);
          } else {
-            pSource.sendSuccess(new TranslatableComponent("commands.effect.give.success.multiple", pEffect.getDisplayName(), pTargets.size(), j / 20), true);
+            pSource.sendSuccess(Component.translatable("commands.effect.give.success.multiple", pEffect.getDisplayName(), pTargets.size(), j / 20), true);
          }
 
          return i;
@@ -100,9 +100,9 @@ public class CumulativeEffectCommand {
          throw ERROR_CLEAR_EVERYTHING_FAILED.create();
       } else {
          if (pTargets.size() == 1) {
-            pSource.sendSuccess(new TranslatableComponent("commands.effect.clear.everything.success.single", pTargets.iterator().next().getDisplayName()), true);
+            pSource.sendSuccess(Component.translatable("commands.effect.clear.everything.success.single", pTargets.iterator().next().getDisplayName()), true);
          } else {
-            pSource.sendSuccess(new TranslatableComponent("commands.effect.clear.everything.success.multiple", pTargets.size()), true);
+            pSource.sendSuccess(Component.translatable("commands.effect.clear.everything.success.multiple", pTargets.size()), true);
          }
 
          return i;
@@ -122,9 +122,9 @@ public class CumulativeEffectCommand {
          throw ERROR_CLEAR_SPECIFIC_FAILED.create();
       } else {
          if (pTargets.size() == 1) {
-            pSource.sendSuccess(new TranslatableComponent("commands.effect.clear.specific.success.single", pEffect.getDisplayName(), pTargets.iterator().next().getDisplayName()), true);
+            pSource.sendSuccess(Component.translatable("commands.effect.clear.specific.success.single", pEffect.getDisplayName(), pTargets.iterator().next().getDisplayName()), true);
          } else {
-            pSource.sendSuccess(new TranslatableComponent("commands.effect.clear.specific.success.multiple", pEffect.getDisplayName(), pTargets.size()), true);
+            pSource.sendSuccess(Component.translatable("commands.effect.clear.specific.success.multiple", pEffect.getDisplayName(), pTargets.size()), true);
          }
 
          return i;
