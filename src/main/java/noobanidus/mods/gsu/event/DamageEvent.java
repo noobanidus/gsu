@@ -58,7 +58,7 @@ public class DamageEvent {
   @SubscribeEvent(priority= EventPriority.HIGHEST)
   public static void onKnockup(LivingKnockBackEvent event) {
     LivingEntity living = event.getEntity();
-    if (living instanceof Mob attacker) {
+    if (living.getLastHurtByMob() instanceof Mob attacker) {
       MobEffectInstance instance = attacker.getEffect(ModEffects.KNOCKUP.get());
       if (instance != null) {
         event.setCanceled(true);
