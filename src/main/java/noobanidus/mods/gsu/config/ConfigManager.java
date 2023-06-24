@@ -19,6 +19,8 @@ public class ConfigManager {
 
   public static ForgeConfigSpec COMMON_CONFIG;
 
+  // Debug
+
   // Potion effects
   private static final ForgeConfigSpec.DoubleValue EXPLOSION_SIZE;
   private static final ForgeConfigSpec.IntValue DAMAGE_AMOUNT;
@@ -27,6 +29,7 @@ public class ConfigManager {
   private static final ForgeConfigSpec.IntValue FUMBLE_CHANCE;
   private static final ForgeConfigSpec.IntValue DRUMBLE_CHANCE;
   private static final ForgeConfigSpec.BooleanValue EFFECTS_PERSIST;
+  private static final ForgeConfigSpec.BooleanValue DEBUG_EFFECTS;
   private static final ForgeConfigSpec.ConfigValue<String> EXPLOSION_MODE;
   private static final ForgeConfigSpec.BooleanValue HIDE_PARTICLES;
   private static final ForgeConfigSpec.DoubleValue KNOCKBACK_AMOUNT;
@@ -55,6 +58,10 @@ public class ConfigManager {
 
   public static boolean getEffectsPersist() {
     return EFFECTS_PERSIST.get();
+  }
+
+  public static boolean debugEffects() {
+    return DEBUG_EFFECTS.get();
   }
 
   public static float getExplosionSize() {
@@ -107,6 +114,7 @@ public class ConfigManager {
     DAMAGE_CHANCE = COMMON_BUILDER.comment("the chance as a percent per tick of the potion effect that a tool or sword will take durability damage").defineInRange("durability_chance", 0.015, 0, Double.MAX_VALUE);
     NICE_MODE = COMMON_BUILDER.comment("whether or not crumble will damage items at or below 10 durability").define("nice_mode", true);
     EFFECTS_PERSIST = COMMON_BUILDER.comment("whether or not potion effects given by bees should persist through death").define("effects_persist", true);
+    DEBUG_EFFECTS = COMMON_BUILDER.comment("whether or not the `dying` potion effect should produce log debug messages for expirations").define("debug_effects", false);
     KNOCKBACK_AMOUNT = COMMON_BUILDER.comment("the amount of knockback that should be added to an entity's attacks").defineInRange("knockback", 5.0, 0.0, 5.0);
     KNOCKUP_AMOUNT = COMMON_BUILDER.comment("the amount of knockup that should be added to an entity's attacks").defineInRange("knockup", 1.8, 0.0, 5.0);
     HIDE_PARTICLES = COMMON_BUILDER.comment("whether or not potion effects should show particles").define("hide_particles", false);

@@ -84,6 +84,25 @@ public class EventsHandler {
     }
   }
 
+/*  @SubscribeEvent
+  public static void onEffectRemoved (MobEffectEvent.Remove event) {
+    LivingEntity pLivingEntity = event.getEntity();
+    if (event.getEffect().equals(ModEffects.DYING.get()) || event.getEffect().equals(ModEffects.IMMORTAL_DYING.get())) {
+      if (ConfigManager.debugEffects()) {
+        GSU.LOG.error("MobEffectEvent.Remove (`dying` or `immortal_dying`) called for " + pLivingEntity);
+      }
+      float oldHealth = pLivingEntity.getHealth();
+      event.getEntity().hurt(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
+      if (ConfigManager.debugEffects()) {
+        if (pLivingEntity.getHealth() >= oldHealth && !pLivingEntity.isDeadOrDying()) {
+          GSU.LOG.error("Health of entity " + pLivingEntity + " didn't change!");
+        } else if (pLivingEntity.isAlive()) {
+          GSU.LOG.error("Entity " + pLivingEntity + " is still alive after dying effect ended!");
+        }
+      }
+    }
+  }*/
+
   @SubscribeEvent
   public static void throwableHit(ProjectileImpactEvent event) {
     if (!event.getProjectile().level.isClientSide() && event.getProjectile() instanceof ThrownPotion thrown) {
