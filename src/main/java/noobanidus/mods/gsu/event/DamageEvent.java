@@ -1,6 +1,7 @@
 package noobanidus.mods.gsu.event;
 
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -29,12 +30,12 @@ public class DamageEvent {
         knockupSet.add(entity.getUUID());
       }
     }
-    if (source != DamageSource.OUT_OF_WORLD) {
+    if (source.is(DamageTypes.FELL_OUT_OF_WORLD)) {
       if (entity.getEffect(ModEffects.IMMORTAL.get()) != null || entity.getEffect(ModEffects.IMMORTAL_DYING.get()) != null) {
         event.setCanceled(true);
         return;
       }
-      if (source == DamageSource.CACTUS && entity.getEffect(ModEffects.CACTUS_SHIELD.get()) != null) {
+      if (source.is(DamageTypes.CACTUS) && entity.getEffect(ModEffects.CACTUS_SHIELD.get()) != null) {
         event.setCanceled(true);
       }
     }

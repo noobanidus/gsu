@@ -12,7 +12,7 @@ public class InstantFireEffect extends SimpleEffect {
 
   @Override
   public void applyEffectTick(LivingEntity entity, int amplifier) {
-    if (!entity.level.isClientSide()) {
+    if (!entity.level().isClientSide()) {
       entity.setSecondsOnFire(ConfigManager.getFireDuration());
     }
   }

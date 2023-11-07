@@ -24,13 +24,13 @@ public class ThimbleEffect extends SimpleEffect  {
   @Override
   public void applyEffectTick(LivingEntity entity, int amplifier) {
     if (entity instanceof Player) {
-      if (!entity.level.isClientSide() && rand.nextInt(24) == 0) {
-        BlockState state = entity.level.getBlockState(entity.blockPosition());
-        VoxelShape shape = state.getShape(entity.level, entity.blockPosition());
+      if (!entity.level().isClientSide() && rand.nextInt(24) == 0) {
+        BlockState state = entity.level().getBlockState(entity.blockPosition());
+        VoxelShape shape = state.getShape(entity.level(), entity.blockPosition());
         if (!shape.isEmpty() && shape.bounds().getYsize() < 1) {
           return;
         }
-        entity.level.setBlockAndUpdate(entity.blockPosition().above(), Blocks.COBWEB.defaultBlockState());
+        entity.level().setBlockAndUpdate(entity.blockPosition().above(), Blocks.COBWEB.defaultBlockState());
       }
     }
   }

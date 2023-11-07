@@ -1,5 +1,6 @@
 package noobanidus.mods.gsu;
 
+import com.tterrag.registrate.Registrate;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -10,7 +11,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import noobanidus.libs.noobutil.registrate.CustomRegistrate;
 import noobanidus.mods.gsu.command.CumulativeEffectCommand;
 import noobanidus.mods.gsu.command.NightCommand;
 import noobanidus.mods.gsu.command.PotionIdCommand;
@@ -28,11 +28,11 @@ import org.apache.logging.log4j.Logger;
 @Mod.EventBusSubscriber(modid = GSU.MODID)
 public class GSU {
   public static final String MODID = "gsu";
-  public static CustomRegistrate REGISTRATE;
+  public static Registrate REGISTRATE;
   public static Logger LOG = LogManager.getLogger();
 
   public GSU() {
-    REGISTRATE = CustomRegistrate.create(MODID);
+    REGISTRATE = Registrate.create(MODID);
 
     IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigManager.COMMON_CONFIG);
@@ -50,8 +50,8 @@ public class GSU {
 
   @SubscribeEvent
   public static void commandRegister(RegisterCommandsEvent event) {
-    CumulativeEffectCommand.register(event.getDispatcher());
-    PotionIdCommand.register(event.getDispatcher());
+    CumulativeEffectCommand.register(event.getDispatcher(), event.getBuildContext());
+    PotionIdCommand.register(event.getDispatcher(), event.getBuildContext());
     NightCommand.register(event.getDispatcher());
   }
 }

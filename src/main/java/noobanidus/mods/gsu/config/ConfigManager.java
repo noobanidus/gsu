@@ -5,6 +5,7 @@ import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -68,15 +69,17 @@ public class ConfigManager {
     return (float) (double) EXPLOSION_SIZE.get();
   }
 
-  public static Explosion.BlockInteraction getExplosionMode() {
+  public static Level.ExplosionInteraction getExplosionMode() {
     switch (EXPLOSION_MODE.get().toLowerCase(Locale.ROOT)) {
       default:
       case "none":
-        return Explosion.BlockInteraction.NONE;
-      case "break":
-        return Explosion.BlockInteraction.BREAK;
-      case "destroy":
-        return Explosion.BlockInteraction.DESTROY;
+        return Level.ExplosionInteraction.NONE;
+      case "block":
+        return Level.ExplosionInteraction.BLOCK;
+      case "mob":
+        return Level.ExplosionInteraction.MOB;
+      case "tnt":
+        return Level.ExplosionInteraction.TNT;
     }
   }
 
@@ -101,13 +104,13 @@ public class ConfigManager {
   }
 
   static {
-    Set<String> MODE_TYPES = new HashSet<>(Arrays.asList("none", "break", "destroy"));
+    Set<String> MODE_TYPES = new HashSet<>(Arrays.asList("none", "block", "mob", "tnt"));
     COMMON_BUILDER.push("reskin");
     ENTITY_LIST = COMMON_BUILDER.comment("list of entities (minecraft:cow, etc) that will have the capacity to be reskinned via NBT").defineList("entity_list", Collections.singletonList("minecraft:cow"), o -> (o instanceof String) && ((String) o).contains(":"));
     COMMON_BUILDER.pop();
     COMMON_BUILDER.push("effects");
     EXPLOSION_SIZE = COMMON_BUILDER.comment("the size of the explosion caused by the explosive effect").defineInRange("explosion_size", 2.0, 0, Double.MAX_VALUE);
-    EXPLOSION_MODE = COMMON_BUILDER.comment("the type of explosion mode for blocks  options: NONE, BREAK, DESTROY. none does nothing, break breaks blocks, destroy breaks & destroys blocks.").define("explosion_mode", "break", (o) -> o != null && MODE_TYPES.contains(o.toString().toLowerCase(Locale.ROOT)));
+    EXPLOSION_MODE = COMMON_BUILDER.comment("the type of explosion mode for blocks  options: NONE, BLOCK, MOB, TNT").define("explosion_mode", "break", (o) -> o != null && MODE_TYPES.contains(o.toString().toLowerCase(Locale.ROOT)));
     FUMBLE_CHANCE = COMMON_BUILDER.comment("the chance of dropping an item per tick, expressed as 1 in X").defineInRange("fumble_chance", 24, 0, Integer.MAX_VALUE);
     DRUMBLE_CHANCE = COMMON_BUILDER.comment("the chance of being granted slowness x while under the effects of the drumble debuff, expressed as 1 in X").defineInRange("fumble_chance", 30, 0, Integer.MAX_VALUE);
     DAMAGE_AMOUNT = COMMON_BUILDER.comment("the maximum amount of durability damage applied (randomly from 1 to X)").defineInRange("durability_damage", 3, 0, Integer.MAX_VALUE);
@@ -189,7 +192,7 @@ public class ConfigManager {
     return KNOCKBACK_AMOUNT.get();
   }
 
-  public static double getKnockupAmount () {
+  public static double getKnockupAmount() {
     return KNOCKUP_AMOUNT.get();
   }
 
@@ -197,11 +200,11 @@ public class ConfigManager {
     return FIRE_DURATION.get();
   }
 
-  public static int getFireRadius () {
+  public static int getFireRadius() {
     return FIRE_RADIUS.get();
   }
 
-  public static Set<EntityType<?>> getEntitySet () {
+  public static Set<EntityType<?>> getEntitySet() {
     if (ENTITY_SET == null) {
       ENTITY_SET = new HashSet<>();
       for (String value : ENTITY_LIST.get()) {

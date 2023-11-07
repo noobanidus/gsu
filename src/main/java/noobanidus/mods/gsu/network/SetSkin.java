@@ -44,7 +44,7 @@ public class SetSkin {
     if (target == null) {
       return;
     }
-    Level world = target.level;
+    Level world = target.level();
     Entity entity = world.getEntity(message.entityId);
     if (entity != null && ConfigManager.getEntitySet().contains(entity.getType())) {
       entity.getCapability(Capabilities.SKIN_CAPABILITY).ifPresent(cap -> {

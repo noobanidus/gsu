@@ -18,7 +18,7 @@ public class DelayedFireEffect extends SimpleEffect {
   @Override
   public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMapIn, int amplifier) {
     super.removeAttributeModifiers(entity, attributeMapIn, amplifier);
-    if (!entity.level.isClientSide) {
+    if (!entity.level().isClientSide) {
       entity.setSecondsOnFire(ConfigManager.getFireDuration());
     }
   }

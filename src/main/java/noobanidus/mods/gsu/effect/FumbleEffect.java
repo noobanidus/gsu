@@ -24,7 +24,7 @@ public class FumbleEffect extends SimpleEffect {
 
   @Override
   public void applyEffectTick(LivingEntity entity, int amplifier) {
-    if (entity instanceof Player && !entity.level.isClientSide()) {
+    if (entity instanceof Player && !entity.level().isClientSide()) {
       if (rand.nextInt(ConfigManager.getFumbleChance()) != 0) {
         // Don't drop an item every tick
         return;

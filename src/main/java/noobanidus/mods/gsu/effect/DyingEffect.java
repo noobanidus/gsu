@@ -22,7 +22,7 @@ public class DyingEffect extends SimpleEffect {
       GSU.LOG.error("DyingEffect removeAttributeModifiers (`dying` or `immortal_dying`) called for " + pLivingEntity);
     }
     float oldHealth = pLivingEntity.getHealth();
-    pLivingEntity.hurt(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
+    pLivingEntity.hurt(pLivingEntity.damageSources().fellOutOfWorld(), Float.MAX_VALUE);
     if (pLivingEntity.getHealth() >= oldHealth && !pLivingEntity.isDeadOrDying()) {
       GSU.LOG.error("Health of entity " + pLivingEntity + " didn't change!");
     } else if (pLivingEntity.isAlive()) {

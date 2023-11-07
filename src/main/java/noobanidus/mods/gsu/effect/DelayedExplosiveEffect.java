@@ -1,6 +1,7 @@
 package noobanidus.mods.gsu.effect;
 
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
@@ -18,8 +19,8 @@ public class DelayedExplosiveEffect extends SimpleEffect {
   @Override
   public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMapIn, int amplifier) {
     super.removeAttributeModifiers(entity, attributeMapIn, amplifier);
-    if (!entity.level.isClientSide) {
-      entity.level.explode(entity, DamageSource.explosion(entity), null, entity.getX(), entity.getY(), entity.getZ(), (float) (double) ConfigManager.getExplosionSize(), false, ConfigManager.getExplosionMode());
+    if (!entity.level().isClientSide) {
+      entity.level().explode(entity, entity.damageSources().explosion(entity, entity), null, entity.getX(), entity.getY(), entity.getZ(), (float) (double) ConfigManager.getExplosionSize(), false, ConfigManager.getExplosionMode());
     }
   }
 }

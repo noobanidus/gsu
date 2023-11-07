@@ -75,7 +75,7 @@ public class EventsHandler {
   @SubscribeEvent
   public static void startTracking(PlayerEvent.StartTracking event) {
     Entity target = event.getTarget();
-    if (!target.level.isClientSide()) {
+    if (!target.level().isClientSide()) {
       target.getCapability(Capabilities.SKIN_CAPABILITY).ifPresent(cap -> {
         if (cap.getOverride() != null) {
           Networking.sendTo(new SetSkin(target.getId(), cap.getOverride()), (ServerPlayer) event.getEntity());
@@ -105,7 +105,7 @@ public class EventsHandler {
 
   @SubscribeEvent
   public static void throwableHit(ProjectileImpactEvent event) {
-    if (!event.getProjectile().level.isClientSide() && event.getProjectile() instanceof ThrownPotion thrown) {
+    if (!event.getProjectile().level().isClientSide() && event.getProjectile() instanceof ThrownPotion thrown) {
       ItemStack itemstack = thrown.getItem();
       List<MobEffectInstance> effects = PotionUtils.getMobEffects(itemstack);
       HitResult.Type type = event.getRayTraceResult().getType();
@@ -128,7 +128,7 @@ public class EventsHandler {
         } else {
           return;
         }
-        Level level = thrown.level;
+        Level level = thrown.level();
         for (BlockPos pos : getPositionsWithinCircle(starting, ConfigManager.getFireRadius())) {
           for (int count = -4; count <= 4; count++) {
             BlockPos newPos = pos.offset(0, count, 0);

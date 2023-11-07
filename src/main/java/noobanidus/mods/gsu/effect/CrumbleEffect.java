@@ -5,7 +5,8 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.init.ModSounds;
 
@@ -30,7 +31,7 @@ public class CrumbleEffect extends SimpleEffect {
     if (entity instanceof Player) {
       if (rand.nextDouble() <= ConfigManager.getDamageChance()) {
         List<ItemStack> tools = new ArrayList<>();
-        entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(cap -> {
+        entity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(cap -> {
           for (int i = 0; i < cap.getSlots(); i++) {
             ItemStack inSlot = cap.getStackInSlot(i);
             // TODO: Improve this
@@ -52,7 +53,7 @@ public class CrumbleEffect extends SimpleEffect {
           ItemStack tool = tools.get(rand.nextInt(tools.size()));
           tool.hurtAndBreak(rand.nextInt(Math.max(1, ConfigManager.getDamageAmount())) + 1, entity, (playerEntity) -> {
           });
-          entity.level.playSound(null, entity.blockPosition(), ModSounds.CRUMBLE.get(), SoundSource.PLAYERS, 1f, 2f);
+          entity.level().playSound(null, entity.blockPosition(), ModSounds.CRUMBLE.get(), SoundSource.PLAYERS, 1f, 2f);
         }
       }
     }

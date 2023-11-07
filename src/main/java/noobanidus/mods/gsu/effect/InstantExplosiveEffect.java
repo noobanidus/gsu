@@ -14,9 +14,9 @@ public class InstantExplosiveEffect extends InstantenousMobEffect {
 
   @Override
   public void applyEffectTick(LivingEntity entity, int amplifier) {
-    if (entity instanceof Player && !entity.level.isClientSide) {
+    if (entity instanceof Player && !entity.level().isClientSide) {
       Player player = (Player) entity;
-      player.level.explode(player, DamageSource.explosion(player), null, player.getX(), player.getY(), player.getZ(), (float) (double) ConfigManager.getExplosionSize(), false, ConfigManager.getExplosionMode());
+      player.level().explode(player, entity.damageSources().explosion(player, player), null, player.getX(), player.getY(), player.getZ(), (float) (double) ConfigManager.getExplosionSize(), false, ConfigManager.getExplosionMode());
     }
   }
 }

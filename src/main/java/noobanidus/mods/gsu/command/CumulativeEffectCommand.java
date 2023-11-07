@@ -6,10 +6,13 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.commands.arguments.MobEffectArgument;
+import net.minecraft.commands.arguments.ResourceArgument;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -20,114 +23,136 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 public class CumulativeEffectCommand {
-   private static final SimpleCommandExceptionType ERROR_GIVE_FAILED = new SimpleCommandExceptionType(Component.translatable("commands.effect.give.failed"));
-   private static final SimpleCommandExceptionType ERROR_CLEAR_EVERYTHING_FAILED = new SimpleCommandExceptionType(Component.translatable("commands.effect.clear.everything.failed"));
-   private static final SimpleCommandExceptionType ERROR_CLEAR_SPECIFIC_FAILED = new SimpleCommandExceptionType(Component.translatable("commands.effect.clear.specific.failed"));
+  private static final SimpleCommandExceptionType ERROR_GIVE_FAILED = new SimpleCommandExceptionType(Component.translatable("commands.effect.give.failed"));
+  private static final SimpleCommandExceptionType ERROR_CLEAR_EVERYTHING_FAILED = new SimpleCommandExceptionType(Component.translatable("commands.effect.clear.everything.failed"));
+  private static final SimpleCommandExceptionType ERROR_CLEAR_SPECIFIC_FAILED = new SimpleCommandExceptionType(Component.translatable("commands.effect.clear.specific.failed"));
 
-   public static void register(CommandDispatcher<CommandSourceStack> pDispatcher) {
-      pDispatcher.register(Commands.literal("ceffect").requires((p_198359_0_) -> {
-         return p_198359_0_.hasPermission(2);
-      }).then(Commands.literal("clear").executes((p_198352_0_) -> {
-         return clearEffects(p_198352_0_.getSource(), ImmutableList.of(p_198352_0_.getSource().getEntityOrException()));
-      }).then(Commands.argument("targets", EntityArgument.entities()).executes((p_198356_0_) -> {
-         return clearEffects(p_198356_0_.getSource(), EntityArgument.getEntities(p_198356_0_, "targets"));
-      }).then(Commands.argument("effect", MobEffectArgument.effect()).executes((p_198351_0_) -> {
-         return clearEffect(p_198351_0_.getSource(), EntityArgument.getEntities(p_198351_0_, "targets"), MobEffectArgument.getEffect(p_198351_0_, "effect"));
-      })))).then(Commands.literal("give").then(Commands.argument("targets", EntityArgument.entities()).then(Commands.argument("effect", MobEffectArgument.effect()).executes((p_198357_0_) -> {
-         return giveEffect(p_198357_0_.getSource(), EntityArgument.getEntities(p_198357_0_, "targets"), MobEffectArgument.getEffect(p_198357_0_, "effect"), (Integer)null, 0, true);
-      }).then(Commands.argument("seconds", IntegerArgumentType.integer(1, 1000000)).executes((p_198350_0_) -> {
-         return giveEffect(p_198350_0_.getSource(), EntityArgument.getEntities(p_198350_0_, "targets"), MobEffectArgument.getEffect(p_198350_0_, "effect"), IntegerArgumentType.getInteger(p_198350_0_, "seconds"), 0, true);
-      }).then(Commands.argument("amplifier", IntegerArgumentType.integer(0, 255)).executes((p_198358_0_) -> {
-         return giveEffect(p_198358_0_.getSource(), EntityArgument.getEntities(p_198358_0_, "targets"), MobEffectArgument.getEffect(p_198358_0_, "effect"), IntegerArgumentType.getInteger(p_198358_0_, "seconds"), IntegerArgumentType.getInteger(p_198358_0_, "amplifier"), true);
-      }).then(Commands.argument("hideParticles", BoolArgumentType.bool()).executes((p_229759_0_) -> {
-         return giveEffect(p_229759_0_.getSource(), EntityArgument.getEntities(p_229759_0_, "targets"), MobEffectArgument.getEffect(p_229759_0_, "effect"), IntegerArgumentType.getInteger(p_229759_0_, "seconds"), IntegerArgumentType.getInteger(p_229759_0_, "amplifier"), !BoolArgumentType.getBool(p_229759_0_, "hideParticles"));
-      }))))))));
-   }
+  public static void register(CommandDispatcher<CommandSourceStack> p_136954_, CommandBuildContext p_251610_) {
+    p_136954_.register(Commands.literal("effect").requires((p_136958_) -> {
+      return p_136958_.hasPermission(2);
+    }).then(Commands.literal("clear").executes((p_136984_) -> {
+      return clearEffects(p_136984_.getSource(), ImmutableList.of(p_136984_.getSource().getEntityOrException()));
+    }).then(Commands.argument("targets", EntityArgument.entities()).executes((p_136982_) -> {
+      return clearEffects(p_136982_.getSource(), EntityArgument.getEntities(p_136982_, "targets"));
+    }).then(Commands.argument("effect", ResourceArgument.resource(p_251610_, Registries.MOB_EFFECT)).executes((p_248126_) -> {
+      return clearEffect(p_248126_.getSource(), EntityArgument.getEntities(p_248126_, "targets"), ResourceArgument.getMobEffect(p_248126_, "effect"));
+    })))).then(Commands.literal("give").then(Commands.argument("targets", EntityArgument.entities()).then(Commands.argument("effect", ResourceArgument.resource(p_251610_, Registries.MOB_EFFECT)).executes((p_248127_) -> {
+      return giveEffect(p_248127_.getSource(), EntityArgument.getEntities(p_248127_, "targets"), ResourceArgument.getMobEffect(p_248127_, "effect"), (Integer)null, 0, true);
+    }).then(Commands.argument("seconds", IntegerArgumentType.integer(1, 1000000)).executes((p_248124_) -> {
+      return giveEffect(p_248124_.getSource(), EntityArgument.getEntities(p_248124_, "targets"), ResourceArgument.getMobEffect(p_248124_, "effect"), IntegerArgumentType.getInteger(p_248124_, "seconds"), 0, true);
+    }).then(Commands.argument("amplifier", IntegerArgumentType.integer(0, 255)).executes((p_248123_) -> {
+      return giveEffect(p_248123_.getSource(), EntityArgument.getEntities(p_248123_, "targets"), ResourceArgument.getMobEffect(p_248123_, "effect"), IntegerArgumentType.getInteger(p_248123_, "seconds"), IntegerArgumentType.getInteger(p_248123_, "amplifier"), true);
+    }).then(Commands.argument("hideParticles", BoolArgumentType.bool()).executes((p_248125_) -> {
+      return giveEffect(p_248125_.getSource(), EntityArgument.getEntities(p_248125_, "targets"), ResourceArgument.getMobEffect(p_248125_, "effect"), IntegerArgumentType.getInteger(p_248125_, "seconds"), IntegerArgumentType.getInteger(p_248125_, "amplifier"), !BoolArgumentType.getBool(p_248125_, "hideParticles"));
+    })))).then(Commands.literal("infinite").executes((p_267907_) -> {
+      return giveEffect(p_267907_.getSource(), EntityArgument.getEntities(p_267907_, "targets"), ResourceArgument.getMobEffect(p_267907_, "effect"), -1, 0, true);
+    }).then(Commands.argument("amplifier", IntegerArgumentType.integer(0, 255)).executes((p_267908_) -> {
+      return giveEffect(p_267908_.getSource(), EntityArgument.getEntities(p_267908_, "targets"), ResourceArgument.getMobEffect(p_267908_, "effect"), -1, IntegerArgumentType.getInteger(p_267908_, "amplifier"), true);
+    }).then(Commands.argument("hideParticles", BoolArgumentType.bool()).executes((p_267909_) -> {
+      return giveEffect(p_267909_.getSource(), EntityArgument.getEntities(p_267909_, "targets"), ResourceArgument.getMobEffect(p_267909_, "effect"), -1, IntegerArgumentType.getInteger(p_267909_, "amplifier"), !BoolArgumentType.getBool(p_267909_, "hideParticles"));
+    }))))))));
+  }
 
-   private static int giveEffect(CommandSourceStack pSource, Collection<? extends Entity> pTargets, MobEffect pEffect, @Nullable Integer pSeconds, int pAmplifier, boolean pShowParticles) throws CommandSyntaxException {
-      int i = 0;
-      int j;
-      if (pSeconds != null) {
-         if (pEffect.isInstantenous()) {
-            j = pSeconds;
-         } else {
-            j = pSeconds * 20;
-         }
-      } else if (pEffect.isInstantenous()) {
-         j = 1;
+  private static int giveEffect(CommandSourceStack pSource, Collection<? extends Entity> pTargets, Holder<MobEffect> pEffect, @Nullable Integer pSeconds, int pAmplifier, boolean pShowsParticles) throws CommandSyntaxException {
+    MobEffect mobeffect = pEffect.value();
+    int i = 0;
+    int j;
+    if (pSeconds != null) {
+      if (mobeffect.isInstantenous()) {
+        j = pSeconds;
+      } else if (pSeconds == -1) {
+        j = -1;
       } else {
-         j = 600;
+        j = pSeconds * 20;
       }
+    } else if (mobeffect.isInstantenous()) {
+      j = 1;
+    } else {
+      j = 600;
+    }
 
-      for(Entity entity : pTargets) {
-         if (entity instanceof LivingEntity) {
-            LivingEntity living = (LivingEntity) entity;
-            int y = j;
-            MobEffectInstance current = living.getEffect(pEffect);
-            if (current != null) {
-               y += current.getDuration();
-            }
-            MobEffectInstance effectinstance = new MobEffectInstance(pEffect, y, pAmplifier, false, pShowParticles);
-            if (living.addEffect(effectinstance)) {
-               ++i;
-            }
-         }
+    for(Entity entity : pTargets) {
+      if (entity instanceof LivingEntity living) {
+        int y = j;
+        MobEffectInstance current = living.getEffect(mobeffect);
+        if (current != null) {
+          y += current.getDuration();
+        }
+        living.removeEffect(mobeffect);
+        MobEffectInstance mobeffectinstance = new MobEffectInstance(mobeffect, y, pAmplifier, false, pShowsParticles);
+        if (living.addEffect(mobeffectinstance, pSource.getEntity())) {
+          ++i;
+        }
       }
+    }
 
-      if (i == 0) {
-         throw ERROR_GIVE_FAILED.create();
+    if (i == 0) {
+      throw ERROR_GIVE_FAILED.create();
+    } else {
+      if (pTargets.size() == 1) {
+        pSource.sendSuccess(() -> {
+          return Component.translatable("commands.effect.give.success.single", mobeffect.getDisplayName(), pTargets.iterator().next().getDisplayName(), j / 20);
+        }, true);
       } else {
-         if (pTargets.size() == 1) {
-            pSource.sendSuccess(Component.translatable("commands.effect.give.success.single", pEffect.getDisplayName(), pTargets.iterator().next().getDisplayName(), j / 20), true);
-         } else {
-            pSource.sendSuccess(Component.translatable("commands.effect.give.success.multiple", pEffect.getDisplayName(), pTargets.size(), j / 20), true);
-         }
-
-         return i;
-      }
-   }
-
-   private static int clearEffects(CommandSourceStack pSource, Collection<? extends Entity> pTargets) throws CommandSyntaxException {
-      int i = 0;
-
-      for(Entity entity : pTargets) {
-         if (entity instanceof LivingEntity && ((LivingEntity)entity).removeAllEffects()) {
-            ++i;
-         }
+        pSource.sendSuccess(() -> {
+          return Component.translatable("commands.effect.give.success.multiple", mobeffect.getDisplayName(), pTargets.size(), j / 20);
+        }, true);
       }
 
-      if (i == 0) {
-         throw ERROR_CLEAR_EVERYTHING_FAILED.create();
+      return i;
+    }
+  }
+
+  private static int clearEffects(CommandSourceStack p_136960_, Collection<? extends Entity> p_136961_) throws CommandSyntaxException {
+    int i = 0;
+
+    for(Entity entity : p_136961_) {
+      if (entity instanceof LivingEntity && ((LivingEntity)entity).removeAllEffects()) {
+        ++i;
+      }
+    }
+
+    if (i == 0) {
+      throw ERROR_CLEAR_EVERYTHING_FAILED.create();
+    } else {
+      if (p_136961_.size() == 1) {
+        p_136960_.sendSuccess(() -> {
+          return Component.translatable("commands.effect.clear.everything.success.single", p_136961_.iterator().next().getDisplayName());
+        }, true);
       } else {
-         if (pTargets.size() == 1) {
-            pSource.sendSuccess(Component.translatable("commands.effect.clear.everything.success.single", pTargets.iterator().next().getDisplayName()), true);
-         } else {
-            pSource.sendSuccess(Component.translatable("commands.effect.clear.everything.success.multiple", pTargets.size()), true);
-         }
-
-         return i;
-      }
-   }
-
-   private static int clearEffect(CommandSourceStack pSource, Collection<? extends Entity> pTargets, MobEffect pEffect) throws CommandSyntaxException {
-      int i = 0;
-
-      for(Entity entity : pTargets) {
-         if (entity instanceof LivingEntity && ((LivingEntity)entity).removeEffect(pEffect)) {
-            ++i;
-         }
+        p_136960_.sendSuccess(() -> {
+          return Component.translatable("commands.effect.clear.everything.success.multiple", p_136961_.size());
+        }, true);
       }
 
-      if (i == 0) {
-         throw ERROR_CLEAR_SPECIFIC_FAILED.create();
+      return i;
+    }
+  }
+
+  private static int clearEffect(CommandSourceStack p_250069_, Collection<? extends Entity> p_248561_, Holder<MobEffect> p_249198_) throws CommandSyntaxException {
+    MobEffect mobeffect = p_249198_.value();
+    int i = 0;
+
+    for(Entity entity : p_248561_) {
+      if (entity instanceof LivingEntity && ((LivingEntity)entity).removeEffect(mobeffect)) {
+        ++i;
+      }
+    }
+
+    if (i == 0) {
+      throw ERROR_CLEAR_SPECIFIC_FAILED.create();
+    } else {
+      if (p_248561_.size() == 1) {
+        p_250069_.sendSuccess(() -> {
+          return Component.translatable("commands.effect.clear.specific.success.single", mobeffect.getDisplayName(), p_248561_.iterator().next().getDisplayName());
+        }, true);
       } else {
-         if (pTargets.size() == 1) {
-            pSource.sendSuccess(Component.translatable("commands.effect.clear.specific.success.single", pEffect.getDisplayName(), pTargets.iterator().next().getDisplayName()), true);
-         } else {
-            pSource.sendSuccess(Component.translatable("commands.effect.clear.specific.success.multiple", pEffect.getDisplayName(), pTargets.size()), true);
-         }
-
-         return i;
+        p_250069_.sendSuccess(() -> {
+          return Component.translatable("commands.effect.clear.specific.success.multiple", mobeffect.getDisplayName(), p_248561_.size());
+        }, true);
       }
-   }
+
+      return i;
+    }
+  }
 }
