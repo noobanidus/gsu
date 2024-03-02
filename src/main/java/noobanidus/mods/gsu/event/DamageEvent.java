@@ -30,7 +30,7 @@ public class DamageEvent {
         knockupSet.add(entity.getUUID());
       }
     }
-    if (source.is(DamageTypes.FELL_OUT_OF_WORLD)) {
+    if (!source.is(DamageTypes.FELL_OUT_OF_WORLD)) {
       if (entity.getEffect(ModEffects.IMMORTAL.get()) != null || entity.getEffect(ModEffects.IMMORTAL_DYING.get()) != null) {
         event.setCanceled(true);
         return;
