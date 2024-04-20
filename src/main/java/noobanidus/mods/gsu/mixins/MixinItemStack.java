@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinItemStack {
   @Inject(method = "getOrCreateTag", at = @At("HEAD"))
   private void getOrCreateTag(CallbackInfoReturnable<CompoundTag> info) {
-    if (ConfigManager.getCheckNbt()) {
+    if (!ConfigManager.getCheckNbt()) {
       return;
     }
     ItemStack stack = (ItemStack) (Object) this;
