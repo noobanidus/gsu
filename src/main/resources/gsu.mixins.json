@@ -3,9 +3,11 @@
   "package": "noobanidus.mods.gsu.mixins",
   "compatibilityLevel": "JAVA_17",
   "refmap": "gsu.refmap.json",
+  "plugin": "noobanidus.mods.gsu.mixins.GSUMixinPlugin",
   "mixins": [
-    "MixinMobEffectInstance",
-    "MixinEntity"
+    "MixinEntity",
+    "MixinItemStack",
+    "MixinMobEffectInstance"
   ],
   "client": [
     "MixinLivingRenderer"

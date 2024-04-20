@@ -36,7 +36,7 @@ public class GSU {
 
     IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigManager.COMMON_CONFIG);
-    ConfigManager.loadConfig(ConfigManager.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
+    loadConfig();
     modBus.addListener(CommonSetup::init);
     modBus.addListener(ConfigManager::configReloaded);
 
@@ -53,5 +53,9 @@ public class GSU {
     CumulativeEffectCommand.register(event.getDispatcher(), event.getBuildContext());
     PotionIdCommand.register(event.getDispatcher(), event.getBuildContext());
     NightCommand.register(event.getDispatcher());
+  }
+
+  public static void loadConfig () {
+    ConfigManager.loadConfig(ConfigManager.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
   }
 }

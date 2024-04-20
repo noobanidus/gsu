@@ -21,6 +21,7 @@ public class ConfigManager {
   public static ForgeConfigSpec COMMON_CONFIG;
 
   // Debug
+  private static final ForgeConfigSpec.BooleanValue CHECK_NBT;
 
   // Potion effects
   private static final ForgeConfigSpec.DoubleValue EXPLOSION_SIZE;
@@ -105,6 +106,9 @@ public class ConfigManager {
 
   static {
     Set<String> MODE_TYPES = new HashSet<>(Arrays.asList("none", "block", "mob", "tnt"));
+    COMMON_BUILDER.push("debug");
+    CHECK_NBT = COMMON_BUILDER.comment("whether or not to debug for NBT on tagged items").define("check_nbt", true);
+    COMMON_BUILDER.pop();
     COMMON_BUILDER.push("reskin");
     ENTITY_LIST = COMMON_BUILDER.comment("list of entities (minecraft:cow, etc) that will have the capacity to be reskinned via NBT").defineList("entity_list", Collections.singletonList("minecraft:cow"), o -> (o instanceof String) && ((String) o).contains(":"));
     COMMON_BUILDER.pop();
@@ -202,6 +206,10 @@ public class ConfigManager {
 
   public static int getFireRadius() {
     return FIRE_RADIUS.get();
+  }
+
+  public static boolean getCheckNbt () {
+    return CHECK_NBT.get();
   }
 
   public static Set<EntityType<?>> getEntitySet() {
