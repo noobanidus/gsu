@@ -24,7 +24,7 @@ public class MixinItemStack {
     }
     CompoundTag current = stack.getTag();
     if (current == null) {
-      GSU.LOG.error("NBT Tag was created for ItemStack " + stack);
+      GSU.LOG.error("NBT Tag was created for ItemStack: " + stack);
       GSU.LOG.error(StringUtils.join(Thread.currentThread().getStackTrace(), "\n"));
     }
   }
