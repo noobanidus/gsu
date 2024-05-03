@@ -43,6 +43,8 @@ public class ModEffects {
 
   public static final RegistryEntry<SimpleEffect> CACTUS_SHIELD = REGISTRATE.simple("cactus_shield", Registries.MOB_EFFECT, () -> new SimpleEffect(MobEffectCategory.BENEFICIAL, 0x237543, true));
 
+  public static final RegistryEntry<SimpleEffect> ARMOR_SHIELD = REGISTRATE.simple("armor_shield", Registries.MOB_EFFECT, () -> new SimpleEffect(MobEffectCategory.BENEFICIAL, 0xd9d48d, true));
+
   public static void load() {
   }
 }
