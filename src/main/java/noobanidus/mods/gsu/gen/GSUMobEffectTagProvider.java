@@ -1,0 +1,27 @@
+package noobanidus.mods.gsu.gen;
+
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.PoiTypeTags;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
+import net.minecraft.world.entity.ai.village.poi.PoiTypes;
+import noobanidus.mods.gsu.GSU;
+import noobanidus.mods.gsu.GSUTags;
+import noobanidus.mods.gsu.init.ModEffects;
+
+import java.util.concurrent.CompletableFuture;
+
+public class GSUMobEffectTagProvider extends TagsProvider<MobEffect> {
+   public GSUMobEffectTagProvider(PackOutput p_256012_, CompletableFuture<HolderLookup.Provider> p_256617_, @org.jetbrains.annotations.Nullable net.minecraftforge.common.data.ExistingFileHelper existingFileHelper) {
+      super(p_256012_, Registries.MOB_EFFECT, p_256617_, GSU.MODID, existingFileHelper);
+   }
+
+   protected void addTags(HolderLookup.Provider p_256206_) {
+      this.tag(GSUTags.Potions.EFFECTS_PERSIST).add(ResourceKey.create(Registries.MOB_EFFECT, ModEffects.ARMOR_SHIELD.getId()));
+   }
+}

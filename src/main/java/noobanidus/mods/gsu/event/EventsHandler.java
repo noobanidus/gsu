@@ -1,7 +1,10 @@
 package noobanidus.mods.gsu.event;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -19,11 +22,12 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 import noobanidus.mods.gsu.GSU;
+import noobanidus.mods.gsu.GSUTags;
 import noobanidus.mods.gsu.capability.Capabilities;
 import noobanidus.mods.gsu.capability.SkinCapability;
 import noobanidus.mods.gsu.config.ConfigManager;
-import noobanidus.mods.gsu.effect.SimpleEffect;
 import noobanidus.mods.gsu.init.ModEffects;
 import noobanidus.mods.gsu.network.Networking;
 import noobanidus.mods.gsu.network.SetSkin;
@@ -34,6 +38,14 @@ import java.util.*;
 public class EventsHandler {
   private static final Map<UUID, List<MobEffectInstance>> potionClone = new HashMap<>();
 
+  public static boolean shouldPersist(MobEffectInstance effect) {
+    if (!ConfigManager.getEffectsPersistTag()) {
+      return true;
+    }
+    ResourceKey<MobEffect> key = BuiltInRegistries.MOB_EFFECT.getResourceKey(effect.getEffect()).orElseThrow();
+    return BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(key).is(GSUTags.Potions.EFFECTS_PERSIST);
+  }
+
   @SubscribeEvent
   public static void playerClone(PlayerEvent.Clone event) {
     if (ConfigManager.getEffectsPersist()) {
@@ -42,7 +54,7 @@ public class EventsHandler {
       if (!instance.isEmpty()) {
         List<MobEffectInstance> map = potionClone.computeIfAbsent(original.getUUID(), (k) -> new ArrayList<>());
         for (MobEffectInstance effect : original.getActiveEffects()) {
-          if (effect.getEffect() instanceof SimpleEffect) {
+          if (shouldPersist(effect)) {
             MobEffectInstance copy = new MobEffectInstance(effect.getEffect(), effect.getDuration(), effect.getAmplifier());
             map.add(copy);
           }
@@ -83,25 +95,6 @@ public class EventsHandler {
       });
     }
   }
-
-/*  @SubscribeEvent
-  public static void onEffectRemoved (MobEffectEvent.Remove event) {
-    LivingEntity pLivingEntity = event.getEntity();
-    if (event.getEffect().equals(ModEffects.DYING.get()) || event.getEffect().equals(ModEffects.IMMORTAL_DYING.get())) {
-      if (ConfigManager.debugEffects()) {
-        GSU.LOG.error("MobEffectEvent.Remove (`dying` or `immortal_dying`) called for " + pLivingEntity);
-      }
-      float oldHealth = pLivingEntity.getHealth();
-      event.getEntity().hurt(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
-      if (ConfigManager.debugEffects()) {
-        if (pLivingEntity.getHealth() >= oldHealth && !pLivingEntity.isDeadOrDying()) {
-          GSU.LOG.error("Health of entity " + pLivingEntity + " didn't change!");
-        } else if (pLivingEntity.isAlive()) {
-          GSU.LOG.error("Entity " + pLivingEntity + " is still alive after dying effect ended!");
-        }
-      }
-    }
-  }*/
 
   @SubscribeEvent
   public static void throwableHit(ProjectileImpactEvent event) {
