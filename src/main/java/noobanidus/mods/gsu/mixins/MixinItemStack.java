@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+// This mixin isn't used.
 @Mixin(ItemStack.class)
 public class MixinItemStack {
   @Inject(method = "getOrCreateTag", at = @At("HEAD"))

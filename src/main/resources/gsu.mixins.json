@@ -5,8 +5,8 @@
   "refmap": "gsu.refmap.json",
   "plugin": "noobanidus.mods.gsu.mixins.GSUMixinPlugin",
   "mixins": [
+    "MixinCompoundTag",
     "MixinEntity",
-    "MixinItemStack",
     "MixinLivingEntity",
     "MixinMobEffectInstance"
   ],
