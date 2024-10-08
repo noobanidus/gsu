@@ -7,8 +7,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import noobanidus.mods.gsu.config.ConfigManager;
 
-import java.util.Random;
-
 public class DrumbleEffect extends SimpleEffect {
   public DrumbleEffect() {
     super(MobEffectCategory.HARMFUL, 0x9c0000);

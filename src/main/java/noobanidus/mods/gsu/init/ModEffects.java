@@ -1,7 +1,6 @@
 package noobanidus.mods.gsu.init;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -13,11 +12,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import noobanidus.mods.gsu.GSU;
 import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.effect.*;
-import noobanidus.mods.gsu.effect.DelayedFireEffect;
-import noobanidus.mods.gsu.effect.InstantFireEffect;
 
 import java.util.Collection;
-import java.util.function.Supplier;
 
 public class ModEffects {
   private static final DeferredRegister<MobEffect> REGISTER = DeferredRegister.create(BuiltInRegistries.MOB_EFFECT, GSU.MODID);

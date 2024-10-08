@@ -7,8 +7,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.Random;
-
 public class ThimbleEffect extends SimpleEffect  {
   public ThimbleEffect() {
     super(MobEffectCategory.HARMFUL, 0xcacbc1);

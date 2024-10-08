@@ -1,13 +1,15 @@
 package noobanidus.mods.gsu.config;
 
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import noobanidus.mods.gsu.GSU;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 
 public class ConfigManager {
   private static final ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();

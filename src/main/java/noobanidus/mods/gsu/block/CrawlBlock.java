@@ -6,7 +6,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.BellBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -17,8 +16,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import noobanidus.mods.gsu.block.entity.DecayingBlockEntity;
 import noobanidus.mods.gsu.init.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class CrawlBlock extends BaseEntityBlock {
   public static final MapCodec<CrawlBlock> CODEC = simpleCodec(CrawlBlock::new);
