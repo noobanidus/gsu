@@ -98,6 +98,9 @@ public class EventsHandler {
 
   @SubscribeEvent
   public static void onPotionRemoved (MobEffectEvent.Remove event) {
+    if (event.getEffectInstance() == null) {
+      return;
+    }
     if (event.getEffectInstance().getEffect().value() instanceof SimpleEffect simpleEffect) {
       if (simpleEffect.onEffectRemoved(event.getEntity(), event.getEffectInstance().getAmplifier())) {
         event.setCanceled(true);
