@@ -7,11 +7,8 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.CommonHooks;
 import noobanidus.mods.gsu.config.ConfigManager;
 
-import java.util.Random;
-
 public class FumbleEffect extends SimpleEffect {
-  private static final Random rand = new Random();
-  private static int OFF_HAND_SLOT = 40;
+  private static final int OFF_HAND_SLOT = 40;
 
   public FumbleEffect() {
     super(MobEffectCategory.HARMFUL, 0x10eb26);
@@ -44,7 +41,7 @@ public class FumbleEffect extends SimpleEffect {
           case 8:
             int tries = 100;
             while (stack.isEmpty()) {
-              stack = player.getInventory().getItem(slot = rand.nextInt(36));
+              stack = player.getInventory().getItem(slot = entity.getRandom().nextInt(36));
               tries--;
               if (tries < 0) {
                 break;
@@ -78,7 +75,7 @@ public class FumbleEffect extends SimpleEffect {
           case 17:
           case 18:
           case 19:
-            slot = rand.nextInt(4);
+            slot = entity.getRandom().nextInt(4);
             stack = player.getInventory().getItem(slot);
             if (!stack.isEmpty() && stack.onDroppedByPlayer(player)) {
               if (CommonHooks.onPlayerTossEvent(player, player.getInventory().removeItem(35 + slot, stack.getCount()), false) != null) {
