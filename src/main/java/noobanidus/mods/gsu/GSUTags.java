@@ -25,5 +25,6 @@ public class GSUTags {
   public static class Potions {
     public static TagKey<MobEffect> EFFECTS_PERSIST = TagKey.create(Registries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(GSU.MODID, "effects_persist"));
     public static TagKey<MobEffect> SUPPRESS_PARTICLES = TagKey.create(Registries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(GSU.MODID, "suppress_particles"));
+    public static TagKey<MobEffect> FIRE_EFFECT = TagKey.create(Registries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(GSU.MODID, "fire_effect"));
   }
 }

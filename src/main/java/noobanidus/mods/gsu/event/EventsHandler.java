@@ -118,7 +118,7 @@ public class EventsHandler {
       boolean doFire = false;
       PotionContents potioncontents = itemstack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
       for (MobEffectInstance effect : potioncontents.getAllEffects()) {
-        if (effect.getEffect() == ModEffects.DELAYED_FIRE.get() || effect.getEffect() == ModEffects.INSTANT_FIRE.get()) {
+        if (effect.getEffect().is(GSUTags.Potions.FIRE_EFFECT)) {
           doFire = true;
           break;
         }
