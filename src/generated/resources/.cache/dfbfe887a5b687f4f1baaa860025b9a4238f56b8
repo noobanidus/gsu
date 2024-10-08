@@ -1,5 +1,0 @@
-// 1.20	2024-04-20T16:52:23.9367588	Registrate Provider for gsu [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
-2a4118b16299d97c8ef396cd4331432362985791 assets/gsu/blockstates/crawl.json
-059c3c88cb1c93230da1f11c4662aeb6200cd0e9 assets/gsu/lang/en_ud.json
-862ceb58e2ca9ac8e0c5b0c80547d78f89a573d4 assets/gsu/lang/en_us.json
-726878c5e854b556b4736fa08fce4e9b050bd6ff data/gsu/loot_tables/blocks/crawl.json

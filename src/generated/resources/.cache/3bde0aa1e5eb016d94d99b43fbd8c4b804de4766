@@ -1,2 +1,3 @@
-// 1.20	2024-05-03T14:17:18.2891209	Tags for minecraft:mob_effect mod id gsu
+// 1.21	2024-10-08T13:53:58.8332887	Tags for minecraft:mob_effect mod id gsu
 c4d2f4d8a75740c6bd65e75621e0af21a9a95368 data/gsu/tags/mob_effect/effects_persist.json
+e2db4ad62929687b522fd5236b96b6aa100ab2b4 data/gsu/tags/mob_effect/fire_effect.json
