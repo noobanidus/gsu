@@ -2,13 +2,20 @@ package noobanidus.mods.gsu;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 
 public class GSUTags {
-  public static class Blocks {
+  public static class Block {
 
+  }
+
+  public static class Item {
+    public static TagKey<net.minecraft.world.item.Item> CRUMBLE_BLACKLIST = ItemTags.create(ResourceLocation.fromNamespaceAndPath(GSU.MODID, "crumble_blacklist"));
+    public static TagKey<net.minecraft.world.item.Item> FUMBLE_BLACKLIST = ItemTags.create(ResourceLocation.fromNamespaceAndPath(GSU.MODID, "fumble_blacklist"));
   }
 
   public static class Entity {

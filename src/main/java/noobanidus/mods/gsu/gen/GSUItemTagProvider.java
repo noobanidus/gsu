@@ -6,6 +6,7 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import noobanidus.mods.gsu.GSU;
+import noobanidus.mods.gsu.GSUTags;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -16,6 +17,8 @@ public class GSUItemTagProvider extends ItemTagsProvider {
 
   @Override
   protected void addTags(HolderLookup.Provider provider) {
+    tag(GSUTags.Item.CRUMBLE_BLACKLIST);
+    tag(GSUTags.Item.FUMBLE_BLACKLIST);
   }
 
   @Override
