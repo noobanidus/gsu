@@ -17,13 +17,13 @@ public class DrumbleEffect extends SimpleEffect {
   }
 
   @Override
-  public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
+  public boolean shouldApplyEffectTickThisTick(int p_295329_, int p_295167_) {
     return true;
   }
 
   @Override
-  public void applyEffectTick(LivingEntity entity, int amplifier) {
-    if (rand.nextInt(8) == 0) {
+  public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+    if (entity.getRandom().nextInt(8) == 0) {
       entity.level().addParticle(ParticleTypes.END_ROD, entity.getRandomX(1.0), entity.getRandomY() + 0.5, entity.getRandomZ(1.0), 0, 0, 0);
     }
     if (!entity.level().isClientSide && rand.nextInt(ConfigManager.getDrumbleChance()) == 0) {
@@ -31,5 +31,6 @@ public class DrumbleEffect extends SimpleEffect {
         entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 15, 10, false, false, true));
       }
     }
+    return false;
   }
 }

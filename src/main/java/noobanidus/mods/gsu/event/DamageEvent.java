@@ -7,10 +7,14 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.ICancellableEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import noobanidus.mods.gsu.GSU;
 import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.init.ModEffects;
@@ -19,40 +23,44 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = GSU.MODID)
+@EventBusSubscriber(modid = GSU.MODID)
 public class DamageEvent {
   public static Set<UUID> knockupSet = new HashSet<>();
 
   private static void livingEvent(LivingEvent event, DamageSource source) {
     LivingEntity entity = event.getEntity();
     if (source.getEntity() instanceof LivingEntity sourceEntity) {
-      if (sourceEntity.hasEffect(ModEffects.KNOCKUP.get())) {
+      if (sourceEntity.hasEffect(ModEffects.KNOCKUP.getDelegate())) {
         knockupSet.add(entity.getUUID());
       }
     }
     if (!source.is(DamageTypes.FELL_OUT_OF_WORLD)) {
-      if (entity.getEffect(ModEffects.IMMORTAL.get()) != null || entity.getEffect(ModEffects.IMMORTAL_DYING.get()) != null) {
-        event.setCanceled(true);
+      if (entity.getEffect(ModEffects.IMMORTAL.getDelegate()) != null || entity.getEffect(ModEffects.IMMORTAL_DYING.getDelegate()) != null) {
+        if (event instanceof ICancellableEvent e) {
+          e.setCanceled(true);
+        }
         return;
       }
-      if (source.is(DamageTypes.CACTUS) && entity.getEffect(ModEffects.CACTUS_SHIELD.get()) != null) {
-        event.setCanceled(true);
+      if (source.is(DamageTypes.CACTUS) && entity.getEffect(ModEffects.CACTUS_SHIELD.getDelegate()) != null) {
+        if (event instanceof ICancellableEvent e) {
+          e.setCanceled(true);
+        }
       }
     }
   }
 
   @SubscribeEvent
-  public static void onAttack(LivingAttackEvent event) {
+  public static void onAttack(LivingIncomingDamageEvent event) {
     livingEvent(event, event.getSource());
   }
 
   @SubscribeEvent
-  public static void onHurt(LivingHurtEvent event) {
+  public static void onHurt(LivingDamageEvent.Pre event) {
     livingEvent(event, event.getSource());
   }
 
   @SubscribeEvent
-  public static void onDamage(LivingDamageEvent event) {
+  public static void onDamage(LivingDamageEvent.Post event) {
     livingEvent(event, event.getSource());
   }
 
@@ -60,7 +68,7 @@ public class DamageEvent {
   public static void onKnockup(LivingKnockBackEvent event) {
     LivingEntity living = event.getEntity();
     if (living.getLastHurtByMob() instanceof Mob attacker) {
-      MobEffectInstance instance = attacker.getEffect(ModEffects.KNOCKUP.get());
+      MobEffectInstance instance = attacker.getEffect(ModEffects.KNOCKUP.getDelegate());
       if (instance != null) {
         event.setCanceled(true);
         float strength = event.getStrength();

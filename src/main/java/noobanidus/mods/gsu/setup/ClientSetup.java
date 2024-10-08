@@ -1,11 +1,14 @@
 package noobanidus.mods.gsu.setup;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import noobanidus.mods.gsu.GSU;
 
-@OnlyIn(Dist.CLIENT)
+@EventBusSubscriber(modid = GSU.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class ClientSetup {
+  @SubscribeEvent
   public static void init(FMLClientSetupEvent event) {
   }
 }

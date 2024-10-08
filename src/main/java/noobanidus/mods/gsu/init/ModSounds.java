@@ -1,16 +1,22 @@
 package noobanidus.mods.gsu.init;
 
-import com.tterrag.registrate.util.entry.RegistryEntry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import noobanidus.mods.gsu.GSU;
 
-import static noobanidus.mods.gsu.GSU.REGISTRATE;
+import java.util.function.Supplier;
 
 public class ModSounds {
-  public static RegistryEntry<SoundEvent> CRUMBLE = REGISTRATE.simple("crumbled_item", Registries.SOUND_EVENT, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(GSU.MODID, "crumbled_item")));
+  private static final DeferredRegister<SoundEvent> REGISTER = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, GSU.MODID);
 
-  public static void load() {
+  public static final Supplier<SoundEvent> CRUMBLE = REGISTER.register("crumbled_item", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(GSU.MODID, "crumbled_item")));
+
+  public static void register (IEventBus bus) {
+    REGISTER.register(bus);
   }
 }

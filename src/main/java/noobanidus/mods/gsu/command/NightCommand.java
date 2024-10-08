@@ -5,11 +5,8 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.PrimaryLevelData;
-import net.minecraftforge.common.Tags;
 import noobanidus.mods.gsu.config.ConfigManager;
 
 public class NightCommand {
@@ -24,7 +21,7 @@ public class NightCommand {
     }
   }
 
-  private static void registerCommand (CommandDispatcher<CommandSourceStack> dispatcher, String command, int value) {
+  private static void registerCommand(CommandDispatcher<CommandSourceStack> dispatcher, String command, int value) {
     dispatcher.register(Commands.literal(command).requires(o -> o.hasPermission(ConfigManager.getPermissionLevel())).executes(c -> {
       MinecraftServer server = c.getSource().getServer();
       ServerLevel world = server.getLevel(Level.OVERWORLD);

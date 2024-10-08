@@ -1,6 +1,5 @@
 package noobanidus.mods.gsu.effect;
 
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.InstantenousMobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,10 +12,11 @@ public class InstantExplosiveEffect extends InstantenousMobEffect {
   }
 
   @Override
-  public void applyEffectTick(LivingEntity entity, int amplifier) {
+  public boolean applyEffectTick(LivingEntity entity, int amplifier) {
     if (entity instanceof Player && !entity.level().isClientSide) {
       Player player = (Player) entity;
       player.level().explode(player, entity.damageSources().explosion(player, player), null, player.getX(), player.getY(), player.getZ(), (float) (double) ConfigManager.getExplosionSize(), false, ConfigManager.getExplosionMode());
     }
+    return false;
   }
 }

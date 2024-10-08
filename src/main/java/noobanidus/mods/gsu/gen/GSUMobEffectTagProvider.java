@@ -10,6 +10,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import noobanidus.mods.gsu.GSU;
 import noobanidus.mods.gsu.GSUTags;
 import noobanidus.mods.gsu.init.ModEffects;
@@ -17,7 +18,7 @@ import noobanidus.mods.gsu.init.ModEffects;
 import java.util.concurrent.CompletableFuture;
 
 public class GSUMobEffectTagProvider extends TagsProvider<MobEffect> {
-   public GSUMobEffectTagProvider(PackOutput p_256012_, CompletableFuture<HolderLookup.Provider> p_256617_, @org.jetbrains.annotations.Nullable net.minecraftforge.common.data.ExistingFileHelper existingFileHelper) {
+   public GSUMobEffectTagProvider(PackOutput p_256012_, CompletableFuture<HolderLookup.Provider> p_256617_, @org.jetbrains.annotations.Nullable ExistingFileHelper existingFileHelper) {
       super(p_256012_, Registries.MOB_EFFECT, p_256617_, GSU.MODID, existingFileHelper);
    }
 

@@ -74,12 +74,12 @@ public class CumulativeEffectCommand {
     for(Entity entity : pTargets) {
       if (entity instanceof LivingEntity living) {
         int y = j;
-        MobEffectInstance current = living.getEffect(mobeffect);
+        MobEffectInstance current = living.getEffect(pEffect);
         if (current != null) {
           y += current.getDuration();
         }
-        living.removeEffect(mobeffect);
-        MobEffectInstance mobeffectinstance = new MobEffectInstance(mobeffect, y, pAmplifier, false, pShowsParticles);
+        living.removeEffect(pEffect);
+        MobEffectInstance mobeffectinstance = new MobEffectInstance(pEffect, y, pAmplifier, false, pShowsParticles);
         if (living.addEffect(mobeffectinstance, pSource.getEntity())) {
           ++i;
         }
@@ -134,7 +134,7 @@ public class CumulativeEffectCommand {
     int i = 0;
 
     for(Entity entity : p_248561_) {
-      if (entity instanceof LivingEntity && ((LivingEntity)entity).removeEffect(mobeffect)) {
+      if (entity instanceof LivingEntity && ((LivingEntity)entity).removeEffect(p_249198_)) {
         ++i;
       }
     }

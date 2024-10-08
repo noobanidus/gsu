@@ -13,7 +13,7 @@ public class MixinLivingEntity {
   @Inject(method="getDamageAfterArmorAbsorb", at=@At("HEAD"), cancellable=true)
   protected void GSUArmorAfterAbsorb (DamageSource p_21162_, float p_21163_, CallbackInfoReturnable<Float> cir) {
     LivingEntity entity = (LivingEntity) (Object) this;
-    if (entity.hasEffect(ModEffects.ARMOR_SHIELD.get())) {
+    if (entity.hasEffect(ModEffects.ARMOR_SHIELD.getDelegate())) {
       cir.setReturnValue(p_21163_);
       cir.cancel();
     }
@@ -22,7 +22,7 @@ public class MixinLivingEntity {
   @Inject( method="getDamageAfterMagicAbsorb", at=@At(value="HEAD"), cancellable=true)
   protected void GSUDamageAfterMagic (DamageSource p_21193_, float p_21194_, CallbackInfoReturnable<Float> cir) {
     LivingEntity entity = (LivingEntity) (Object) this;
-    if (entity.hasEffect(ModEffects.ARMOR_SHIELD.get())) {
+    if (entity.hasEffect(ModEffects.ARMOR_SHIELD.getDelegate())) {
       cir.setReturnValue(p_21194_);
       cir.cancel();
     }

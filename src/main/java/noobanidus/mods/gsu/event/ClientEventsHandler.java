@@ -3,27 +3,27 @@ package noobanidus.mods.gsu.event;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.Input;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.MovementInputUpdateEvent;
-import net.minecraftforge.client.event.ViewportEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
+import net.neoforged.neoforge.client.event.ViewportEvent;
 import noobanidus.mods.gsu.GSU;
 import noobanidus.mods.gsu.init.ModEffects;
 
-@Mod.EventBusSubscriber(modid = GSU.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = GSU.MODID, value = Dist.CLIENT)
 public class ClientEventsHandler {
   @SubscribeEvent
   public static void tumbleHandler(ViewportEvent.ComputeCameraAngles event) {
     Player player = Minecraft.getInstance().player;
-    if (player != null && player.getEffect(ModEffects.TUMBLE.get()) != null) {
+    if (player != null && player.getEffect(ModEffects.TUMBLE.getDelegate()) != null) {
       event.setRoll(180f);
     }
   }
 
   @SubscribeEvent
   public static void onInput(MovementInputUpdateEvent event) {
-    if (!event.getEntity().hasEffect(ModEffects.JUMBLE.get())) {
+    if (!event.getEntity().hasEffect(ModEffects.JUMBLE.getDelegate())) {
       return;
     }
 

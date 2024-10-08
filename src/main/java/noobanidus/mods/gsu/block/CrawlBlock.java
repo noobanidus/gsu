@@ -1,10 +1,12 @@
 package noobanidus.mods.gsu.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.BellBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -19,10 +21,17 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class CrawlBlock extends BaseEntityBlock {
+  public static final MapCodec<CrawlBlock> CODEC = simpleCodec(CrawlBlock::new);
+
   private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
 
   public CrawlBlock(Properties props) {
     super(props);
+  }
+
+  @Override
+  protected MapCodec<? extends BaseEntityBlock> codec() {
+    return CODEC;
   }
 
   @SuppressWarnings("deprecation")
@@ -40,7 +49,7 @@ public class CrawlBlock extends BaseEntityBlock {
 
   @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-    return new DecayingBlockEntity(ModBlockEntities.DECAYING.get(), pos, state);
+    return new DecayingBlockEntity(pos, state);
   }
 
   @Nullable

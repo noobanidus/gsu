@@ -3,7 +3,6 @@ package noobanidus.mods.gsu.effect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import noobanidus.mods.gsu.config.ConfigManager;
-import noobanidus.mods.gsu.effect.SimpleEffect;
 
 public class InstantFireEffect extends SimpleEffect {
   public InstantFireEffect() {
@@ -11,9 +10,10 @@ public class InstantFireEffect extends SimpleEffect {
   }
 
   @Override
-  public void applyEffectTick(LivingEntity entity, int amplifier) {
+  public boolean applyEffectTick(LivingEntity entity, int amplifier) {
     if (!entity.level().isClientSide()) {
-      entity.setSecondsOnFire(ConfigManager.getFireDuration());
+      entity.setRemainingFireTicks(ConfigManager.getFireDuration());
     }
+    return false;
   }
 }

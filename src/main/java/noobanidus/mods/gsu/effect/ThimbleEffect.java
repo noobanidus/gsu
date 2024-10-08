@@ -17,21 +17,22 @@ public class ThimbleEffect extends SimpleEffect  {
   }
 
   @Override
-  public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
+  public boolean shouldApplyEffectTickThisTick(int p_295329_, int p_295167_) {
     return true;
   }
 
   @Override
-  public void applyEffectTick(LivingEntity entity, int amplifier) {
+  public boolean applyEffectTick(LivingEntity entity, int amplifier) {
     if (entity instanceof Player) {
       if (!entity.level().isClientSide() && rand.nextInt(24) == 0) {
         BlockState state = entity.level().getBlockState(entity.blockPosition());
         VoxelShape shape = state.getShape(entity.level(), entity.blockPosition());
         if (!shape.isEmpty() && shape.bounds().getYsize() < 1) {
-          return;
+          return false;
         }
         entity.level().setBlockAndUpdate(entity.blockPosition().above(), Blocks.COBWEB.defaultBlockState());
       }
     }
+    return false;
   }
 }

@@ -4,7 +4,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ForgeHooks;
+import net.neoforged.neoforge.common.CommonHooks;
 import noobanidus.mods.gsu.config.ConfigManager;
 
 import java.util.Random;
@@ -18,16 +18,16 @@ public class FumbleEffect extends SimpleEffect {
   }
 
   @Override
-  public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
+  public boolean shouldApplyEffectTickThisTick(int p_295329_, int p_295167_) {
     return true;
   }
 
   @Override
-  public void applyEffectTick(LivingEntity entity, int amplifier) {
+  public boolean applyEffectTick(LivingEntity entity, int amplifier) {
     if (entity instanceof Player && !entity.level().isClientSide()) {
       if (rand.nextInt(ConfigManager.getFumbleChance()) != 0) {
         // Don't drop an item every tick
-        return;
+        return false;
       }
       Player player = (Player) entity;
       ItemStack stack = ItemStack.EMPTY;
@@ -52,7 +52,7 @@ public class FumbleEffect extends SimpleEffect {
               }
             }
             if (!stack.isEmpty() && stack.onDroppedByPlayer(player)) {
-              if (ForgeHooks.onPlayerTossEvent(player, player.getInventory().removeItem(slot, 1), false) != null) {
+              if (CommonHooks.onPlayerTossEvent(player, player.getInventory().removeItem(slot, 1), false) != null) {
                 break;
               }
             }
@@ -62,7 +62,7 @@ public class FumbleEffect extends SimpleEffect {
           case 12:
             stack = player.getInventory().getSelected();
             if (!stack.isEmpty() && stack.onDroppedByPlayer(player)) {
-              if (ForgeHooks.onPlayerTossEvent(player, player.getInventory().removeItem(player.getInventory().selected, 1), false) != null) {
+              if (CommonHooks.onPlayerTossEvent(player, player.getInventory().removeItem(player.getInventory().selected, 1), false) != null) {
                 break;
               }
             }
@@ -71,7 +71,7 @@ public class FumbleEffect extends SimpleEffect {
           case 15:
             stack = player.getOffhandItem();
             if (!stack.isEmpty() && stack.onDroppedByPlayer(player)) {
-              if (ForgeHooks.onPlayerTossEvent(player, player.getInventory().removeItem(OFF_HAND_SLOT, 1), false) != null) {
+              if (CommonHooks.onPlayerTossEvent(player, player.getInventory().removeItem(OFF_HAND_SLOT, 1), false) != null) {
                 break;
               }
             }
@@ -82,12 +82,13 @@ public class FumbleEffect extends SimpleEffect {
             slot = rand.nextInt(4);
             stack = player.getInventory().getItem(slot);
             if (!stack.isEmpty() && stack.onDroppedByPlayer(player)) {
-              if (ForgeHooks.onPlayerTossEvent(player, player.getInventory().removeItem(35 + slot, stack.getCount()), false) != null) {
+              if (CommonHooks.onPlayerTossEvent(player, player.getInventory().removeItem(35 + slot, stack.getCount()), false) != null) {
                 break;
               }
             }
         }
       }
     }
+    return false;
   }
 }

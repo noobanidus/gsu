@@ -8,18 +8,14 @@ import noobanidus.mods.gsu.effect.SimpleEffect;
 
 public class DelayedFireEffect extends SimpleEffect {
   public DelayedFireEffect() {
-    this(ConfigManager.getHideParticles());
-  }
-
-  public DelayedFireEffect(boolean hide) {
-    super(MobEffectCategory.HARMFUL, 0xcf1920, hide);
+    super(MobEffectCategory.HARMFUL, 0xcf1920);
   }
 
   @Override
-  public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMapIn, int amplifier) {
-    super.removeAttributeModifiers(entity, attributeMapIn, amplifier);
+  public boolean onEffectRemoved(LivingEntity entity, int amplifier) {
     if (!entity.level().isClientSide) {
-      entity.setSecondsOnFire(ConfigManager.getFireDuration());
+      entity.setRemainingFireTicks(ConfigManager.getFireDuration());
     }
+    return false;
   }
 }

@@ -1,15 +1,21 @@
 package noobanidus.mods.gsu.init;
 
-import com.tterrag.registrate.util.entry.RegistryEntry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import noobanidus.mods.gsu.GSU;
 import noobanidus.mods.gsu.block.CrawlBlock;
 
-import static noobanidus.mods.gsu.GSU.REGISTRATE;
-
 public class ModBlocks {
-  public static final RegistryEntry<CrawlBlock> CRAWL = REGISTRATE.block("crawl", CrawlBlock::new).properties(o -> o.randomTicks().strength(0, 0))
-      .blockstate((ctx, p) -> p.simpleBlock(ctx.getEntry(), p.models().getExistingFile(new ResourceLocation("minecraft", "barrier")))).register();
+  private static final DeferredRegister<Block> REGISTER = DeferredRegister.create(BuiltInRegistries.BLOCK, GSU.MODID);
 
-  public static void load() {
+  public static final DeferredHolder<Block, CrawlBlock> CRAWL = REGISTER.register("crawl", () -> new CrawlBlock(BlockBehaviour.Properties.of().strength(0, 0).randomTicks()));
+
+  public static void register (IEventBus bus) {
+    REGISTER.register(bus);
   }
 }

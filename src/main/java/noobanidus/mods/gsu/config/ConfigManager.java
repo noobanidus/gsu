@@ -1,63 +1,49 @@
 package noobanidus.mods.gsu.config;
 
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.core.io.WritingMode;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import noobanidus.mods.gsu.GSU;
 
-import java.nio.file.Path;
 import java.util.*;
 
 public class ConfigManager {
-  private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
+  private static final ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
 
-  public static ForgeConfigSpec COMMON_CONFIG;
-
-  // Debug
-  private static final ForgeConfigSpec.BooleanValue CHECK_NBT;
+  public static ModConfigSpec COMMON_CONFIG;
 
   // Potion effects
-  private static final ForgeConfigSpec.DoubleValue EXPLOSION_SIZE;
-  private static final ForgeConfigSpec.IntValue DAMAGE_AMOUNT;
-  private static final ForgeConfigSpec.DoubleValue DAMAGE_CHANCE;
-  private static final ForgeConfigSpec.BooleanValue NICE_MODE;
-  private static final ForgeConfigSpec.IntValue FUMBLE_CHANCE;
-  private static final ForgeConfigSpec.IntValue DRUMBLE_CHANCE;
-  private static final ForgeConfigSpec.BooleanValue EFFECTS_PERSIST;
-  private static final ForgeConfigSpec.BooleanValue EFFECTS_PERSIST_TAG;
-  private static final ForgeConfigSpec.BooleanValue DEBUG_EFFECTS;
-  private static final ForgeConfigSpec.ConfigValue<String> EXPLOSION_MODE;
-  private static final ForgeConfigSpec.BooleanValue HIDE_PARTICLES;
-  private static final ForgeConfigSpec.DoubleValue KNOCKBACK_AMOUNT;
-  private static final ForgeConfigSpec.DoubleValue KNOCKUP_AMOUNT;
-  private static final ForgeConfigSpec.IntValue FIRE_DURATION;
-  private static final ForgeConfigSpec.IntValue FIRE_RADIUS;
+  private static final ModConfigSpec.DoubleValue EXPLOSION_SIZE;
+  private static final ModConfigSpec.IntValue DAMAGE_AMOUNT;
+  private static final ModConfigSpec.DoubleValue DAMAGE_CHANCE;
+  private static final ModConfigSpec.BooleanValue NICE_MODE;
+  private static final ModConfigSpec.IntValue FUMBLE_CHANCE;
+  private static final ModConfigSpec.IntValue DRUMBLE_CHANCE;
+  private static final ModConfigSpec.BooleanValue EFFECTS_PERSIST;
+  private static final ModConfigSpec.BooleanValue EFFECTS_PERSIST_TAG;
+  private static final ModConfigSpec.BooleanValue DEBUG_EFFECTS;
+  private static final ModConfigSpec.ConfigValue<String> EXPLOSION_MODE;
+  private static final ModConfigSpec.BooleanValue HIDE_PARTICLES;
+  private static final ModConfigSpec.DoubleValue KNOCKBACK_AMOUNT;
+  private static final ModConfigSpec.DoubleValue KNOCKUP_AMOUNT;
+  private static final ModConfigSpec.IntValue FIRE_DURATION;
+  private static final ModConfigSpec.IntValue FIRE_RADIUS;
 
   // Command options
-  private static final ForgeConfigSpec.BooleanValue REGISTER_TIME;
-  private static final ForgeConfigSpec.BooleanValue REGISTER_POTION;
-  private static final ForgeConfigSpec.IntValue PERMISSION_LEVEL;
+  private static final ModConfigSpec.BooleanValue REGISTER_TIME;
+  private static final ModConfigSpec.BooleanValue REGISTER_POTION;
+  private static final ModConfigSpec.IntValue PERMISSION_LEVEL;
 
   // Time values
-  private static final ForgeConfigSpec.LongValue DAY_LENGTH;
-  private static final ForgeConfigSpec.IntValue MIDNIGHT_TIME;
-  private static final ForgeConfigSpec.IntValue NIGHT_TIME;
-  private static final ForgeConfigSpec.IntValue MORNING_TIME;
-  private static final ForgeConfigSpec.IntValue SUNSET_TIME;
-  private static final ForgeConfigSpec.IntValue DAWN_TIME;
-  private static final ForgeConfigSpec.IntValue MIDDAY_TIME;
-
-  // Capability injects
-  private static final ForgeConfigSpec.ConfigValue<List<? extends String>> ENTITY_LIST;
-
-  private static Set<EntityType<?>> ENTITY_SET = null;
+  private static final ModConfigSpec.LongValue DAY_LENGTH;
+  private static final ModConfigSpec.IntValue MIDNIGHT_TIME;
+  private static final ModConfigSpec.IntValue NIGHT_TIME;
+  private static final ModConfigSpec.IntValue MORNING_TIME;
+  private static final ModConfigSpec.IntValue SUNSET_TIME;
+  private static final ModConfigSpec.IntValue DAWN_TIME;
+  private static final ModConfigSpec.IntValue MIDDAY_TIME;
 
   public static boolean getEffectsPersist() {
     return EFFECTS_PERSIST.get();
@@ -111,12 +97,6 @@ public class ConfigManager {
 
   static {
     Set<String> MODE_TYPES = new HashSet<>(Arrays.asList("none", "block", "mob", "tnt"));
-    COMMON_BUILDER.push("debug");
-    CHECK_NBT = COMMON_BUILDER.comment("whether or not to debug for NBT on tagged items").define("check_nbt", true);
-    COMMON_BUILDER.pop();
-    COMMON_BUILDER.push("reskin");
-    ENTITY_LIST = COMMON_BUILDER.comment("list of entities (minecraft:cow, etc) that will have the capacity to be reskinned via NBT").defineList("entity_list", Collections.singletonList("minecraft:cow"), o -> (o instanceof String) && ((String) o).contains(":"));
-    COMMON_BUILDER.pop();
     COMMON_BUILDER.push("effects");
     EXPLOSION_SIZE = COMMON_BUILDER.comment("the size of the explosion caused by the explosive effect").defineInRange("explosion_size", 2.0, 0, Double.MAX_VALUE);
     EXPLOSION_MODE = COMMON_BUILDER.comment("the type of explosion mode for blocks  options: NONE, BLOCK, MOB, TNT").define("explosion_mode", "break", (o) -> o != null && MODE_TYPES.contains(o.toString().toLowerCase(Locale.ROOT)));
@@ -214,35 +194,8 @@ public class ConfigManager {
     return FIRE_RADIUS.get();
   }
 
-  public static boolean getCheckNbt () {
-    return CHECK_NBT.get();
-  }
-
-  public static Set<EntityType<?>> getEntitySet() {
-    if (ENTITY_SET == null) {
-      ENTITY_SET = new HashSet<>();
-      for (String value : ENTITY_LIST.get()) {
-        ResourceLocation loc = new ResourceLocation(value);
-        EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(loc);
-        if (type != null) {
-          ENTITY_SET.add(type);
-        }
-      }
-    }
-
-    return ENTITY_SET;
-  }
-
-  public static void loadConfig(ForgeConfigSpec spec, Path path) {
-    CommentedFileConfig configData = CommentedFileConfig.builder(path).sync().autosave().writingMode(WritingMode.REPLACE).build();
-    configData.load();
-    spec.setConfig(configData);
-  }
-
   public static void configReloaded(ModConfigEvent event) {
     if (event.getConfig().getType() == ModConfig.Type.COMMON) {
-      ENTITY_SET = null;
-      COMMON_CONFIG.setConfig(event.getConfig().getConfigData());
       GSU.LOG.info("GSU config reloaded");
     }
   }

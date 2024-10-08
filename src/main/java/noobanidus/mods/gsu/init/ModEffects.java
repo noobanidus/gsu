@@ -1,50 +1,52 @@
 package noobanidus.mods.gsu.init;
 
-import com.tterrag.registrate.util.entry.RegistryEntry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import noobanidus.mods.gsu.GSU;
 import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.effect.*;
 import noobanidus.mods.gsu.effect.DelayedFireEffect;
 import noobanidus.mods.gsu.effect.InstantFireEffect;
 
-import static noobanidus.mods.gsu.GSU.REGISTRATE;
+import java.util.function.Supplier;
 
 public class ModEffects {
-  public static final RegistryEntry<DyingEffect> DYING = REGISTRATE.simple("dying", Registries.MOB_EFFECT, DyingEffect::new);
-  public static final RegistryEntry<SimpleEffect> IMMORTAL = REGISTRATE.simple("immortal", Registries.MOB_EFFECT, () -> new SimpleEffect(MobEffectCategory.NEUTRAL, 0xffffff, true));
-  public static final RegistryEntry<DyingEffect> IMMORTAL_DYING = REGISTRATE.simple("immortal_dying", Registries.MOB_EFFECT, DyingEffect::new);
-  public static final RegistryEntry<FumbleEffect> FUMBLE = REGISTRATE.simple("fumble", Registries.MOB_EFFECT, FumbleEffect::new);
-  public static final RegistryEntry<InstantExplosiveEffect> EXPLOSIVE = REGISTRATE.simple("explosive", Registries.MOB_EFFECT, InstantExplosiveEffect::new);
-  public static final RegistryEntry<DelayedExplosiveEffect> DELAYED_EXPLOSIVE = REGISTRATE.simple("delayed_explosive", Registries.MOB_EFFECT, DelayedExplosiveEffect::new);
-  public static final RegistryEntry<StumbleEffect> STUMBLE = REGISTRATE.simple("stumble",Registries.MOB_EFFECT, StumbleEffect::new);
+  private static final DeferredRegister<MobEffect> REGISTER = DeferredRegister.create(BuiltInRegistries.MOB_EFFECT, GSU.MODID);
 
-  public static final RegistryEntry<CrumbleEffect> CRUMBLE = REGISTRATE.simple("crumble", Registries.MOB_EFFECT,  CrumbleEffect::new);
+  public static final DeferredHolder<MobEffect, DyingEffect> DYING = REGISTER.register("dying", DyingEffect::new);
+  public static final DeferredHolder<MobEffect, SimpleEffect> IMMORTAL = REGISTER.register("immortal", () -> new SimpleEffect.HiddenParticleEffect(MobEffectCategory.NEUTRAL, 0xffffff));
+  public static final DeferredHolder<MobEffect, DyingEffect> IMMORTAL_DYING = REGISTER.register("immortal_dying", DyingEffect::new);
+  public static final DeferredHolder<MobEffect, FumbleEffect> FUMBLE = REGISTER.register("fumble", FumbleEffect::new);
+  public static final DeferredHolder<MobEffect, InstantExplosiveEffect> EXPLOSIVE = REGISTER.register("explosive", InstantExplosiveEffect::new);
+  public static final DeferredHolder<MobEffect, DelayedExplosiveEffect> DELAYED_EXPLOSIVE = REGISTER.register("delayed_explosive", () -> new DelayedExplosiveEffect());
+  public static final DeferredHolder<MobEffect, StumbleEffect> STUMBLE = REGISTER.register("stumble", StumbleEffect::new);
+  public static final DeferredHolder<MobEffect, CrumbleEffect> CRUMBLE = REGISTER.register("crumble", CrumbleEffect::new);
+  public static final DeferredHolder<MobEffect, DrumbleEffect> DRUMBLE = REGISTER.register("drumble", DrumbleEffect::new);
+  public static final DeferredHolder<MobEffect, TumbleEffect> TUMBLE = REGISTER.register("tumble", TumbleEffect::new);
+  public static final DeferredHolder<MobEffect, ThimbleEffect> THIMBLE = REGISTER.register("thimble", ThimbleEffect::new);
+  public static final DeferredHolder<MobEffect, JumbleEffect> JUMBLE = REGISTER.register("jumble", JumbleEffect::new);
+  public static final DeferredHolder<MobEffect, InstantFireEffect> INSTANT_FIRE = REGISTER.register("instant_fire", InstantFireEffect::new);
+  public static final DeferredHolder<MobEffect, DelayedFireEffect> DELAYED_FIRE = REGISTER.register("delayed_fire", () -> new DelayedFireEffect());
 
-  public static final RegistryEntry<DrumbleEffect> DRUMBLE = REGISTRATE.simple("drumble", Registries.MOB_EFFECT, DrumbleEffect::new);
+  private static final ResourceLocation KNOCKBACK_MODIFIER = ResourceLocation.fromNamespaceAndPath(GSU.MODID, "knockback_modifier");
 
-  public static final RegistryEntry<TumbleEffect> TUMBLE = REGISTRATE.simple("tumble", Registries.MOB_EFFECT, TumbleEffect::new);
+  public static final DeferredHolder<MobEffect, MobEffect> KNOCKBACK = REGISTER.register("knockback", () -> new SimpleEffect.HiddenParticleEffect(MobEffectCategory.BENEFICIAL, 0x000000).addAttributeModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager::getKnockbackAmount, AttributeModifier.Operation.ADD_VALUE));
 
-  public static final RegistryEntry<ThimbleEffect> THIMBLE = REGISTRATE.simple("thimble", Registries.MOB_EFFECT, ThimbleEffect::new);
+  public static final DeferredHolder<MobEffect, MobEffect> KNOCKUP = REGISTER.register("knockup", () -> new SimpleEffect.HiddenParticleEffect(MobEffectCategory.BENEFICIAL, 0x000000).addAttributeModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager::getKnockupAmount, AttributeModifier.Operation.ADD_VALUE));
 
-  public static final RegistryEntry<JumbleEffect> JUMBLE = REGISTRATE.simple("jumble", Registries.MOB_EFFECT, JumbleEffect::new);
+  public static final DeferredHolder<MobEffect, SimpleEffect> CACTUS_SHIELD = REGISTER.register("cactus_shield", () -> new SimpleEffect.HiddenParticleEffect(MobEffectCategory.BENEFICIAL, 0x237543));
 
-  public static final RegistryEntry<InstantFireEffect> INSTANT_FIRE = REGISTRATE.simple("instant_fire", Registries.MOB_EFFECT, InstantFireEffect::new);
-  public static final RegistryEntry<DelayedFireEffect> DELAYED_FIRE = REGISTRATE.simple("delayed_fire", Registries.MOB_EFFECT, DelayedFireEffect::new);
+  public static final DeferredHolder<MobEffect, SimpleEffect> ARMOR_SHIELD = REGISTER.register("armor_shield", () -> new SimpleEffect.HiddenParticleEffect(MobEffectCategory.BENEFICIAL, 0xd9d48d));
 
-  private static final String KNOCKBACK_MODIFIER = "135f711e-33b6-457f-8c40-a5abc8c47a5e";
-
-  public static final RegistryEntry<MobEffect> KNOCKBACK = REGISTRATE.simple("knockback", Registries.MOB_EFFECT, () -> new SimpleEffect(MobEffectCategory.BENEFICIAL, 0x000000, true).addAttributeModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager.getKnockbackAmount(), AttributeModifier.Operation.ADDITION));
-
-  public static final RegistryEntry<MobEffect> KNOCKUP = REGISTRATE.simple("knockup", Registries.MOB_EFFECT, () -> new SimpleEffect(MobEffectCategory.BENEFICIAL, 0x000000, true).addAttributeModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager.getKnockupAmount(), AttributeModifier.Operation.ADDITION));
-
-  public static final RegistryEntry<SimpleEffect> CACTUS_SHIELD = REGISTRATE.simple("cactus_shield", Registries.MOB_EFFECT, () -> new SimpleEffect(MobEffectCategory.BENEFICIAL, 0x237543, true));
-
-  public static final RegistryEntry<SimpleEffect> ARMOR_SHIELD = REGISTRATE.simple("armor_shield", Registries.MOB_EFFECT, () -> new SimpleEffect(MobEffectCategory.BENEFICIAL, 0xd9d48d, true));
-
-  public static void load() {
+  public static void register (IEventBus bus) {
+    REGISTER.register(bus);
   }
 }

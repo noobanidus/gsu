@@ -8,7 +8,7 @@ public class TumbleEffect extends SimpleEffect  {
   }
 
   @Override
-  public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
+  public boolean shouldApplyEffectTickThisTick(int p_295329_, int p_295167_) {
     return true;
   }
 }

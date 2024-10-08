@@ -1,61 +1,35 @@
 package noobanidus.mods.gsu;
 
-import com.tterrag.registrate.Registrate;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLPaths;
-import noobanidus.mods.gsu.command.CumulativeEffectCommand;
-import noobanidus.mods.gsu.command.NightCommand;
-import noobanidus.mods.gsu.command.PotionIdCommand;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import noobanidus.mods.gsu.config.ConfigManager;
-import noobanidus.mods.gsu.init.ModBlockEntities;
-import noobanidus.mods.gsu.init.ModBlocks;
-import noobanidus.mods.gsu.init.ModEffects;
-import noobanidus.mods.gsu.init.ModSounds;
-import noobanidus.mods.gsu.setup.ClientInit;
+import noobanidus.mods.gsu.init.*;
+import noobanidus.mods.gsu.network.PacketHandler;
 import noobanidus.mods.gsu.setup.CommonSetup;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(GSU.MODID)
-@Mod.EventBusSubscriber(modid = GSU.MODID)
 public class GSU {
   public static final String MODID = "gsu";
-  public static Registrate REGISTRATE;
   public static Logger LOG = LogManager.getLogger();
+  public static final String NETWORK_VERSION = "1.21_1";
 
-  public GSU() {
-    REGISTRATE = Registrate.create(MODID);
+  private final PacketHandler PACKET_HANDLER;
 
-    IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
-    ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigManager.COMMON_CONFIG);
-    loadConfig();
+  public GSU(ModContainer container, IEventBus modBus) {
+    container.registerConfig(ModConfig.Type.COMMON, ConfigManager.COMMON_CONFIG);
     modBus.addListener(CommonSetup::init);
     modBus.addListener(ConfigManager::configReloaded);
 
-    DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientInit::init);
+    PACKET_HANDLER = new PacketHandler(modBus);
 
-    ModSounds.load();
-    ModEffects.load();
-    ModBlockEntities.load();
-    ModBlocks.load();
-  }
-
-  @SubscribeEvent
-  public static void commandRegister(RegisterCommandsEvent event) {
-    CumulativeEffectCommand.register(event.getDispatcher(), event.getBuildContext());
-    PotionIdCommand.register(event.getDispatcher(), event.getBuildContext());
-    NightCommand.register(event.getDispatcher());
-  }
-
-  public static void loadConfig () {
-    ConfigManager.loadConfig(ConfigManager.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
+    ModBlocks.register(modBus);
+    ModBlockEntities.register(modBus);
+    ModAttachments.register(modBus);
+    ModSounds.register(modBus);
+    ModEffects.register(modBus);
   }
 }

@@ -1,40 +1,39 @@
 package noobanidus.mods.gsu.event;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import noobanidus.mods.gsu.GSU;
 import noobanidus.mods.gsu.GSUTags;
-import noobanidus.mods.gsu.capability.Capabilities;
-import noobanidus.mods.gsu.capability.SkinCapability;
 import noobanidus.mods.gsu.config.ConfigManager;
+import noobanidus.mods.gsu.effect.SimpleEffect;
+import noobanidus.mods.gsu.init.ModAttachments;
 import noobanidus.mods.gsu.init.ModEffects;
-import noobanidus.mods.gsu.network.Networking;
-import noobanidus.mods.gsu.network.SetSkin;
+import noobanidus.mods.gsu.network.PacketSetSkin;
 
 import java.util.*;
 
-@Mod.EventBusSubscriber(modid = GSU.MODID)
+@EventBusSubscriber(modid = GSU.MODID)
 public class EventsHandler {
   private static final Map<UUID, List<MobEffectInstance>> potionClone = new HashMap<>();
 
@@ -42,8 +41,7 @@ public class EventsHandler {
     if (!ConfigManager.getEffectsPersistTag()) {
       return true;
     }
-    ResourceKey<MobEffect> key = BuiltInRegistries.MOB_EFFECT.getResourceKey(effect.getEffect()).orElseThrow();
-    return BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(key).is(GSUTags.Potions.EFFECTS_PERSIST);
+    return effect.getEffect().is(GSUTags.Potions.EFFECTS_PERSIST);
   }
 
   @SubscribeEvent
@@ -77,22 +75,33 @@ public class EventsHandler {
     }
   }
 
-  @SubscribeEvent
-  public static void attachCapbilities(AttachCapabilitiesEvent<Entity> event) {
-    if (ConfigManager.getEntitySet().contains(event.getObject().getType())) {
-      event.addCapability(SkinCapability.IDENTIFIER, new SkinCapability());
-    }
-  }
-
+  // Data attachments
   @SubscribeEvent
   public static void startTracking(PlayerEvent.StartTracking event) {
     Entity target = event.getTarget();
     if (!target.level().isClientSide()) {
-      target.getCapability(Capabilities.SKIN_CAPABILITY).ifPresent(cap -> {
-        if (cap.getOverride() != null) {
-          Networking.sendTo(new SetSkin(target.getId(), cap.getOverride()), (ServerPlayer) event.getEntity());
-        }
-      });
+      ResourceLocation skin = target.getData(ModAttachments.SKIN);
+      if (skin != ModAttachments.NO_SKIN) {
+        PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new PacketSetSkin(target.getId(), skin));
+      }
+    }
+  }
+
+  @SubscribeEvent
+  public static void onPotionExpire (MobEffectEvent.Expired event) {
+    if (event.getEffectInstance().getEffect().value() instanceof SimpleEffect simpleEffect) {
+      if (simpleEffect.onEffectExpire(event.getEntity(), event.getEffectInstance().getAmplifier())) {
+        event.setCanceled(true);
+      }
+    }
+  }
+
+  @SubscribeEvent
+  public static void onPotionRemoved (MobEffectEvent.Remove event) {
+    if (event.getEffectInstance().getEffect().value() instanceof SimpleEffect simpleEffect) {
+      if (simpleEffect.onEffectRemoved(event.getEntity(), event.getEffectInstance().getAmplifier())) {
+        event.setCanceled(true);
+      }
     }
   }
 
@@ -100,13 +109,13 @@ public class EventsHandler {
   public static void throwableHit(ProjectileImpactEvent event) {
     if (!event.getProjectile().level().isClientSide() && event.getProjectile() instanceof ThrownPotion thrown) {
       ItemStack itemstack = thrown.getItem();
-      List<MobEffectInstance> effects = PotionUtils.getMobEffects(itemstack);
       HitResult.Type type = event.getRayTraceResult().getType();
       if (type == HitResult.Type.MISS) {
         return;
       }
       boolean doFire = false;
-      for (MobEffectInstance effect : effects) {
+      PotionContents potioncontents = itemstack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+      for (MobEffectInstance effect : potioncontents.getAllEffects()) {
         if (effect.getEffect() == ModEffects.DELAYED_FIRE.get() || effect.getEffect() == ModEffects.INSTANT_FIRE.get()) {
           doFire = true;
           break;
