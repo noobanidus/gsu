@@ -28,7 +28,7 @@ public class CumulativeEffectCommand {
   private static final SimpleCommandExceptionType ERROR_CLEAR_SPECIFIC_FAILED = new SimpleCommandExceptionType(Component.translatable("commands.effect.clear.specific.failed"));
 
   public static void register(CommandDispatcher<CommandSourceStack> p_136954_, CommandBuildContext p_251610_) {
-    p_136954_.register(Commands.literal("effect").requires((p_136958_) -> {
+    p_136954_.register(Commands.literal("ceffect").requires((p_136958_) -> {
       return p_136958_.hasPermission(2);
     }).then(Commands.literal("clear").executes((p_136984_) -> {
       return clearEffects(p_136984_.getSource(), ImmutableList.of(p_136984_.getSource().getEntityOrException()));
