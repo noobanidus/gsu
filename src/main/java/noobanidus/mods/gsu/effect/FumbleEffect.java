@@ -24,16 +24,15 @@ public class FumbleEffect extends SimpleEffect {
 
   @Override
   public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-    if (entity instanceof Player && !entity.level().isClientSide()) {
-      if (rand.nextInt(ConfigManager.getFumbleChance()) != 0) {
+    if (entity instanceof Player player && !entity.level().isClientSide()) {
+      if (entity.getRandom().nextInt(ConfigManager.getFumbleChance()) != 0) {
         // Don't drop an item every tick
-        return false;
+        return true;
       }
-      Player player = (Player) entity;
       ItemStack stack = ItemStack.EMPTY;
       int slot = 0;
       for (int i = 0; i < amplifier + 1; i++) {
-        switch (rand.nextInt(20)) {
+        switch (entity.getRandom().nextInt(20)) {
           case 0:
           case 1:
           case 2:
@@ -89,6 +88,6 @@ public class FumbleEffect extends SimpleEffect {
         }
       }
     }
-    return false;
+    return true;
   }
 }
