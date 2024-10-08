@@ -25,5 +25,6 @@ public class GSUDataGenerators {
     generator.addProvider(event.includeServer(), new GSUItemTagProvider(output, provider,blocks.contentsGetter(), helper));
     generator.addProvider(event.includeServer(), new GSUMobEffectTagProvider(output, provider, helper));
     generator.addProvider(event.includeServer(), new GSUEntityTagsProvider(output, provider, helper));
+    generator.addProvider(event.includeServer(), new GSUDamageTypeTagProvider(output, provider, helper));
   }
 }
