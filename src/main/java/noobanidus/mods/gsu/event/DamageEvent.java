@@ -16,6 +16,7 @@ import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import noobanidus.mods.gsu.GSU;
+import noobanidus.mods.gsu.GSUTags;
 import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.init.ModEffects;
 
@@ -41,7 +42,7 @@ public class DamageEvent {
         }
         return;
       }
-      if (source.is(DamageTypes.CACTUS) && entity.getEffect(ModEffects.CACTUS_SHIELD.getDelegate()) != null) {
+      if (source.is(GSUTags.Damage.CACTUS_DAMAGE) && entity.getEffect(ModEffects.CACTUS_SHIELD.getDelegate()) != null) {
         if (event instanceof ICancellableEvent e) {
           e.setCanceled(true);
         }
