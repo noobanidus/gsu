@@ -12,7 +12,7 @@ public class DelayedFireEffect extends SimpleEffect {
   @Override
   public boolean onEffectRemoved(LivingEntity entity, int amplifier) {
     if (!entity.level().isClientSide) {
-      entity.setRemainingFireTicks(ConfigManager.getFireDuration());
+      entity.igniteForTicks(ConfigManager.getFireDuration());
     }
     return false;
   }

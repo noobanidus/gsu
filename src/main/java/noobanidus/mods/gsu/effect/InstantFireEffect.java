@@ -10,9 +10,14 @@ public class InstantFireEffect extends SimpleEffect {
   }
 
   @Override
+  public boolean shouldApplyEffectTickThisTick(int p_295329_, int p_295167_) {
+    return true;
+  }
+
+  @Override
   public boolean applyEffectTick(LivingEntity entity, int amplifier) {
     if (!entity.level().isClientSide()) {
-      entity.setRemainingFireTicks(ConfigManager.getFireDuration());
+      entity.igniteForTicks(ConfigManager.getFireDuration());
     }
     return false;
   }
