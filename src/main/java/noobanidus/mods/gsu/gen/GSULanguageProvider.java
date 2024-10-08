@@ -14,8 +14,8 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class GSULanguageProvider extends LanguageProvider {
-  public GSULanguageProvider(PackOutput output, String locale) {
-    super(output, GSU.MODID, locale);
+  public GSULanguageProvider(PackOutput output) {
+    super(output, GSU.MODID, "en_us");
   }
 
   @Override
