@@ -5,6 +5,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.CommonHooks;
+import noobanidus.mods.gsu.GSUTags;
 import noobanidus.mods.gsu.config.ConfigManager;
 
 public class FumbleEffect extends SimpleEffect {
@@ -40,7 +41,7 @@ public class FumbleEffect extends SimpleEffect {
           case 7:
           case 8:
             int tries = 100;
-            while (stack.isEmpty()) {
+            while (stack.isEmpty() && !stack.is(GSUTags.Item.FUMBLE_BLACKLIST)) {
               stack = player.getInventory().getItem(slot = entity.getRandom().nextInt(36));
               tries--;
               if (tries < 0) {
@@ -57,7 +58,7 @@ public class FumbleEffect extends SimpleEffect {
           case 11:
           case 12:
             stack = player.getInventory().getSelected();
-            if (!stack.isEmpty() && stack.onDroppedByPlayer(player)) {
+            if (!stack.isEmpty() && !stack.is(GSUTags.Item.FUMBLE_BLACKLIST) && stack.onDroppedByPlayer(player)) {
               if (CommonHooks.onPlayerTossEvent(player, player.getInventory().removeItem(player.getInventory().selected, 1), false) != null) {
                 break;
               }
@@ -66,7 +67,7 @@ public class FumbleEffect extends SimpleEffect {
           case 14:
           case 15:
             stack = player.getOffhandItem();
-            if (!stack.isEmpty() && stack.onDroppedByPlayer(player)) {
+            if (!stack.isEmpty() && !stack.is(GSUTags.Item.FUMBLE_BLACKLIST) && stack.onDroppedByPlayer(player)) {
               if (CommonHooks.onPlayerTossEvent(player, player.getInventory().removeItem(OFF_HAND_SLOT, 1), false) != null) {
                 break;
               }
@@ -77,7 +78,7 @@ public class FumbleEffect extends SimpleEffect {
           case 19:
             slot = entity.getRandom().nextInt(4);
             stack = player.getInventory().getItem(slot);
-            if (!stack.isEmpty() && stack.onDroppedByPlayer(player)) {
+            if (!stack.isEmpty() && !stack.is(GSUTags.Item.FUMBLE_BLACKLIST) && stack.onDroppedByPlayer(player)) {
               if (CommonHooks.onPlayerTossEvent(player, player.getInventory().removeItem(35 + slot, stack.getCount()), false) != null) {
                 break;
               }
