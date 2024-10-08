@@ -4,6 +4,7 @@ import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import noobanidus.mods.gsu.GSU;
+import noobanidus.mods.gsu.GSUTags;
 import noobanidus.mods.gsu.init.ModBlocks;
 import noobanidus.mods.gsu.init.ModEffects;
 import org.apache.commons.lang3.StringUtils;
@@ -39,7 +40,13 @@ public class GSULanguageProvider extends LanguageProvider {
     addEffect(ModEffects.THIMBLE, getDescription(ModEffects.THIMBLE));
     addEffect(ModEffects.TUMBLE, getDescription(ModEffects.TUMBLE));
 
-
+    add(GSUTags.Potions.EFFECTS_PERSIST, "Effects Persist Through Death");
+    add(GSUTags.Damage.CACTUS_DAMAGE, "Cactus Damage");
+    add(GSUTags.Item.CRUMBLE_BLACKLIST, "Crumble Blacklist");
+    add(GSUTags.Item.FUMBLE_BLACKLIST, "Fumble Blacklist");
+    add(GSUTags.Entity.RESKIN, "Reskin Entities");
+    add(GSUTags.Potions.SUPPRESS_PARTICLES, "Particles Suppressed");
+    add(GSUTags.Potions.FIRE_EFFECT, "Fire Ground Effect");
   }
 
   private String getDescription(DeferredHolder<?, ?> holder) {
