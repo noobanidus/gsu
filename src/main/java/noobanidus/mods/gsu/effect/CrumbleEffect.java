@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.TieredItem;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import noobanidus.mods.gsu.GSUTags;
 import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.init.ModSounds;
 
@@ -34,7 +35,7 @@ public class CrumbleEffect extends SimpleEffect {
         for (int i = 0; i < cap.getSlots(); i++) {
           ItemStack inSlot = cap.getStackInSlot(i);
           // TODO: Improve this
-          if (inSlot.getItem() instanceof TieredItem && inSlot.isDamageableItem()) {
+          if (inSlot.getItem() instanceof TieredItem && inSlot.isDamageableItem() && !inSlot.is(GSUTags.Item.CRUMBLE_BLACKLIST)) {
             if (ConfigManager.getNiceMode() && inSlot.getDamageValue() >= inSlot.getMaxDamage() + 10) {
               continue;
             }
@@ -43,8 +44,10 @@ public class CrumbleEffect extends SimpleEffect {
         }
         if (entity.getOffhandItem().getItem() instanceof ShieldItem) {
           ItemStack inSlot = entity.getOffhandItem();
-          if (!ConfigManager.getNiceMode() || inSlot.getDamageValue() < inSlot.getMaxDamage() + 10) {
-            tools.add(inSlot);
+          if (!inSlot.is(GSUTags.Item.CRUMBLE_BLACKLIST)) {
+            if (!ConfigManager.getNiceMode() || inSlot.getDamageValue() < inSlot.getMaxDamage() + 10) {
+              tools.add(inSlot);
+            }
           }
         }
         if (!tools.isEmpty()) {
