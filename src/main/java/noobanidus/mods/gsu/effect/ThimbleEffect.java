@@ -24,11 +24,11 @@ public class ThimbleEffect extends SimpleEffect  {
         BlockState state = player.level().getBlockState(player.blockPosition());
         VoxelShape shape = state.getShape(player.level(), player.blockPosition());
         if (!shape.isEmpty() && shape.bounds().getYsize() < 1) {
-          return false;
+          return true;
         }
         player.level().setBlockAndUpdate(player.blockPosition().above(), Blocks.COBWEB.defaultBlockState());
       }
     }
-    return false;
+    return true;
   }
 }

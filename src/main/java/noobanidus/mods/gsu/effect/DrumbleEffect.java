@@ -27,6 +27,6 @@ public class DrumbleEffect extends SimpleEffect {
         entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 15, 10, false, false, true));
       }
     }
-    return false;
+    return true;
   }
 }
