@@ -21,14 +21,14 @@ public class StumbleEffect extends SimpleEffect  {
 
   @Override
   public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-    if (entity instanceof Player) {
-      if (!entity.level().isClientSide() && entity.getRandom().nextInt(16) == 0) {
-        BlockState state = entity.level().getBlockState(entity.blockPosition());
-        VoxelShape shape = state.getShape(entity.level(), entity.blockPosition());
+    if (entity instanceof Player player) {
+      if (!player.level().isClientSide() && player.getRandom().nextInt(16) == 0) {
+        BlockState state = player.level().getBlockState(player.blockPosition());
+        VoxelShape shape = state.getShape(player.level(), player.blockPosition());
         if (!shape.isEmpty() && shape.bounds().getYsize() < 1) {
           return false;
         }
-        entity.level().setBlockAndUpdate(entity.blockPosition().above(), ModBlocks.CRAWL.get().defaultBlockState());
+        player.level().setBlockAndUpdate(player.blockPosition().above(), ModBlocks.CRAWL.get().defaultBlockState());
       }
     }
     return false;

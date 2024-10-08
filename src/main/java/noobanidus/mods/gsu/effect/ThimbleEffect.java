@@ -10,8 +10,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.Random;
 
 public class ThimbleEffect extends SimpleEffect  {
-  private static final Random rand = new Random();
-
   public ThimbleEffect() {
     super(MobEffectCategory.HARMFUL, 0xcacbc1);
   }
@@ -23,14 +21,14 @@ public class ThimbleEffect extends SimpleEffect  {
 
   @Override
   public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-    if (entity instanceof Player) {
-      if (!entity.level().isClientSide() && rand.nextInt(24) == 0) {
-        BlockState state = entity.level().getBlockState(entity.blockPosition());
-        VoxelShape shape = state.getShape(entity.level(), entity.blockPosition());
+    if (entity instanceof Player player) {
+      if (!player.level().isClientSide() && player.getRandom().nextInt(24) == 0) {
+        BlockState state = player.level().getBlockState(player.blockPosition());
+        VoxelShape shape = state.getShape(player.level(), player.blockPosition());
         if (!shape.isEmpty() && shape.bounds().getYsize() < 1) {
           return false;
         }
-        entity.level().setBlockAndUpdate(entity.blockPosition().above(), Blocks.COBWEB.defaultBlockState());
+        player.level().setBlockAndUpdate(player.blockPosition().above(), Blocks.COBWEB.defaultBlockState());
       }
     }
     return false;
