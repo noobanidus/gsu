@@ -16,10 +16,15 @@ import noobanidus.mods.gsu.effect.*;
 import noobanidus.mods.gsu.effect.DelayedFireEffect;
 import noobanidus.mods.gsu.effect.InstantFireEffect;
 
+import java.util.Collection;
 import java.util.function.Supplier;
 
 public class ModEffects {
   private static final DeferredRegister<MobEffect> REGISTER = DeferredRegister.create(BuiltInRegistries.MOB_EFFECT, GSU.MODID);
+
+  public static Collection<DeferredHolder<MobEffect, ?>> getEntries () {
+    return REGISTER.getEntries();
+  }
 
   public static final DeferredHolder<MobEffect, DyingEffect> DYING = REGISTER.register("dying", DyingEffect::new);
   public static final DeferredHolder<MobEffect, SimpleEffect> IMMORTAL = REGISTER.register("immortal", () -> new SimpleEffect.HiddenParticleEffect(MobEffectCategory.NEUTRAL, 0xffffff));
