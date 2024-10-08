@@ -27,7 +27,7 @@ public class DyingEffect extends SimpleEffect {
   @Override
   public boolean onEffectRemoved (LivingEntity pLivingEntity, int pAmplifier) {
     if (ConfigManager.debugEffects()) {
-      GSU.LOG.error("DyingEffect removeAttributeModifiers (`dying` or `immortal_dying`) called for " + pLivingEntity);
+      GSU.LOG.error("DyingEffect onEffectRemoved (`dying` or `immortal_dying`) called for " + pLivingEntity);
     }
     float oldHealth = pLivingEntity.getHealth();
     pLivingEntity.hurt(pLivingEntity.damageSources().fellOutOfWorld(), Float.MAX_VALUE);
