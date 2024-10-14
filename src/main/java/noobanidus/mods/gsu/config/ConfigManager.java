@@ -26,9 +26,8 @@ public class ConfigManager {
   private static final ModConfigSpec.BooleanValue EFFECTS_PERSIST;
   private static final ModConfigSpec.BooleanValue EFFECTS_PERSIST_TAG;
   private static final ModConfigSpec.BooleanValue DEBUG_EFFECTS;
-  private static final ModConfigSpec.ConfigValue<String> EXPLOSION_MODE;
+  private static final ModConfigSpec.ConfigValue<Level.ExplosionInteraction> EXPLOSION_MODE;
   private static final ModConfigSpec.BooleanValue HIDE_PARTICLES;
-  private static final ModConfigSpec.DoubleValue KNOCKBACK_AMOUNT;
   private static final ModConfigSpec.DoubleValue KNOCKUP_AMOUNT;
   private static final ModConfigSpec.IntValue FIRE_DURATION;
   private static final ModConfigSpec.IntValue FIRE_RADIUS;
@@ -64,17 +63,7 @@ public class ConfigManager {
   }
 
   public static Level.ExplosionInteraction getExplosionMode() {
-    switch (EXPLOSION_MODE.get().toLowerCase(Locale.ROOT)) {
-      default:
-      case "none":
-        return Level.ExplosionInteraction.NONE;
-      case "block":
-        return Level.ExplosionInteraction.BLOCK;
-      case "mob":
-        return Level.ExplosionInteraction.MOB;
-      case "tnt":
-        return Level.ExplosionInteraction.TNT;
-    }
+    return EXPLOSION_MODE.get();
   }
 
   public static int getDrumbleChance() {
@@ -97,11 +86,17 @@ public class ConfigManager {
     return DAMAGE_CHANCE.get();
   }
 
+  public enum ModeTypes {
+    NONE,
+    BLOCK,
+    MOB,
+    TNT
+  }
+
   static {
-    Set<String> MODE_TYPES = new HashSet<>(Arrays.asList("none", "block", "mob", "tnt"));
     COMMON_BUILDER.push("effects");
     EXPLOSION_SIZE = COMMON_BUILDER.comment("the size of the explosion caused by the explosive effect").defineInRange("explosion_size", 2.0, 0, Double.MAX_VALUE);
-    EXPLOSION_MODE = COMMON_BUILDER.comment("the type of explosion mode for blocks  options: NONE, BLOCK, MOB, TNT").define("explosion_mode", "break", (o) -> o != null && MODE_TYPES.contains(o.toString().toLowerCase(Locale.ROOT)));
+    EXPLOSION_MODE = COMMON_BUILDER.comment("the type of explosion mode for blocks  options: NONE, BLOCK, MOB, TNT, TRIGGER").defineEnum("explosion_mode", Level.ExplosionInteraction.TNT);
     FUMBLE_CHANCE = COMMON_BUILDER.comment("the chance of dropping an item per tick, expressed as 1 in X").defineInRange("fumble_chance", 24, 0, Integer.MAX_VALUE);
     DRUMBLE_CHANCE = COMMON_BUILDER.comment("the chance of being granted slowness x while under the effects of the drumble debuff, expressed as 1 in X").defineInRange("fumble_chance", 30, 0, Integer.MAX_VALUE);
     DAMAGE_AMOUNT = COMMON_BUILDER.comment("the maximum amount of durability damage applied (randomly from 1 to X)").defineInRange("durability_damage", 3, 0, Integer.MAX_VALUE);
@@ -110,7 +105,6 @@ public class ConfigManager {
     EFFECTS_PERSIST = COMMON_BUILDER.comment("whether or not potion effects given by bees should persist through death").define("effects_persist", true);
     EFFECTS_PERSIST_TAG = COMMON_BUILDER.comment("if `effects_persist` is true and this is true, only effects in the gsu:effects_persist tag will persist through death").define("effects_persist_tag", false);
     DEBUG_EFFECTS = COMMON_BUILDER.comment("whether or not the `dying` potion effect should produce log debug messages for expirations").define("debug_effects", false);
-    KNOCKBACK_AMOUNT = COMMON_BUILDER.comment("the amount of knockback that should be added to an entity's attacks").defineInRange("knockback", 5.0, 0.0, 5.0);
     KNOCKUP_AMOUNT = COMMON_BUILDER.comment("the amount of knockup that should be added to an entity's attacks").defineInRange("knockup", 1.8, 0.0, 5.0);
     HIDE_PARTICLES = COMMON_BUILDER.comment("whether or not potion effects should show particles").define("hide_particles", false);
     FIRE_DURATION = COMMON_BUILDER.comment("how long a fire (or delayed fire) potion effect should set an entity on fire (in seconds)").defineInRange("fire_duration", 5, 0, Integer.MAX_VALUE);
@@ -178,10 +172,6 @@ public class ConfigManager {
 
   public static int getMiddayTime() {
     return MIDDAY_TIME.get();
-  }
-
-  public static double getKnockbackAmount() {
-    return KNOCKBACK_AMOUNT.get();
   }
 
   public static double getKnockupAmount() {

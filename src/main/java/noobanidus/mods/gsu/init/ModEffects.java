@@ -39,8 +39,6 @@ public class ModEffects {
 
   private static final ResourceLocation KNOCKBACK_MODIFIER = ResourceLocation.fromNamespaceAndPath(GSU.MODID, "knockback_modifier");
 
-  public static final DeferredHolder<MobEffect, MobEffect> KNOCKBACK = REGISTER.register("knockback", () -> new SimpleEffect.HiddenParticleEffect(MobEffectCategory.BENEFICIAL, 0x000000).addAttributeModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager::getKnockbackAmount, AttributeModifier.Operation.ADD_VALUE));
-
   public static final DeferredHolder<MobEffect, MobEffect> KNOCKUP = REGISTER.register("knockup", () -> new SimpleEffect.HiddenParticleEffect(MobEffectCategory.BENEFICIAL, 0x000000).addAttributeModifier(Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER, ConfigManager::getKnockupAmount, AttributeModifier.Operation.ADD_VALUE));
 
   public static final DeferredHolder<MobEffect, SimpleEffect> CACTUS_SHIELD = REGISTER.register("cactus_shield", () -> new SimpleEffect.HiddenParticleEffect(MobEffectCategory.BENEFICIAL, 0x237543));

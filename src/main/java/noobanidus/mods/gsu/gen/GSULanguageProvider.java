@@ -26,7 +26,6 @@ public class GSULanguageProvider extends LanguageProvider {
     addEffect(ModEffects.IMMORTAL_DYING, getDescription(ModEffects.IMMORTAL_DYING));
     addEffect(ModEffects.DYING, getDescription(ModEffects.DYING));
     addEffect(ModEffects.KNOCKUP, getDescription(ModEffects.KNOCKUP));
-    addEffect(ModEffects.KNOCKBACK, getDescription(ModEffects.KNOCKBACK));
     addEffect(ModEffects.ARMOR_SHIELD, getDescription(ModEffects.ARMOR_SHIELD));
     addEffect(ModEffects.CRUMBLE, getDescription(ModEffects.CRUMBLE));
     addEffect(ModEffects.DELAYED_EXPLOSIVE, getDescription(ModEffects.DELAYED_EXPLOSIVE));
@@ -47,6 +46,8 @@ public class GSULanguageProvider extends LanguageProvider {
     add(GSUTags.Entity.RESKIN, "Reskin Entities");
     add(GSUTags.Potions.SUPPRESS_PARTICLES, "Particles Suppressed");
     add(GSUTags.Potions.FIRE_EFFECT, "Fire Ground Effect");
+
+    add("subtitles.gsu.crumbled", "Item crumbled");
   }
 
   private String getDescription(DeferredHolder<?, ?> holder) {
