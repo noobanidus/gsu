@@ -17,7 +17,7 @@ public class GSUEntityTagsProvider extends EntityTypeTagsProvider {
 
   @Override
   protected void addTags(HolderLookup.Provider p_255894_) {
-    tag(GSUTags.Entity.RESKIN);
+    tag(GSUTags.Entity.RESKIN); // .add(EntityType.COW);
   }
 
   @Override
