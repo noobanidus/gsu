@@ -4,9 +4,12 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "gsu.refmap.json",
   "mixins": [
+    "AccessorMixinAttributeMap",
+    "MixinBee",
     "MixinEntity",
     "MixinLivingEntity",
-    "MixinMobEffectInstance"
+    "MixinMobEffectInstance",
+    "MixinNeutralMob"
   ],
   "client": [
     "MixinLivingRenderer"

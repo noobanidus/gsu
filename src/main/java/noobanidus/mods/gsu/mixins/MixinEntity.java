@@ -16,9 +16,11 @@ public class MixinEntity {
   @Inject(method = "load", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V", shift = At.Shift.AFTER, by = 1))
   private void skinRenderer(CompoundTag nbt, CallbackInfo ci) {
     Entity entity = (Entity) (Object) this;
-    // TODO: Change this to an entity tag
     if (nbt.contains("gsu_reskin", Tag.TAG_STRING) && entity.getType().is(GSUTags.Entity.RESKIN)) {
+      //noinspection DataFlowIssue
       entity.setData(ModAttachments.SKIN.get(), ResourceLocation.tryParse(nbt.getString("gsu_reskin")));
+    } else if (nbt.contains("gsu_player_hostile", Tag.TAG_BYTE) && nbt.getBoolean("gsu_player_hostile")) {
+      entity.setData(ModAttachments.PLAYER_HOSTILE.get(), true);
     }
   }
 }
