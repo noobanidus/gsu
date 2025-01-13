@@ -23,6 +23,7 @@ public class PacketHandler {
 
   protected void registerServerToClient(PacketRegistrar registrar) {
     registrar.play(PacketSetSkin.TYPE, PacketSetSkin.STREAM_CODEC);
+    registrar.play(PacketSetShiny.TYPE, PacketSetShiny.STREAM_CODEC);
   }
 
   protected record PacketRegistrar(PayloadRegistrar registrar, boolean toServer) {

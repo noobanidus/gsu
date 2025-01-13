@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import noobanidus.mods.gsu.GSUTags;
+import noobanidus.mods.gsu.GlintType;
 import noobanidus.mods.gsu.init.ModAttachments;
 
 public class ClientHooks {
@@ -19,5 +20,17 @@ public class ClientHooks {
     if (entity.getType().is(GSUTags.Entity.RESKIN)) {
       entity.setData(ModAttachments.SKIN, skin);
     }
+  }
+
+  public static void setShiny (int entityId, GlintType glint) {
+    Minecraft minecraft = Minecraft.getInstance();
+    if (minecraft == null || minecraft.level == null) {
+      return;
+    }
+    Entity entity = minecraft.level.getEntity(entityId);
+    if (entity == null) {
+      return;
+    }
+    entity.setData(ModAttachments.SHINY, glint);
   }
 }

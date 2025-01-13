@@ -28,6 +28,7 @@ import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.effect.SimpleEffect;
 import noobanidus.mods.gsu.init.ModAttachments;
 import noobanidus.mods.gsu.init.ModEffects;
+import noobanidus.mods.gsu.network.PacketSetShiny;
 import noobanidus.mods.gsu.network.PacketSetSkin;
 
 import java.util.*;
@@ -82,6 +83,9 @@ public class EventsHandler {
       ResourceLocation skin = target.getData(ModAttachments.SKIN);
       if (skin != ModAttachments.NO_SKIN) {
         PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new PacketSetSkin(target.getId(), skin));
+      }
+      if (target.hasData(ModAttachments.SHINY)) {
+        PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new PacketSetShiny(target.getId(), target.getData(ModAttachments.SHINY)));
       }
     }
   }

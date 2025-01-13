@@ -7,6 +7,7 @@ import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import noobanidus.mods.gsu.GSU;
+import noobanidus.mods.gsu.GlintType;
 
 import java.util.function.Supplier;
 
@@ -18,6 +19,8 @@ public class ModAttachments {
   public static final Supplier<AttachmentType<ResourceLocation>> SKIN = REGISTER.register("skin", () -> AttachmentType.builder(() -> NO_SKIN).serialize(ResourceLocation.CODEC).build());
 
   public static final Supplier<AttachmentType<Boolean>> PLAYER_HOSTILE = REGISTER.register("player_hostile", () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).build());
+
+  public static final Supplier<AttachmentType<GlintType>> SHINY = REGISTER.register("shiny", () -> AttachmentType.builder(() -> GlintType.DEFAULT).serialize(GlintType.CODEC).build());
 
   public static void register (IEventBus bus) {
     REGISTER.register(bus);

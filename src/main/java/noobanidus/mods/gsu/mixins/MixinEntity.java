@@ -5,6 +5,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import noobanidus.mods.gsu.GSUTags;
+import noobanidus.mods.gsu.GlintType;
 import noobanidus.mods.gsu.init.ModAttachments;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,8 +20,12 @@ public class MixinEntity {
     if (nbt.contains("gsu_reskin", Tag.TAG_STRING) && entity.getType().is(GSUTags.Entity.RESKIN)) {
       //noinspection DataFlowIssue
       entity.setData(ModAttachments.SKIN.get(), ResourceLocation.tryParse(nbt.getString("gsu_reskin")));
-    } else if (nbt.contains("gsu_player_hostile", Tag.TAG_BYTE) && nbt.getBoolean("gsu_player_hostile")) {
+    }
+    if (nbt.contains("gsu_player_hostile", Tag.TAG_BYTE) && nbt.getBoolean("gsu_player_hostile")) {
       entity.setData(ModAttachments.PLAYER_HOSTILE.get(), true);
+    }
+    if (nbt.contains("gsu_shiny", Tag.TAG_STRING)) {
+      entity.setData(ModAttachments.SHINY.get(), GlintType.fromString(nbt.getString("gsu_shiny")));
     }
   }
 }
