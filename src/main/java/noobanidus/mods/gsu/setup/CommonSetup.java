@@ -8,6 +8,7 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import noobanidus.mods.gsu.GSU;
 import noobanidus.mods.gsu.command.CumulativeEffectCommand;
+import noobanidus.mods.gsu.command.GSUCommand;
 import noobanidus.mods.gsu.command.NightCommand;
 import noobanidus.mods.gsu.effect.SimpleEffect;
 import noobanidus.mods.gsu.init.ModEffects;
@@ -28,5 +29,6 @@ public class CommonSetup {
   public static void registerCommands (RegisterCommandsEvent event) {
     CumulativeEffectCommand.register(event.getDispatcher(), event.getBuildContext());
     NightCommand.register(event.getDispatcher());
+    GSUCommand.register(event.getDispatcher(), event.getBuildContext());
   }
 }

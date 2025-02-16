@@ -6,10 +6,7 @@ import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import noobanidus.mods.gsu.GSU;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 public class ConfigManager {
   private static final ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
@@ -34,7 +31,6 @@ public class ConfigManager {
 
   // Command options
   private static final ModConfigSpec.BooleanValue REGISTER_TIME;
-  private static final ModConfigSpec.BooleanValue REGISTER_POTION;
   private static final ModConfigSpec.IntValue PERMISSION_LEVEL;
 
   // Time values
@@ -45,6 +41,9 @@ public class ConfigManager {
   private static final ModConfigSpec.IntValue SUNSET_TIME;
   private static final ModConfigSpec.IntValue DAWN_TIME;
   private static final ModConfigSpec.IntValue MIDDAY_TIME;
+
+  // Goals to keep
+  private static final ModConfigSpec.ConfigValue<List<? extends String>> GOALS_TO_KEEP;
 
   public static boolean getEffectsPersist() {
     return EFFECTS_PERSIST.get();
@@ -112,7 +111,6 @@ public class ConfigManager {
     COMMON_BUILDER.pop();
     COMMON_BUILDER.push("commands");
 
-    REGISTER_POTION = COMMON_BUILDER.comment("whether or not the potion id command should be registered [default: true]").define("register_potion", true);
     REGISTER_TIME = COMMON_BUILDER.comment("whether commands should be registered for each time (/midnight, /night, /sunrise, etc) [default: true]").define("register_time", true);
     PERMISSION_LEVEL = COMMON_BUILDER.comment("the permission level required for all commands").defineInRange("permission_level", 2, 0, 4);
 
@@ -127,6 +125,9 @@ public class ConfigManager {
     MIDDAY_TIME = COMMON_BUILDER.comment("the value of midday or noon [default: 6000]").defineInRange("midday_time", 6000, 0, Integer.MAX_VALUE);
     COMMON_BUILDER.pop();
     COMMON_BUILDER.pop();
+    COMMON_BUILDER.push("goals");
+    GOALS_TO_KEEP = COMMON_BUILDER.comment("goals that should not be discarded when making an entity hostile").defineList("goals_to_keep", List.of(), String::new, o -> true);
+    COMMON_BUILDER.pop();
     COMMON_CONFIG = COMMON_BUILDER.build();
   }
 
@@ -136,10 +137,6 @@ public class ConfigManager {
 
   public static boolean getRegisterTime() {
     return REGISTER_TIME.get();
-  }
-
-  public static boolean getRegisterPotion() {
-    return REGISTER_POTION.get();
   }
 
   public static int getPermissionLevel() {
@@ -186,9 +183,19 @@ public class ConfigManager {
     return FIRE_RADIUS.get();
   }
 
+  private static List<String> goalsToKeep = null;
+
+  public static List<String> getGoalsToKeep () {
+    if (goalsToKeep == null) {
+      goalsToKeep = GOALS_TO_KEEP.get().stream().map(String::toLowerCase).toList();
+    }
+    return goalsToKeep;
+  }
+
   public static void configReloaded(ModConfigEvent event) {
     if (event.getConfig().getType() == ModConfig.Type.COMMON) {
       GSU.LOG.info("GSU config reloaded");
+      goalsToKeep = null;
     }
   }
 }
