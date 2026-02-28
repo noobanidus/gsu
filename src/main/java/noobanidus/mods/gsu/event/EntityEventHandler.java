@@ -45,8 +45,13 @@ public class EntityEventHandler {
     if (!attributeMap.hasAttribute(Attributes.ATTACK_DAMAGE)) {
       AttributeInstance attribute = new AttributeInstance(Attributes.ATTACK_DAMAGE, a -> {
       });
-      attribute.setBaseValue(1);
+      attribute.setBaseValue(mob.getData(ModAttachments.HOSTILE_DAMAGE));
       ((AccessorMixinAttributeMap) attributeMap).getAttributes().put(Attributes.ATTACK_DAMAGE, attribute);
+    } else {
+      AttributeInstance attribute = attributeMap.getInstance(Attributes.ATTACK_DAMAGE);
+      if (attribute != null) {
+        attribute.setBaseValue(mob.getData(ModAttachments.HOSTILE_DAMAGE));
+      }
     }
 
     Set<WrappedGoal> attackTasks = new HashSet<>();

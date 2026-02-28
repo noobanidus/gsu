@@ -24,6 +24,13 @@ public class MixinEntity {
     if (nbt.contains("gsu_player_hostile", Tag.TAG_BYTE) && nbt.getBoolean("gsu_player_hostile")) {
       entity.setData(ModAttachments.PLAYER_HOSTILE.get(), true);
     }
+    if (nbt.contains("gsu_player_hostile", Tag.TAG_DOUBLE)) {
+      entity.setData(ModAttachments.PLAYER_HOSTILE.get(), true);
+      entity.setData(ModAttachments.HOSTILE_DAMAGE.get(), nbt.getDouble("gsu_player_hostile"));
+    }
+    if (nbt.contains("gsu_player_hostile_damage", Tag.TAG_DOUBLE)) {
+      entity.setData(ModAttachments.HOSTILE_DAMAGE.get(), nbt.getDouble("gsu_player_hostile_damage"));
+    }
     if (nbt.contains("gsu_shiny", Tag.TAG_STRING)) {
       entity.setData(ModAttachments.SHINY.get(), GlintType.fromString(nbt.getString("gsu_shiny")));
     }

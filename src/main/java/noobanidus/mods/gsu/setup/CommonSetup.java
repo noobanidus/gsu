@@ -26,7 +26,7 @@ public class CommonSetup {
   }
 
   @SubscribeEvent
-  public static void registerCommands (RegisterCommandsEvent event) {
+  public static void registerCommands(RegisterCommandsEvent event) {
     CumulativeEffectCommand.register(event.getDispatcher(), event.getBuildContext());
     NightCommand.register(event.getDispatcher());
     GSUCommand.register(event.getDispatcher(), event.getBuildContext());

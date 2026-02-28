@@ -16,13 +16,19 @@ public class ModAttachments {
 
   private static final DeferredRegister<AttachmentType<?>> REGISTER = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, GSU.MODID);
 
-  public static final Supplier<AttachmentType<ResourceLocation>> SKIN = REGISTER.register("skin", () -> AttachmentType.builder(() -> NO_SKIN).serialize(ResourceLocation.CODEC).build());
+  public static final Supplier<AttachmentType<ResourceLocation>> SKIN = REGISTER.register("skin", () -> AttachmentType.builder(() -> NO_SKIN)
+      .serialize(ResourceLocation.CODEC).build());
 
-  public static final Supplier<AttachmentType<Boolean>> PLAYER_HOSTILE = REGISTER.register("player_hostile", () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).build());
+  public static final Supplier<AttachmentType<Boolean>> PLAYER_HOSTILE = REGISTER.register("player_hostile", () -> AttachmentType.builder(() -> false)
+      .serialize(Codec.BOOL).build());
 
-  public static final Supplier<AttachmentType<GlintType>> SHINY = REGISTER.register("shiny", () -> AttachmentType.builder(() -> GlintType.DEFAULT).serialize(GlintType.CODEC).build());
+  public static final Supplier<AttachmentType<Double>> HOSTILE_DAMAGE = REGISTER.register("player_hostile_damage", () -> AttachmentType.builder(() -> 2.0)
+      .serialize(Codec.DOUBLE).build());
 
-  public static void register (IEventBus bus) {
+  public static final Supplier<AttachmentType<GlintType>> SHINY = REGISTER.register("shiny", () -> AttachmentType.builder(() -> GlintType.DEFAULT)
+      .serialize(GlintType.CODEC).build());
+
+  public static void register(IEventBus bus) {
     REGISTER.register(bus);
   }
 }
