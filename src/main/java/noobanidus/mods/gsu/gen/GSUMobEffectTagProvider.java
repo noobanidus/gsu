@@ -4,7 +4,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.effect.MobEffect;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import noobanidus.mods.gsu.GSU;
@@ -14,12 +13,12 @@ import noobanidus.mods.gsu.init.ModEffects;
 import java.util.concurrent.CompletableFuture;
 
 public class GSUMobEffectTagProvider extends TagsProvider<MobEffect> {
-   public GSUMobEffectTagProvider(PackOutput p_256012_, CompletableFuture<HolderLookup.Provider> p_256617_, @org.jetbrains.annotations.Nullable ExistingFileHelper existingFileHelper) {
-      super(p_256012_, Registries.MOB_EFFECT, p_256617_, GSU.MODID, existingFileHelper);
-   }
+  public GSUMobEffectTagProvider(PackOutput p_256012_, CompletableFuture<HolderLookup.Provider> p_256617_, @org.jetbrains.annotations.Nullable ExistingFileHelper existingFileHelper) {
+    super(p_256012_, Registries.MOB_EFFECT, p_256617_, GSU.MODID, existingFileHelper);
+  }
 
-   protected void addTags(HolderLookup.Provider p_256206_) {
-      this.tag(GSUTags.Potions.EFFECTS_PERSIST).add(ResourceKey.create(Registries.MOB_EFFECT, ModEffects.ARMOR_SHIELD.getId()));
-      this.tag(GSUTags.Potions.FIRE_EFFECT).add(ResourceKey.create(Registries.MOB_EFFECT, ModEffects.INSTANT_FIRE.getId())).add(ResourceKey.create(Registries.MOB_EFFECT, ModEffects.DELAYED_FIRE.getId()));
-   }
+  protected void addTags(HolderLookup.Provider p_256206_) {
+    this.tag(GSUTags.Potions.EFFECTS_PERSIST).add(ModEffects.ARMOR_SHIELD.getKey());
+    this.tag(GSUTags.Potions.FIRE_EFFECT).add(ModEffects.INSTANT_FIRE.getKey()).add(ModEffects.DELAYED_FIRE.getKey());
+  }
 }

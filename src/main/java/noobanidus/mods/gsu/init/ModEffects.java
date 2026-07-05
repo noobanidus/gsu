@@ -18,7 +18,7 @@ import java.util.Collection;
 public class ModEffects {
   private static final DeferredRegister<MobEffect> REGISTER = DeferredRegister.create(BuiltInRegistries.MOB_EFFECT, GSU.MODID);
 
-  public static Collection<DeferredHolder<MobEffect, ?>> getEntries () {
+  public static Collection<DeferredHolder<MobEffect, ?>> getEntries() {
     return REGISTER.getEntries();
   }
 
@@ -36,6 +36,7 @@ public class ModEffects {
   public static final DeferredHolder<MobEffect, JumbleEffect> JUMBLE = REGISTER.register("jumble", JumbleEffect::new);
   public static final DeferredHolder<MobEffect, InstantFireEffect> INSTANT_FIRE = REGISTER.register("instant_fire", InstantFireEffect::new);
   public static final DeferredHolder<MobEffect, DelayedFireEffect> DELAYED_FIRE = REGISTER.register("delayed_fire", () -> new DelayedFireEffect());
+  public static final DeferredHolder<MobEffect, AutoRunEffect> AUTO_RUN = REGISTER.register("auto_run", AutoRunEffect::new);
 
   private static final ResourceLocation KNOCKBACK_MODIFIER = ResourceLocation.fromNamespaceAndPath(GSU.MODID, "knockback_modifier");
 
@@ -45,7 +46,7 @@ public class ModEffects {
 
   public static final DeferredHolder<MobEffect, SimpleEffect> ARMOR_SHIELD = REGISTER.register("armor_shield", () -> new SimpleEffect.HiddenParticleEffect(MobEffectCategory.BENEFICIAL, 0xd9d48d));
 
-  public static void register (IEventBus bus) {
+  public static void register(IEventBus bus) {
     REGISTER.register(bus);
   }
 }
