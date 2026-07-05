@@ -11,7 +11,7 @@ import noobanidus.mods.gsu.GSU;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = GSU.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = GSU.MODID)
 public class GSUDataGenerators {
   @SubscribeEvent
   public static void gatherData(GatherDataEvent event) {
