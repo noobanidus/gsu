@@ -4,6 +4,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.bus.api.IEventBus;
@@ -27,7 +28,7 @@ public class ModEffects {
   public static final DeferredHolder<MobEffect, DyingEffect> IMMORTAL_DYING = REGISTER.register("immortal_dying", DyingEffect::new);
   public static final DeferredHolder<MobEffect, FumbleEffect> FUMBLE = REGISTER.register("fumble", FumbleEffect::new);
   public static final DeferredHolder<MobEffect, InstantExplosiveEffect> EXPLOSIVE = REGISTER.register("explosive", InstantExplosiveEffect::new);
-  public static final DeferredHolder<MobEffect, DelayedExplosiveEffect> DELAYED_EXPLOSIVE = REGISTER.register("delayed_explosive", () -> new DelayedExplosiveEffect());
+  public static final DeferredHolder<MobEffect, DelayedExplosiveEffect> DELAYED_EXPLOSIVE = REGISTER.register("delayed_explosive", DelayedExplosiveEffect::new);
   public static final DeferredHolder<MobEffect, StumbleEffect> STUMBLE = REGISTER.register("stumble", StumbleEffect::new);
   public static final DeferredHolder<MobEffect, CrumbleEffect> CRUMBLE = REGISTER.register("crumble", CrumbleEffect::new);
   public static final DeferredHolder<MobEffect, DrumbleEffect> DRUMBLE = REGISTER.register("drumble", DrumbleEffect::new);
@@ -35,8 +36,11 @@ public class ModEffects {
   public static final DeferredHolder<MobEffect, ThimbleEffect> THIMBLE = REGISTER.register("thimble", ThimbleEffect::new);
   public static final DeferredHolder<MobEffect, JumbleEffect> JUMBLE = REGISTER.register("jumble", JumbleEffect::new);
   public static final DeferredHolder<MobEffect, InstantFireEffect> INSTANT_FIRE = REGISTER.register("instant_fire", InstantFireEffect::new);
-  public static final DeferredHolder<MobEffect, DelayedFireEffect> DELAYED_FIRE = REGISTER.register("delayed_fire", () -> new DelayedFireEffect());
+  public static final DeferredHolder<MobEffect, DelayedFireEffect> DELAYED_FIRE = REGISTER.register("delayed_fire", DelayedFireEffect::new);
   public static final DeferredHolder<MobEffect, AutoRunEffect> AUTO_RUN = REGISTER.register("auto_run", AutoRunEffect::new);
+  public static final DeferredHolder<MobEffect, ShaderEffect> CREEPER = REGISTER.register("creeper", () -> new ShaderEffect(894731, () -> EntityType.CREEPER));
+  public static final DeferredHolder<MobEffect, ShaderEffect> SPIDER = REGISTER.register("spider", () -> new ShaderEffect(11013646, () -> EntityType.SPIDER));
+  public static final DeferredHolder<MobEffect, ShaderEffect> ENDERMAN = REGISTER.register("enderman", () -> new ShaderEffect(1447446, () -> EntityType.ENDERMAN));
 
   private static final ResourceLocation KNOCKBACK_MODIFIER = ResourceLocation.fromNamespaceAndPath(GSU.MODID, "knockback_modifier");
 

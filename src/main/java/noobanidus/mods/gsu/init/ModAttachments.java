@@ -7,7 +7,8 @@ import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import noobanidus.mods.gsu.GSU;
-import noobanidus.mods.gsu.GlintType;
+import noobanidus.mods.gsu.attachment.EntityEffect;
+import noobanidus.mods.gsu.attachment.GlintType;
 
 import java.util.function.Supplier;
 
@@ -15,6 +16,10 @@ public class ModAttachments {
   public static final ResourceLocation NO_SKIN = ResourceLocation.fromNamespaceAndPath(GSU.MODID, "no_skin");
 
   private static final DeferredRegister<AttachmentType<?>> REGISTER = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, GSU.MODID);
+
+  public static final Supplier<AttachmentType<EntityEffect>> ENTITY_EFFECT = REGISTER.register("entity_effect", () -> AttachmentType.builder(() -> EntityEffect.NONE)
+      .sync(EntityEffect.SYNC_HANDLER)
+      .serialize(EntityEffect.CODEC).build());
 
   public static final Supplier<AttachmentType<ResourceLocation>> SKIN = REGISTER.register("skin", () -> AttachmentType.builder(() -> NO_SKIN)
       .serialize(ResourceLocation.CODEC).build());

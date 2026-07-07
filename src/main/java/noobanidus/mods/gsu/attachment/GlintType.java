@@ -1,4 +1,4 @@
-package noobanidus.mods.gsu;
+package noobanidus.mods.gsu.attachment;
 
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;

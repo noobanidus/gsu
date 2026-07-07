@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import noobanidus.mods.gsu.GlintType;
+import noobanidus.mods.gsu.attachment.GlintType;
 
 public class CustomRenderType extends RenderType {
   public static ResourceLocation DEFAULT_ENTITY_GLINT = ResourceLocation.fromNamespaceAndPath("gsu", "textures/misc/glint/default_entity_glint.png");

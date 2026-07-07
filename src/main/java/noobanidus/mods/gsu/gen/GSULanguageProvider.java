@@ -24,7 +24,6 @@ public class GSULanguageProvider extends LanguageProvider {
     addEffect(ModEffects.CACTUS_SHIELD, getDescription(ModEffects.CACTUS_SHIELD));
     addEffect(ModEffects.IMMORTAL, getDescription(ModEffects.IMMORTAL));
     addEffect(ModEffects.IMMORTAL_DYING, getDescription(ModEffects.IMMORTAL_DYING));
-    addEffect(ModEffects.AUTO_RUN, getDescription(ModEffects.AUTO_RUN));
     addEffect(ModEffects.DYING, getDescription(ModEffects.DYING));
     addEffect(ModEffects.KNOCKUP, getDescription(ModEffects.KNOCKUP));
     addEffect(ModEffects.ARMOR_SHIELD, getDescription(ModEffects.ARMOR_SHIELD));
@@ -39,6 +38,10 @@ public class GSULanguageProvider extends LanguageProvider {
     addEffect(ModEffects.STUMBLE, getDescription(ModEffects.STUMBLE));
     addEffect(ModEffects.THIMBLE, getDescription(ModEffects.THIMBLE));
     addEffect(ModEffects.TUMBLE, getDescription(ModEffects.TUMBLE));
+    addEffect(ModEffects.AUTO_RUN, getDescription(ModEffects.AUTO_RUN));
+    addEffect(ModEffects.CREEPER, getDescription(ModEffects.CREEPER));
+    addEffect(ModEffects.SPIDER, getDescription(ModEffects.SPIDER));
+    addEffect(ModEffects.ENDERMAN, getDescription(ModEffects.ENDERMAN));
 
     add(GSUTags.Potions.EFFECTS_PERSIST, "Effects Persist Through Death");
     add(GSUTags.Damage.CACTUS_DAMAGE, "Cactus Damage");

@@ -6,7 +6,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import noobanidus.mods.gsu.network.client.ClientHooks;
+import noobanidus.mods.gsu.network.client.ClientNetworkHooks;
 
 public record PacketSetSkin(int entityId, ResourceLocation skin) implements ICustomPacket {
   public static final CustomPacketPayload.Type<PacketSetSkin> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("gsu", "set_skin"));
@@ -15,7 +15,7 @@ public record PacketSetSkin(int entityId, ResourceLocation skin) implements ICus
 
   @Override
   public void handle(IPayloadContext context) {
-    ClientHooks.setSkin(this.entityId(), this.skin());
+    ClientNetworkHooks.setSkin(this.entityId(), this.skin());
   }
 
   @Override
