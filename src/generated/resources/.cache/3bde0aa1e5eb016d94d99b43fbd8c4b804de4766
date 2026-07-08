@@ -1,3 +1,4 @@
-// 1.21.1	2026-07-05T11:19:17.4793734	Tags for minecraft:mob_effect mod id gsu
+// 1.21.1	2026-07-08T11:07:23.2716642	Tags for minecraft:mob_effect mod id gsu
 c4d2f4d8a75740c6bd65e75621e0af21a9a95368 data/gsu/tags/mob_effect/effects_persist.json
 e2db4ad62929687b522fd5236b96b6aa100ab2b4 data/gsu/tags/mob_effect/fire_effect.json
+705e8a1504ab7c4ceda8ac692d0588179931cc1a data/gsu/tags/mob_effect/shader_effects.json

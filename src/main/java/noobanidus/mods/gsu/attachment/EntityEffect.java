@@ -28,6 +28,7 @@ public record EntityEffect(ResourceKey<EntityType<?>> type) {
 
     @Override
     public EntityEffect read(IAttachmentHolder holder, RegistryFriendlyByteBuf buf, EntityEffect previousValue) {
+      // This is how EntityEffects are applied
       var result = STREAM_CODEC.decode(buf);
       if (result != previousValue) {
         ClientNetworkHooks.tryRefreshShader(result);

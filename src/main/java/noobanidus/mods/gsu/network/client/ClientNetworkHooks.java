@@ -42,6 +42,15 @@ public class ClientNetworkHooks {
   public static final ResourceLocation SPIDER = ResourceLocation.withDefaultNamespace("shaders/post/spider.json");
   public static final ResourceLocation ENDERMAN = ResourceLocation.withDefaultNamespace("shaders/post/invert.json");
 
+  public static void tryRefreshShader () {
+    Minecraft minecraft = Minecraft.getInstance();
+    if (minecraft == null || minecraft.player == null) {
+      return;
+    }
+
+    tryRefreshShader(minecraft.player.getData(ModAttachments.ENTITY_EFFECT));
+  }
+
   public static void tryRefreshShader(EntityEffect effect) {
     Minecraft minecraft = Minecraft.getInstance();
     if (minecraft == null) {

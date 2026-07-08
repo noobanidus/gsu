@@ -20,5 +20,6 @@ public class GSUMobEffectTagProvider extends TagsProvider<MobEffect> {
   protected void addTags(HolderLookup.Provider p_256206_) {
     this.tag(GSUTags.Potions.EFFECTS_PERSIST).add(ModEffects.ARMOR_SHIELD.getKey());
     this.tag(GSUTags.Potions.FIRE_EFFECT).add(ModEffects.INSTANT_FIRE.getKey()).add(ModEffects.DELAYED_FIRE.getKey());
+    this.tag(GSUTags.Potions.SHADER_EFFECT).add(ModEffects.ENDERMAN.getKey(), ModEffects.CREEPER.getKey(), ModEffects.SPIDER.getKey());
   }
 }
