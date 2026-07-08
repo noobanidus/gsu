@@ -21,6 +21,7 @@ public class GSU {
 
   public GSU(ModContainer container, IEventBus modBus) {
     container.registerConfig(ModConfig.Type.COMMON, ConfigManager.COMMON_CONFIG);
+    container.registerConfig(ModConfig.Type.CLIENT, ConfigManager.CLIENT_CONFIG);
     modBus.addListener(CommonSetup::init);
     modBus.addListener(ConfigManager::configReloaded);
 

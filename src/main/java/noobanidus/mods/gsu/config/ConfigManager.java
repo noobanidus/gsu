@@ -10,8 +10,10 @@ import java.util.*;
 
 public class ConfigManager {
   private static final ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
+  private static final ModConfigSpec.Builder CLIENT_BUILDER = new ModConfigSpec.Builder();
 
   public static ModConfigSpec COMMON_CONFIG;
+  public static ModConfigSpec CLIENT_CONFIG;
 
   // Potion effects
   private static final ModConfigSpec.DoubleValue EXPLOSION_SIZE;
@@ -45,12 +47,18 @@ public class ConfigManager {
   // Goals to keep
   private static final ModConfigSpec.ConfigValue<List<? extends String>> GOALS_TO_KEEP;
 
+  private static final ModConfigSpec.BooleanValue FLIP_CONTROLS;
+
   public static boolean getEffectsPersist() {
     return EFFECTS_PERSIST.get();
   }
 
   public static boolean getEffectsPersistTag() {
     return EFFECTS_PERSIST_TAG.get();
+  }
+
+  public static boolean shouldFlipControls () {
+    return FLIP_CONTROLS.get();
   }
 
   public static boolean debugEffects() {
@@ -129,6 +137,10 @@ public class ConfigManager {
     GOALS_TO_KEEP = COMMON_BUILDER.comment("goals that should not be discarded when making an entity hostile").defineList("goals_to_keep", List.of(), String::new, o -> true);
     COMMON_BUILDER.pop();
     COMMON_CONFIG = COMMON_BUILDER.build();
+    CLIENT_BUILDER.push("mirroring");
+    FLIP_CONTROLS = CLIENT_BUILDER.comment("when under the mirror effect, also flip the controls").define("flip_controls", false);
+    CLIENT_BUILDER.pop();
+    CLIENT_CONFIG = CLIENT_BUILDER.build();
   }
 
   public static boolean getHideParticles() {

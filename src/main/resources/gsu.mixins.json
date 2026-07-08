@@ -12,11 +12,12 @@
     "MixinNeutralMob"
   ],
   "client": [
-    "client.MixinLivingRenderer",
     "client.AccessorMixinGameRenderer",
     "client.MixinGameRenderer",
     "client.MixinGameRenderer$1",
-    "client.MixinMinecraft"
+    "client.MixinLivingRenderer",
+    "client.MixinMinecraft",
+    "client.MixinMouseHandler"
   ],
   "injectors": {
     "defaultRequire": 1
