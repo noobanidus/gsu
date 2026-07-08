@@ -58,7 +58,7 @@ public class ClientNetworkHooks {
     }
 
     if (!effect.exists()) {
-      // Null here disables the shader
+      // None here disables the shader
       if (minecraft.getCameraEntity() != minecraft.player) {
         minecraft.gameRenderer.checkEntityPostEffect(minecraft.getCameraEntity());
       } else {
