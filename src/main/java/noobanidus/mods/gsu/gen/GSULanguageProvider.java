@@ -29,6 +29,7 @@ public class GSULanguageProvider extends LanguageProvider {
     addEffect(ModEffects.ARMOR_SHIELD, getDescription(ModEffects.ARMOR_SHIELD));
     addEffect(ModEffects.CRUMBLE, getDescription(ModEffects.CRUMBLE));
     addEffect(ModEffects.DELAYED_EXPLOSIVE, getDescription(ModEffects.DELAYED_EXPLOSIVE));
+    addEffect(ModEffects.MIRROR, getDescription(ModEffects.MIRROR));
     addEffect(ModEffects.DELAYED_FIRE, getDescription(ModEffects.DELAYED_FIRE));
     addEffect(ModEffects.DRUMBLE, getDescription(ModEffects.DRUMBLE));
     addEffect(ModEffects.EXPLOSIVE, getDescription(ModEffects.EXPLOSIVE));

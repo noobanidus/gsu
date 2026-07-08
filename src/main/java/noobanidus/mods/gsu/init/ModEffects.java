@@ -32,7 +32,8 @@ public class ModEffects {
   public static final DeferredHolder<MobEffect, StumbleEffect> STUMBLE = REGISTER.register("stumble", StumbleEffect::new);
   public static final DeferredHolder<MobEffect, CrumbleEffect> CRUMBLE = REGISTER.register("crumble", CrumbleEffect::new);
   public static final DeferredHolder<MobEffect, DrumbleEffect> DRUMBLE = REGISTER.register("drumble", DrumbleEffect::new);
-  public static final DeferredHolder<MobEffect, TumbleEffect> TUMBLE = REGISTER.register("tumble", TumbleEffect::new);
+  public static final DeferredHolder<MobEffect, SimpleEffect> TUMBLE = REGISTER.register("tumble", () -> new SimpleEffect(MobEffectCategory.HARMFUL, 0x532eca));
+  public static final DeferredHolder<MobEffect, SimpleEffect> MIRROR = REGISTER.register("mirror", () -> new SimpleEffect(MobEffectCategory.HARMFUL, 0x9ad8fa));
   public static final DeferredHolder<MobEffect, ThimbleEffect> THIMBLE = REGISTER.register("thimble", ThimbleEffect::new);
   public static final DeferredHolder<MobEffect, JumbleEffect> JUMBLE = REGISTER.register("jumble", JumbleEffect::new);
   public static final DeferredHolder<MobEffect, InstantFireEffect> INSTANT_FIRE = REGISTER.register("instant_fire", InstantFireEffect::new);
