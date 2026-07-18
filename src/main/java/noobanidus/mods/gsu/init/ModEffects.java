@@ -38,7 +38,8 @@ public class ModEffects {
   public static final DeferredHolder<MobEffect, JumbleEffect> JUMBLE = REGISTER.register("jumble", JumbleEffect::new);
   public static final DeferredHolder<MobEffect, InstantFireEffect> INSTANT_FIRE = REGISTER.register("instant_fire", InstantFireEffect::new);
   public static final DeferredHolder<MobEffect, DelayedFireEffect> DELAYED_FIRE = REGISTER.register("delayed_fire", DelayedFireEffect::new);
-  public static final DeferredHolder<MobEffect, AutoRunEffect> AUTO_RUN = REGISTER.register("auto_run", AutoRunEffect::new);
+  public static final DeferredHolder<MobEffect, AutoRunEffect> AUTO_RUN = REGISTER.register("auto_run", () -> new AutoRunEffect(MobEffectCategory.HARMFUL));
+  public static final DeferredHolder<MobEffect, AutoRunEffect> BENEFICIAL_AUTO_RUN = REGISTER.register("beneficial_auto_run", () -> new AutoRunEffect(MobEffectCategory.BENEFICIAL));
   public static final DeferredHolder<MobEffect, ShaderEffect> CREEPER = REGISTER.register("creeper", () -> new ShaderEffect(894731, () -> EntityType.CREEPER));
   public static final DeferredHolder<MobEffect, ShaderEffect> SPIDER = REGISTER.register("spider", () -> new ShaderEffect(11013646, () -> EntityType.SPIDER));
   public static final DeferredHolder<MobEffect, ShaderEffect> ENDERMAN = REGISTER.register("enderman", () -> new ShaderEffect(1447446, () -> EntityType.ENDERMAN));

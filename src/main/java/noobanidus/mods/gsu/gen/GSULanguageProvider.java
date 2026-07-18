@@ -40,6 +40,7 @@ public class GSULanguageProvider extends LanguageProvider {
     addEffect(ModEffects.THIMBLE, getDescription(ModEffects.THIMBLE));
     addEffect(ModEffects.TUMBLE, getDescription(ModEffects.TUMBLE));
     addEffect(ModEffects.AUTO_RUN, getDescription(ModEffects.AUTO_RUN));
+    addEffect(ModEffects.BENEFICIAL_AUTO_RUN, getDescription(ModEffects.BENEFICIAL_AUTO_RUN));
     addEffect(ModEffects.CREEPER, getDescription(ModEffects.CREEPER));
     addEffect(ModEffects.SPIDER, getDescription(ModEffects.SPIDER));
     addEffect(ModEffects.ENDERMAN, getDescription(ModEffects.ENDERMAN));

@@ -6,8 +6,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 public class AutoRunEffect extends SimpleEffect {
-  public AutoRunEffect() {
-    super(MobEffectCategory.HARMFUL, 0xd13317);
+  public AutoRunEffect(MobEffectCategory type) {
+    super(type, 0xd13317);
   }
 
   @Override
