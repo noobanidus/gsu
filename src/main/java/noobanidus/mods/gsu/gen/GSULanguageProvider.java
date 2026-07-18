@@ -30,6 +30,8 @@ public class GSULanguageProvider extends LanguageProvider {
     addEffect(ModEffects.CRUMBLE, getDescription(ModEffects.CRUMBLE));
     addEffect(ModEffects.DELAYED_EXPLOSIVE, getDescription(ModEffects.DELAYED_EXPLOSIVE));
     addEffect(ModEffects.MIRROR, getDescription(ModEffects.MIRROR));
+    addEffect(ModEffects.MIRROR_CONTROLS, getDescription(ModEffects.MIRROR_CONTROLS));
+    addEffect(ModEffects.MIRROR_VISUALS, getDescription(ModEffects.MIRROR_VISUALS));
     addEffect(ModEffects.DELAYED_FIRE, getDescription(ModEffects.DELAYED_FIRE));
     addEffect(ModEffects.DRUMBLE, getDescription(ModEffects.DRUMBLE));
     addEffect(ModEffects.EXPLOSIVE, getDescription(ModEffects.EXPLOSIVE));

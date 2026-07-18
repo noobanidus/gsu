@@ -29,6 +29,9 @@ public class GSUTags {
     public static TagKey<MobEffect> EFFECTS_PERSIST = TagKey.create(Registries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(GSU.MODID, "effects_persist"));
     public static TagKey<MobEffect> SUPPRESS_PARTICLES = TagKey.create(Registries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(GSU.MODID, "suppress_particles"));
     public static TagKey<MobEffect> FIRE_EFFECT = TagKey.create(Registries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(GSU.MODID, "fire_effect"));
+
+    public static TagKey<MobEffect> MIRROR_VISUALS = TagKey.create(Registries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(GSU.MODID, "mirror_visuals"));
+    public static TagKey<MobEffect> MIRROR_CONTROLS = TagKey.create(Registries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(GSU.MODID, "mirror_controls"));
   }
 
   public static class Damage {

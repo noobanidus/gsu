@@ -48,6 +48,6 @@ public class MixinGameRenderer {
       return false;
     }
 
-    return mc.player.hasEffect(ModEffects.MIRROR);
+    return mc.player.hasEffect(ModEffects.MIRROR) || mc.player.hasEffect(ModEffects.MIRROR_VISUALS);
   }
 }

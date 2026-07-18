@@ -19,7 +19,7 @@ public class MixinMouseHandler {
       )
   )
   private void gsu$invertYawOnly(LocalPlayer instance, double yaw, double pitch, Operation<Void> original) {
-    if (instance.hasEffect(ModEffects.MIRROR) && ConfigManager.shouldFlipControls()) {
+    if ((instance.hasEffect(ModEffects.MIRROR) && ConfigManager.shouldFlipControls()) || instance.hasEffect(ModEffects.MIRROR_CONTROLS)) {
       yaw = -yaw;
     }
     original.call(instance, yaw, pitch);

@@ -41,7 +41,7 @@ public class ClientEventsHandler {
       input.jumping = sneaking;
       input.forwardImpulse = input.up == input.down ? 0.0F : (input.up ? 1.0F : -1.0F);
       input.leftImpulse = input.left == input.right ? 0.0F : (input.left ? 1.0F : -1.0F);
-    } else if (entity.hasEffect(ModEffects.MIRROR) && ConfigManager.shouldFlipControls()) {
+    } else if ((entity.hasEffect(ModEffects.MIRROR) && ConfigManager.shouldFlipControls()) || entity.hasEffect(ModEffects.MIRROR_CONTROLS)) {
       input.left = rightKeyDown;
       input.right = leftKeyDown;
       input.leftImpulse = input.left == input.right ? 0.0F : (input.left ? 1.0F : -1.0F);
