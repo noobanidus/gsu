@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -26,10 +27,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 import noobanidus.mods.gsu.GSU;
 import noobanidus.mods.gsu.GSUTags;
 import noobanidus.mods.gsu.capability.Capabilities;
+import noobanidus.mods.gsu.capability.ShinyCapability;
 import noobanidus.mods.gsu.capability.SkinCapability;
 import noobanidus.mods.gsu.config.ConfigManager;
 import noobanidus.mods.gsu.init.ModEffects;
 import noobanidus.mods.gsu.network.Networking;
+import noobanidus.mods.gsu.network.SetGlint;
 import noobanidus.mods.gsu.network.SetSkin;
 
 import java.util.*;
@@ -81,6 +84,7 @@ public class EventsHandler {
   public static void attachCapbilities(AttachCapabilitiesEvent<Entity> event) {
     if (ConfigManager.getEntitySet().contains(event.getObject().getType())) {
       event.addCapability(SkinCapability.IDENTIFIER, new SkinCapability());
+      event.addCapability(ShinyCapability.IDENTIFIER, new ShinyCapability());
     }
   }
 
@@ -91,6 +95,11 @@ public class EventsHandler {
       target.getCapability(Capabilities.SKIN_CAPABILITY).ifPresent(cap -> {
         if (cap.getOverride() != null) {
           Networking.sendTo(new SetSkin(target.getId(), cap.getOverride()), (ServerPlayer) event.getEntity());
+        }
+      });
+      target.getCapability(Capabilities.SHINY_CAPABILITY).ifPresent(cap -> {
+        if (cap.getGlint() != null) {
+          Networking.sendTo(new SetGlint(target.getId(), cap.getGlint()), (ServerPlayer) event.getEntity());
         }
       });
     }

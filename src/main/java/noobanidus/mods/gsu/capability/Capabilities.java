@@ -7,4 +7,6 @@ import net.minecraftforge.common.capabilities.CapabilityToken;
 public class Capabilities {
   public static Capability<SkinCapability> SKIN_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
   });
+  public static Capability<ShinyCapability> SHINY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>()  {
+  });
 }

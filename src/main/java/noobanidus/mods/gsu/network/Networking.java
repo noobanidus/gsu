@@ -15,6 +15,7 @@ public class Networking extends PacketHandler {
   @Override
   public void registerMessages() {
     registerMessage(SetSkin.class, SetSkin::encode, SetSkin::new, SetSkin::handle);
+    registerMessage(SetGlint.class, SetGlint::encode, SetGlint::new, SetGlint::handle);
   }
 
   public static void sendTo(Object msg, ServerPlayer player) {

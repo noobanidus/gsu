@@ -5,6 +5,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import noobanidus.mods.gsu.capability.Capabilities;
+import noobanidus.mods.gsu.capability.GlintType;
 import noobanidus.mods.gsu.config.ConfigManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,6 +20,11 @@ public class MixinEntity {
     if (nbt.contains("gsu_reskin", Tag.TAG_STRING) && ConfigManager.getEntitySet().contains(entity.getType())) {
       entity.getCapability(Capabilities.SKIN_CAPABILITY).ifPresent(cap -> {
         cap.setOverride(new ResourceLocation(nbt.getString("gsu_reskin")));
+      });
+    }
+    if (nbt.contains("gsu_shiny", Tag.TAG_STRING) && ConfigManager.getEntitySet().contains(entity.getType())) {
+      entity.getCapability(Capabilities.SHINY_CAPABILITY).ifPresent(cap -> {
+        cap.setGlint(GlintType.fromString(nbt.getString("gsu_shiny")));
       });
     }
   }
